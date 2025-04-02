@@ -1,0 +1,397 @@
+:root {
+    /* Variables de color y fuentes */
+    --primary-color: #2E3036; /* Color principal (fondo de la cabecera y pie de página) */
+    --text-light: white; /* Color claro para textos (blanco) */
+    --text-dark: black; /* Color oscuro para textos (negro) */
+    --font-lustria: 'Lustria', serif; /* Fuente Lustria para títulos */
+    --font-work-sans: 'Work Sans', sans-serif; /* Fuente Work Sans para cuerpo de texto */
+    --font-marko: 'Marko One', serif; /* Fuente Marko One para títulos específicos */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Asegura que el padding y borde no aumenten el tamaño total del elemento */
+}
+
+body {
+    min-height: 100vh; /* Altura mínima del viewport */
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-work-sans); /* Fuente para todo el cuerpo */
+    background-image: url('/fondo-general.png'); /* Imagen de fondo */
+    background-color: #f5f5f5; /* Color de respaldo si la imagen de fondo no carga */
+    background-size: cover; /* La imagen de fondo cubre toda la pantalla */
+    background-position: center; /* Centra la imagen de fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* Fija la imagen al fondo de la página */
+    line-height: 1.6; /* Altura de línea general */
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura del viewport */
+}
+
+/* Estilos del encabezado */
+.main-header {
+    background-color: var(--primary-color); /* Fondo del encabezado */
+    padding: 1rem 0;
+    position: fixed; /* Fija el encabezado en la parte superior */
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Mantiene el encabezado por encima del resto del contenido */
+}
+
+.nav-container {
+    max-width: 1430px;
+    margin: 0 auto; /* Centra el contenedor de navegación */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%; /* Hace la imagen del logo circular */
+    object-fit: cover; /* Ajusta la imagen dentro del contenedor */
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem; /* Espacio entre los enlaces de navegación */
+}
+
+.nav-links a {
+    color: var(--text-light); /* Color de texto claro (blanco) */
+    text-decoration: none;
+    font-family: var(--font-lustria); /* Fuente Lustria para los enlaces */
+    font-size: 1.25rem;
+    transition: color 0.3s ease; /* Transición suave al cambiar de color */
+}
+
+.nav-links a:hover {
+    color: #B6BAC3; /* Color de hover para los enlaces */
+}
+
+/* Estilos del contenido principal */
+.main-container {
+    background: rgba(239, 246, 255, 0.85); /* Fondo con opacidad */
+    border-radius: 15px; /* Bordes redondeados */
+    max-width: 1440px;
+    margin: 2rem auto;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.main-content {
+    flex: 1;
+    margin-top: 140px; /* Espacio superior para evitar que el contenido se superponga al encabezado fijo */
+    padding: 0 2rem;
+}
+
+.welcome-title-container {
+    background: rgba(239, 246, 255, 0.85);
+    padding: 2rem 4rem;
+    border-radius: 15px;
+    max-width: 700px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-title {
+    font-family: var(--font-marko); /* Fuente específica para el título de bienvenida */
+    font-size: 5rem;
+    text-align: center;
+    color: var(--text-dark); /* Color de texto oscuro */
+    white-space: nowrap; /* Evita que el texto se ajuste en varias líneas */
+}
+
+.welcome-section {
+    background: rgba(239, 246, 255, 0.85);
+    padding: 3rem;
+    border-radius: 15px;
+    max-width: 2000px;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas */
+    gap: 2rem; /* Espacio entre columnas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contact-box {
+    background: #B6BAC3;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.web-button {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+}
+
+.web-button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-2px); /* Eleva el botón al pasar el ratón */
+}
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas ajustables */
+    gap: 1rem;
+}
+
+.image-gallery img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover; /* Asegura que la imagen cubra completamente su contenedor */
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.image-gallery img:hover {
+    transform: scale(1.05); /* Agranda la imagen ligeramente al pasar el ratón */
+}
+
+/* Estilos del pie de página */
+.main-footer {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 2rem 0;
+    margin-top: auto; /* Alinea el pie de página al fondo */
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+    gap: 2rem; /* Espacio entre columnas */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-content > div {
+    text-align: left;
+}
+
+.contact-info, .social-media {
+    flex: 1;
+    margin: 10px; /* Añade margen alrededor de cada sección */
+    min-width: 250px; /* Asegura un ancho mínimo para cada sección */
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icons a {
+    color: #ffffff;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #007bff;
+}
+
+/* Para asegurarnos de que en pantallas pequeñas no se amontone */
+@media screen and (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr; /* Cambia a una sola columna en pantallas pequeñas */
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .welcome-section {
+        grid-template-columns: 1fr; /* Cambia a una columna */
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr 1fr; /* Pie de página en dos columnas */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr; /* Pie de página en una sola columna */
+        text-align: center;
+        padding: 0;
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .welcome-title {
+        font-size: 2rem; /* Título más pequeño en pantallas pequeñas */
+    }
+    
+    .contact-box {
+        flex-direction: column; /* Alineación vertical en el contenedor de contacto */
+    }
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff8c;
+}
+
+h1 {
+    font-size: 2em;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.faq-item {
+    border-top: 1px solid #e0e0e0;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.faq-item:last-child {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.faq-item p {
+    margin: 0;
+    font-size: 1.1em;
+    color: #1a1a1a;
+}
+
+.faq-item i {
+    color: #1a1a1a;
+}
+
+.faq-answer {
+    display: none;
+    padding: 10px 0;
+    font-size: 1em;
+    color: #1a1a1a;
+}
+.container {
+    padding: 20px;
+}
+
+.header {
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.subheader {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.benefits {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.benefit {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.benefit-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.benefit-description {
+    font-size: 16px;
+}
+
+.button-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.button {
+    background-color: #ffcc00;
+    color: #000;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.image-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .header {
+        font-size: 36px;
+    }
+    .subheader {
+        font-size: 16px;
+    }
+    .benefit-title {
+        font-size: 20px;
+    }
+    .benefit-description {
+        font-size: 14px;
+    }
+    .button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+.image-container {
+    display: flex; /* Alinea los elementos en fila */
+    justify-content: center; /* Centra las imágenes horizontalmente */
+    gap: 20px; /* Espaciado entre imágenes */
+    margin-top: 20px;
+}
+
+.image-container img {
+    width: 45%; /* Ajusta el ancho para que quepan horizontalmente */
+    height: auto; /* Mantiene la proporción original */
+    border-radius: 8px; /* Opcional: esquinas redondeadas */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Opcional: sombra para destacar */
+}
