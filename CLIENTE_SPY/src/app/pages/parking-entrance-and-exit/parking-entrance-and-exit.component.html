@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SPY Parking Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="parking-entrance-and-exit.component.css">
+    <script src="entrada y salidad de parqueaderos.js" defer></script>
+</head>
+<body>
+    <div class="header">
+        <img src="c:\Users\mairo\OneDrive\Documents\proyecto del sena\Sin título.jpeg" alt="SPY Logo" height="50">
+        <nav>
+            <a href="#">Entrada y Salida</a>
+            <a href="#">Pagos</a>
+            <a href="#">Ofertas</a>
+            <a href="#">Recibos</a>
+            <a href="#">Notificaciones</a>
+            <a href="#">Contactos</a>
+        </nav>
+    </div>
+    <div class="content">
+        <div class="form-observations-container">
+            <div class="form-container">
+                <h2>Información del Vehículo</h2>
+                <input id="plate" placeholder="Placa" type="text">
+                <input id="brand" placeholder="Marca" type="text">
+                <input id="model" placeholder="Modelo" type="text">
+                <input id="color" placeholder="Color" type="text">
+                <input id="year" placeholder="Año" type="text">
+                <input id="owner" placeholder="Propietario" type="text">
+                <input id="phone" placeholder="Teléfono" type="text">
+                <input id="email" placeholder="Correo" type="text">
+                <input id="entryTime" placeholder="Hora de Entrada" type="time">
+                <input id="exitTime" placeholder="Hora de Salida" type="time">
+                <input id="Observaciones" placeholder="Observaciones" type="text">
+                <button onclick="addVehicle()">Ingresar</button>
+            </div>
+            <div class="sidebar">
+                <h3>Observaciones</h3>
+                <table>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Observación</th>
+                    </tr>
+                    <tr>
+                        <td>22/09/2023</td>
+                        <td><textarea>Vehículo en buen estado</textarea></td>
+
+                    </tr>
+                    <tr>
+                        <td>22/09/2023</td>
+
+                        <td><textarea>Neumáticos desgastados</textarea></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="table-container">
+            <h2>Registro de Entrada y Salida de Vehículos</h2>
+            <table id="vehicleTable">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Placa</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Color</th>
+                    <th>Año</th>
+                    <th>Propietario</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Hora de Entrada</th>
+                    <th>Hora de Salida</th>
+                </tr>
+            </table>
+        </div>
+        <button class="print-button" onclick="window.print()">Imprimir Recibo</button>
+    </div>
+    <div class="footer">
+        <p>Dirección: Calle 123 #45-67, Ciudad, País | Teléfono: (123) 456-7890 | Correo: info@spyparking.com</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+    </div>
+</body>
+</html>

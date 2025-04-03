@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>Contact Information</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        body {
+            background-image: url('https://placehold.co/800x600?text=Background+Image+of+Cars+in+a+Garage+with+Neon+Lights');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function App() {
+            return (
+                <div className="flex items-center justify-center min-h-screen">
+                    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                        <h2 className="text-xl font-bold mb-4">INFORMACIÓN DE CONTACTO</h2>
+                        <form>
+                            <div className="mb-4">
+                                <input type="text" placeholder="Nombre" className="w-full p-2 border border-gray-300 rounded mb-2" />
+                                <input type="text" placeholder="Apellidos" className="w-full p-2 border border-gray-300 rounded" />
+                            </div>
+                            <div className="mb-4">
+                                <input type="email" placeholder="Correo electrónico" className="w-full p-2 border border-gray-300 rounded mb-2" />
+                                <input type="text" placeholder="Nombre de la compañía" className="w-full p-2 border border-gray-300 rounded" />
+                            </div>
+                            <h2 className="text-xl font-bold mb-4">MÉTODO DE PAGO</h2>
+                            <div className="mb-4 flex items-center justify-between">
+                                <img src="https://placehold.co/50x30?text=PayPal" alt="PayPal" className="h-8" />
+                                <img src="https://placehold.co/50x30?text=Western+Union" alt="Western Union" className="h-8" />
+                                <img src="https://placehold.co/50x30?text=VISA" alt="VISA" className="h-8" />
+                                <img src="https://placehold.co/50x30?text=MasterCard" alt="MasterCard" className="h-8" />
+                                <img src="https://placehold.co/50x30?text=Discover" alt="Discover" className="h-8" />
+                            </div>
+                            <div className="mb-4">
+                                <input type="text" placeholder="Nombre en la tarjeta" className="w-full p-2 border border-gray-300 rounded mb-2" />
+                                <input type="text" placeholder="1234 1234 1234 1234" className="w-full p-2 border border-gray-300 rounded mb-2" />
+                                <div className="flex">
+                                    <input type="text" placeholder="MM/AA" className="w-1/2 p-2 border border-gray-300 rounded mb-2 mr-2" />
+                                    <input type="text" placeholder="CVC" className="w-1/2 p-2 border border-gray-300 rounded mb-2" />
+                                </div>
+                            </div>
+                            <div className="mb-4">
+                                <input type="checkbox" id="terms" className="mr-2" />
+                                <label htmlFor="terms">Por favor acepta los términos y condiciones antes de continuar</label>
+                            </div>
+                            <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Comprar</button>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

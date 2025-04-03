@@ -1,1 +1,49 @@
-<p>payment-gateway works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodos de pago</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="payment-gateway.component.css">
+</head>
+<body>
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4">INFORMACIÓN DE CONTACTO</h2>
+            <form id="paymentForm">
+                <div class="mb-4">
+                    <input type="text" placeholder="Nombre" class="w-full p-2 border border-gray-300 rounded mb-2" required />
+                    <input type="text" placeholder="Apellidos" class="w-full p-2 border border-gray-300 rounded" required />
+                </div>
+                <div class="mb-4">
+                    <input type="email" placeholder="Correo electrónico" class="w-full p-2 border border-gray-300 rounded mb-2" required />
+                    <input type="text" placeholder="Nombre de la compañía" class="w-full p-2 border border-gray-300 rounded" required />
+                </div>
+                <h2 class="text-xl font-bold mb-4">MÉTODO DE PAGO</h2>
+                <div class="mb-4 flex items-center justify-between">
+                    <div class="payment-method paypal">PayPal</div>
+                    <div class="payment-method western-union">Western Union</div>
+                    <div class="payment-method visa">VISA</div>
+                    <div class="payment-method mastercard">Master Card</div>
+                    <div class="payment-method discover">Discover</div>
+                </div>
+                <div class="mb-4">
+                    <input type="text" placeholder="Nombre en la tarjeta" class="w-full p-2 border border-gray-300 rounded mb-2" required />
+                    <input type="text" placeholder="1234 1234 1234 1234" class="w-full p-2 border border-gray-300 rounded mb-2" required />
+                    <div class="flex">
+                        <input type="text" placeholder="MM/AA" class="w-1/2 p-2 border border-gray-300 rounded mb-2 mr-2" required />
+                        <input type="text" placeholder="CVC" class="w-1/2 p-2 border border-gray-300 rounded mb-2" required />
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <input type="checkbox" id="terms" class="mr-2" required />
+                    <label for="terms">Por favor acepta los términos y condiciones antes de continuar</label>
+                </div>
+                <button type="button" onclick="goBack()" class="w-full bg-gray-500 text-white p-2 rounded mb-2">Regresar</button>
+                <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Comprar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #4a1a1a;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.header img {
+  height: 50px;
+}
+.nav {
+  display: flex;
+  gap: 20px;
+}
+.nav a {
+  color: #000;
+  text-decoration: none;
+  font-size: 18px;
+}
+.nav a:hover {
+  text-decoration: underline;
+}
+.main-content {
+  text-align: center;
+  padding: 20px 0;
+}
+.main-content h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+.membership {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.membership-card {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.membership-card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.membership-card p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+.membership-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+.membership-card ul li {
+  font-size: 16px;
+  margin: 5px 0;
+}
+.membership-card button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.membership-card button:hover {
+  background-color: #0056b3;
+}
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+.footer p {
+  margin: 5px 0;
+}
+.footer .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.footer .social-icons a {
+  color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+}

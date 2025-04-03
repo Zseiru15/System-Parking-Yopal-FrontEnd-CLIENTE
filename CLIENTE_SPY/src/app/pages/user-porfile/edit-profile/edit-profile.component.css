@@ -1,0 +1,23 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('fondo.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Estilos del contenido principal */
+.main-container {
+  background: rgba(239, 246, 255, 0.85); /* Fondo con opacidad */
+  border-radius: 15px; /* Bordes redondeados */
+  max-width: 1440px;
+  margin: 2rem auto;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 30px; /* Espacio superior para evitar que el contenido se superponga al encabezado fijo */
+  padding: 0 2rem;
+}

@@ -28,7 +28,7 @@ body {
   flex-direction: column;
   font-family: var(--font-work-sans);
   /* Fuente para todo el cuerpo */
-  background-image: url('fondo.jpg');
+  background-image: url('/public/fondo-general.png');
   /* Imagen de fondo */
   background-color: #f5f5f5;
   /* Color de respaldo si la imagen de fondo no carga */
