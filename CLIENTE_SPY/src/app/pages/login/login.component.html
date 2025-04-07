@@ -1,46 +1,45 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>System Parking Yopal - Inicio de Sesión</title>
-    <link rel="stylesheet" href="login.component.css">
+<div class="login-session">
+  <mat-card class="login-container">
+    <mat-card class="login-form">
+      <h1 class="title">Iniciar Sesion</h1>
+      <p class="subtitle">Ingrese sus credenciales para continuar</p>
 
-</head>
-<body>
-    <main class="login-container">
-        <form class="login-form">
-            <h1>Iniciar sesión</h1>
+      <div class="user-type">
+        <button type="button" class="user-btn active">Usuario</button>
+        <button type="button" class="admin-btn">Administrador</button>
+      </div>
 
-            <div class="user-type">
-                <button type="button" class="user-btn active">Usuario</button>
-                <button type="button" class="admin-btn">Administrador</button>
-            </div>
+      <!-- Campo de Usuario -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput placeholder="Usuario, email o número telefónico">
+      </mat-form-field>
 
-            <div class="form-group">
-                <input type="text" id="contacto" placeholder="Correo electrónico o número telefónico *" required>
-            </div>
+      <!-- Campo de Contraseña -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Ingrese su contraseña">
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
 
-            <div class="form-group">
-                <input type="password" id="password" placeholder="Contraseña *" required>
-            </div>
+      <!-- Botón de Ingreso -->
+      <button mat-raised-button color="primary" class="submit-btn" (click)="login()">Iniciar Sesión</button>
 
-            <button type="submit" class="submit-btn">Iniciar sesión</button>
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox">
+          <span>Recuérdame</span>
+        </label>
+        <a href="/help" class="help-link">¿Necesitas ayuda?</a>
+      </div>
 
-            <div class="form-options">
-                <label class="remember-me">
-                    <input type="checkbox">
-                    <span>Recuérdame</span>
-                </label>
-                <a href="/help" class="help-link">¿Necesitas ayuda?</a>
-            </div>
-
-            <div class="form-footer">
-                <p>¿No tienes cuenta? <a href="/registro">Regístrate</a></p>
-                <a href="/recuperar" class="recover-link">Recuperar contraseña</a>
-            </div>
-        </form>
-    </main>
-</body>
-</html>
+      <!-- Enlaces para recuperar contraseña y crear cuenta -->
+      <div class="actions">
+        <button class="recover-password" mat-button color="accent" (click)="recoverPassword()">¿Olvidaste tu contraseña?</button>
+        <button class="create-account" mat-button color="warn" (click)="goToRegister()">Crear cuenta nueva</button>
+      </div>
+    </mat-card>
+  </mat-card>
+</div>

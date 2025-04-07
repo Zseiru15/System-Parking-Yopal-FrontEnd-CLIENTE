@@ -3,10 +3,8 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [RouterOutlet], // Permite que las rutas carguen los componentes correctos
+  template: `<router-outlet></router-outlet>`, // Aquí se renderizan los componentes según la ruta
 })
-export class AppComponent {
-  title = 'CLIENTE_SPY';
-}
+export class AppComponent {}

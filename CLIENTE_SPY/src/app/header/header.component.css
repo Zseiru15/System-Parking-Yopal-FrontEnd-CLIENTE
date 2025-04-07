@@ -1,0 +1,57 @@
+:root {
+  /* Variables de color y fuentes */
+  --primary-color: #2E3036; /* Color principal (fondo de la cabecera y pie de página) */
+  --text-light: white; /* Color claro para textos (blanco) */
+  --text-dark: black; /* Color oscuro para textos (negro) */
+  --font-lustria: 'Lustria', serif; /* Fuente Lustria para títulos */
+  --font-work-sans: 'Work Sans', sans-serif; /* Fuente Work Sans para cuerpo de texto */
+  --font-marko: 'Marko One', serif; /* Fuente Marko One para títulos específicos */
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura del viewport */
+}
+
+/* Estilos del encabezado */
+.main-header {
+  background-color: var(--primary-color); /* Fondo del encabezado */
+  padding: 1rem 0;
+  position: fixed; /* Fija el encabezado en la parte superior */
+  width: 100%;
+  top: 0;
+  z-index: 1000; /* Mantiene el encabezado por encima del resto del contenido */
+}
+
+.nav-container {
+  max-width: 1430px;
+  margin: 0 auto; /* Centra el contenedor de navegación */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%; /* Hace la imagen del logo circular */
+  object-fit: cover; /* Ajusta la imagen dentro del contenedor */
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem; /* Espacio entre los enlaces de navegación */
+}
+
+.nav-links a {
+  color: var(--text-light); /* Color de texto claro (blanco) */
+  text-decoration: none;
+  font-family: var(--font-lustria); /* Fuente Lustria para los enlaces */
+  font-size: 1.25rem;
+  transition: color 0.3s ease; /* Transición suave al cambiar de color */
+}
+
+.nav-links a:hover {
+  color: #B6BAC3; /* Color de hover para los enlaces */
+}

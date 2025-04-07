@@ -1,95 +1,82 @@
-:root {
-  /* Definición de variables de color y fuentes */
-  --primary-color: #4170DF; /* Color primario para botones y elementos importantes */
-  --secondary-color: #B6BAC3; /* Color secundario para fondos de entrada y otros elementos */
-  --text-light: #FFFFFF; /* Color para texto claro */
-  --text-dark: #000000; /* Color para texto oscuro */
-  --font-lustria: 'Lustria', serif; /* Fuente para títulos */
-  --font-work-sans: 'Work Sans', sans-serif; /* Fuente para el cuerpo de texto */
-}
-
-* {
-  /* Reinicio de margen y relleno para todos los elementos */
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* Define box-sizing para un mejor control de los bordes y padding */
-}
-
-body {
-  /* Configuración básica del cuerpo de la página */
+/* Estilo del fondo*/
+.register-container{
   min-height: 100vh;
   display: flex;
-  align-items: center; /* Centra el contenido verticalmente */
-  justify-content: center; /* Centra el contenido horizontalmente */
-  font-family: var(--font-work-sans); /* Fuente principal del cuerpo */
-  background-image: url('/public/fondo-sesion.png'); /* Imagen de fondo */
-  background-color: #f5f5f5; /* Color de fondo alternativo */
-  background-size: cover; /* La imagen cubre todo el fondo */
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-work-sans);
+  background-image: url('/fondo-sesion.png');
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* La imagen permanece fija al hacer scroll */
-  padding: 2rem;
+  background-attachment: fixed;
 }
 
-.register-container {
-  /* Estilo del contenedor principal del formulario */
-  width: 100%;
-  max-width: 780px;
-  background: rgba(0, 0, 0, 0.60); /* Fondo oscuro semi-transparente */
-  border-radius: 30px; /* Bordes redondeados */
-  padding: 2rem;
-}
-
+/* Estilo del formulario de inicio de sesión*/
 .register-form {
-  /* Estilos del formulario */
   width: 100%;
-  max-width: 694px;
-  margin: 0 auto; /* Centra el formulario */
+  margin: 0 auto;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0);
 }
 
+/* Estilo del contenedor del formulario*/
+.register-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 450px;
+  background: rgba(0, 0, 0, 0.60);
+  border-radius: 30px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+/* Estilo del inicio de sesion*/
 h1 {
-  /* Estilo del encabezado principal */
   color: var(--text-light);
   font-size: 40px;
-  font-family: var(--font-lustria); /* Fuente decorativa */
+  font-family: var(--font-lustria);
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
+/* ubicacion del input Usuario/Administrador*/
 .user-type {
-  /* Contenedor para los botones de tipo de usuario */
   display: flex;
-  justify-content: space-around; /* Distribuye los botones de usuario */
+  justify-content: space-around;
   margin-bottom: 2rem;
-  border-bottom: 2px solid var(--text-light); /* Línea de separación */
+  border-bottom: 2px solid var(--text-light);
   position: relative;
 }
 
-.user-type::after {
-  /* Línea divisoria entre los botones de tipo de usuario */
-  content: '';
-  position: absolute;
-  left: 50%;
-  height: 40px;
-  width: 2px;
-  background: var(--text-light);
-  bottom: 0;
-}
-
+/* Estilo del input Usuario/Administrador*/
 .user-type button {
-  /* Estilo de los botones de selección de tipo de usuario */
   background: none;
   border: none;
   color: var(--text-light);
-  font-size: 40px;
+  font-size: 20px;
   font-family: var(--font-lustria);
   cursor: pointer;
   padding: 0.5rem 1rem;
 }
 
+/* Estilo del input activo*/
 .user-type button.active {
-  /* Estilo para el botón activo */
   font-weight: bold;
+}
+
+/* Estilo de la linea separadora*/
+.user-type::after {
+  content: '';
+  position: absolute;
+  left: 45%;
+  height: 40px;
+  width: 2px;
+  background: #ffffff;
+  bottom: 0;
 }
 
 .form-row {
@@ -103,6 +90,12 @@ h1 {
   /* Contenedor para cada grupo de entrada */
   margin-bottom: 1.5rem;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  font-family: var(--font-lustria);
+  font-size: 20px;
 }
 
 .form-group label {
@@ -113,115 +106,125 @@ h1 {
   font-size: 20px;
 }
 
-input, select {
-  /* Estilo de los campos de entrada y selectores */
-  width: 100%;
-  padding: 0.8rem;
+/*Estilo de formularios y botones*/
+.full-width{
+  color: #ffffff;
+  width: auto;
+  height: 60px;
+  margin-bottom: 15px;
+  padding: 0.5rem;
   border-radius: 10px;
-  border: none;
-  background: var(--secondary-color);
-  font-family: var(--font-lustria);
   font-size: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid transparent;
 }
 
-.date-inputs {
-  /* Contenedor para los selectores de fecha */
+.action{
   display: flex;
-  gap: 1rem;
+  justify-content: space-between;
 }
 
-.date-inputs select {
-  /* Estilo de los selectores de fecha individuales */
-  flex: 1;
-}
-
-.gender-options {
-  /* Contenedor para las opciones de género */
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-
-.radio-label {
-  /*Estilodecadaetiquetadeopcióndegénero*/
-  flex: 1;
-  background: var(--secondary-color);
-  padding: 0.8rem;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-}
-
-.help-text {
-  /* Texto de ayuda para información adicional */
-  display: block;
-  color: var(--text-light);
-  font-size: 13px;
-  margin-top: 0.5rem;
-}
-
+/* Estilo del boton iniciar sesion*/
 .submit-btn {
-  /* Estilo del botón de envío */
   width: 100%;
   padding: 1rem;
-  background: var(--primary-color);
-  color: var(--text-light);
+  background: #4170df;
+  color: #ffffff;
   border: none;
   border-radius: 10px;
   font-size: 20px;
   cursor: pointer;
-  margin-top: 2rem;
+  margin: 1rem 0;
   font-family: var(--font-lustria);
 }
 
-.form-footer {
-  /* Estilo del pie del formulario */
-  text-align: center;
-  margin-top: 2rem;
+.actions{
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Estilo del recuperar contraseña*/
+.session {
   color: var(--text-light);
+  margin-top: 0.5rem;
+  font-size: 15px;
 }
 
-.form-footer a {
-  /* Estilo de los enlaces en el pie del formulario */
+/* Estilo del crear cuenta*/
+.terms-condit {
   color: var(--text-light);
-  text-decoration: none;
+  margin-top: 0.5rem;
+  font-size: 15px;
 }
 
-.terms-link {
-  /* Estilo del enlace a términos y condiciones */
-  display: block;
-  margin-top: 1rem;
-}
+/* === Dispositivos pequeños (teléfonos) === */
+@media (max-width: 768px) {
+  .register-card {
+    width: 90%;
+    padding: 1.5rem;
+  }
 
-@media screen and (max-width: 768px) {
-  /* Ajustes para pantallas medianas (tablets) */
   .form-row {
-      flex-direction: column;
-      gap: 1rem;
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  .user-type button {
-      font-size: 30px;
-  }
-
-  .gender-options {
-      flex-direction: column;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  /* Ajustes para pantallas pequeñas (móviles) */
-  .register-container {
-      padding: 1rem;
+  .full-width {
+    width: 100%;
+    height: 50px;
+    font-size: 14px;
   }
 
   h1 {
-      font-size: 30px;
+    font-size: 32px;
   }
 
   .user-type button {
-      font-size: 24px;
+    font-size: 16px;
+  }
+
+  .form-group label {
+    font-size: 16px;
+  }
+
+  .submit-btn {
+    font-size: 18px;
+  }
+
+  .remember-me, .help-link, .recover-password, .create-account {
+    font-size: 12px;
+  }
+}
+
+/* === Dispositivos medianos (tablets) === */
+@media (max-width: 1024px) {
+  .register-card {
+    width: 80%;
+    padding: 1.5rem;
+  }
+
+  .form-row {
+    gap: 1rem;
+  }
+
+  .full-width {
+    height: 55px;
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  .user-type button {
+    font-size: 18px;
+  }
+
+  .form-group label {
+    font-size: 18px;
+  }
+
+  .submit-btn {
+    font-size: 19px;
   }
 }

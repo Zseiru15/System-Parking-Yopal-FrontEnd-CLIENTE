@@ -5,16 +5,15 @@ import {MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-user-porfile',
+  selector: 'app-welcome',
   imports: [
     CommonModule,
     MatCardModule,
     MatTableModule,
     MatButtonModule,
-  ],
-  templateUrl: './user-porfile.component.html',
-  styleUrl: './user-porfile.component.css'
-})
-export class UserPorfileComponent {
 
-}
+  ],
+  templateUrl: './welcome.component.html',
+  styleUrl: './welcome.component.css'
+})
+export class WelcomeComponent {}

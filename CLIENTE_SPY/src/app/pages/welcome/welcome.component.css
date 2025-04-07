@@ -1,0 +1,122 @@
+:root {
+  /* Variables de color y fuentes */
+  --primary-color: #2E3036;
+  /* Color principal (fondo de la cabecera y pie de página) */
+  --text-light: white;
+  /* Color claro para textos (blanco) */
+  --text-dark: black;
+  /* Color oscuro para textos (negro) */
+  --font-lustria: 'Lustria', serif;
+  /* Fuente Lustria para títulos */
+  --font-work-sans: 'Work Sans', sans-serif;
+  /* Fuente Work Sans para cuerpo de texto */
+  --font-marko: 'Marko One', serif;
+  /* Fuente Marko One para títulos específicos */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Asegura que el padding y borde no aumenten el tamaño total del elemento */
+  font-family: var(--font-work-sans);
+}
+
+.welcome-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-work-sans);
+  background-image: url('/fondo-general.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 1.6;
+}
+
+.welcome-title-container {
+  background: rgba(239, 246, 255, 0.85);
+  padding: 2rem 4rem;
+  border-radius: 15px;
+  max-width: 700px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-title {
+  font-family: var(--font-marko);
+  /* Fuente específica para el título de bienvenida */
+  font-size: 5rem;
+  text-align: center;
+  color: var(--text-dark);
+  /* Color de texto oscuro */
+  white-space: nowrap;
+  /* Evita que el texto se ajuste en varias líneas */
+}
+
+.welcome-section {
+  background: rgba(239, 246, 255, 0.85);
+  padding: 3rem;
+  border-radius: 15px;
+  max-width: 2000px;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* Dos columnas */
+  gap: 2rem;
+  /* Espacio entre columnas */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact-box {
+  background: #B6BAC3;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.web-button {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+}
+
+.web-button:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  /* Eleva el botón al pasar el ratón */
+}
+
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  /* Columnas ajustables */
+  gap: 1rem;
+}
+
+.image-gallery img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  /* Asegura que la imagen cubra completamente su contenedor */
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.05);
+  /* Agranda la imagen ligeramente al pasar el ratón */
+}
