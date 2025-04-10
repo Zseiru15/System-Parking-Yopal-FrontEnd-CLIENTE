@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Injectable, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule, } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,6 +11,8 @@ import { API_URLS } from '../../../config/api-config';
 import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatStepperIntl, MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-register',
@@ -24,18 +26,25 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatOptionModule,
     MatSelectModule,
+    MatRadioModule,
+    FormsModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
 
-  hidePassword= true;
-  hideConfirmPassword= true;
+  hidePassword = true;
+  hideConfirmPassword = true;
 
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router){
+  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+
+
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -47,8 +56,8 @@ export class RegisterComponent {
     })
   }
 
-  register(){
-    if (this.registerForm.valid){
+  register() {
+    if (this.registerForm.valid) {
       console.log('Registro Exitoso')
       const formData = this.registerForm.value;
       console.log('datos capturados', formData)
@@ -80,11 +89,11 @@ export class RegisterComponent {
     }
   }
 
-  goToLogin(){
+  goToLogin() {
     console.log('Boton de registro clickeado');
     this.router.navigate(['/login']);
   }
-  goToDashboard(){
+  goToDashboard() {
     console.log('Boton de registro clickeado');
     this.router.navigate(['/user-porfile']);
   }

@@ -1,0 +1,129 @@
+:root {
+    /* Variables de color y fuentes */
+    --primary-color: #2E3036; /* Color principal (fondo de la cabecera y pie de página) */
+    --text-light: white; /* Color claro para textos (blanco) */
+    --text-dark: black; /* Color oscuro para textos (negro) */
+    --font-lustria: 'Lustria', serif; /* Fuente Lustria para títulos */
+    --font-work-sans: 'Work Sans', sans-serif; /* Fuente Work Sans para cuerpo de texto */
+    --font-marko: 'Marko One', serif; /* Fuente Marko One para títulos específicos */
+}
+
+/*header*/
+
+.spacer{
+    flex: 1 1 auto;
+}
+
+.logo{
+    width: 90px;
+    height: 90px; 
+    border-radius: 50%; /* Hace la imagen del logo circular */
+    object-fit: cover; /* Ajusta la imagen dentro del contenedor */
+    margin-right: 100px;
+    margin-left: 25px;
+    background: #ffff;
+}
+
+.toolbar{
+    background-color: #2E3036; /* Fondo del encabezado */
+    padding: 1rem 0;
+    height: auto;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Mantiene el encabezado por encima del resto del contenido */
+}
+
+.usuario{
+    color: #ffff; /* Color de texto claro (blanco) */
+    text-decoration: none;
+    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
+    font-size: 1.25rem;
+    transition: color 0.3s ease; /* Transición suave al cambiar de color */
+    margin-right: 12px; /* Espacio a la derecha del enlace */
+}
+
+.menu-button{
+    color: #ffff; /* Color de texto claro (blanco) */
+    width: 90px;
+    height: 90px; 
+    margin-left: 25px;
+    margin-right: 10px;
+}
+
+/*nav container*/
+
+.sidenav-container{
+    height: 100%;
+}
+
+.sidenav{
+    
+    width: 250px;
+}
+
+/*footer*/
+
+.spacer{
+    flex: 1 1 auto;
+}
+
+.informatbar{
+    background-color: #2E3036; /* Fondo del encabezado */
+    color: #ffff;
+    padding: 2rem 0;
+    margin-top: auto; /* Alinea el pie de página al fondo */
+    position: sticky;
+    height: auto;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.terms{
+    margin: 100px;
+}
+
+.contact-info {
+    flex: 1;
+    margin: 10px; /* Añade margen alrededor de cada sección */
+    min-width: 250px; /* Asegura un ancho mínimo para cada sección */
+    text-align: center;
+}
+
+.social-media {
+    flex: 1;
+    margin: 10px; /* Añade margen alrededor de cada sección */
+    min-width: 250px; /* Asegura un ancho mínimo para cada sección */
+    
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0px; /* Espacio entre los iconos sociales */
+}
+
+.social-icons a {
+    color: #333;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #007bff;
+}
+
+.usuario{
+    font-weight: 500;
+    margin-right: 12px;
+    text-align: center;
+}
+
+.sidenav-container{
+    height: 100%;
+    padding: 1rem 0rem;
+}
+
+.sidenav{
+    width: 250px;
+}

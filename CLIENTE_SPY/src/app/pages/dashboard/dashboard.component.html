@@ -1,0 +1,52 @@
+<mat-toolbar color="primary" class="toolbar">
+    <button mat-icon-button (click)="toggleSidenav()" class="menu-button">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <span class="usuario">{{usuario}}</span>
+    <img src="/logo.png" alt="Logo Angular" class="logo">
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="over" position="start" [(opened)]="showSidenav" class="sidenav">
+        <mat-nav-list>
+            <a mat-list-item routerLink="/dashboard/user-porfile" (click)="toggleSidenav()">Perfil</a>
+            <a mat-list-item routerLink="/dashboard/register" (click)="toggleSidenav()">Registro</a>
+            <a mat-list-item routerLink="/dashboard/login" (click)="toggleSidenav()">Login</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-toolbar color="primary" class="informatbar">
+    <span class="terms">
+        Términos y condiciones
+    </span>
+    <span class="spacer"></span>
+    <span class="contact-info">
+        <p>Calle 26A #14-63 Piso 1, Yopal Casanare Colombia</p>
+        <p>Horario de atención: Lunes a domingo - 6:00 am a 10:00 pm</p>
+        <p>Dependencias Administrativas: (+57) 3114368376</p>
+        <p>Support&#64;spy.gov.co</p>
+        <p>Línea anticorrupción: 195<br>Canal de Integridad y Antisoborno</p>
+        <p>Calle 26A #14-63 Piso 1, Yopal Casanare Colombia</p>
+        <p>Horario de atención: Lunes a domingo - 6:00 am a 10:00 pm</p>
+        <p>Dependencias Administrativas: (+57) 3114368376</p>
+        <p>Support&#64;spy.gov.co</p>
+        <p>Línea anticorrupción: 195<br>Canal de Integridad y Antisoborno</p>
+    </span>
+    <span class="spacer"></span>
+    <span class="social-media">
+        <h2>Síguenos</h2>
+        <div class="social-icons">
+            <i class="fab fa-facebook fa-2x"></i>
+            <i class="fab fa-twitter fa-2x"></i>
+            <i class="fab fa-instagram fa-2x"></i>
+            <i class="fab fa-linkedin fa-2x"></i>
+            <i class="fab fa-github fa-2x"></i>
+        </div>
+        <p>&#64;SystemParkingYopal</p>
+    </span>
+
+</mat-toolbar>
