@@ -8,11 +8,11 @@
     --font-marko: 'Marko One', serif; /* Fuente Marko One para títulos específicos */
 }
 
-/*header*/
-
 .spacer{
     flex: 1 1 auto;
 }
+
+/*header*/
 
 .logo{
     width: 90px;
@@ -42,12 +42,22 @@
     margin-right: 12px; /* Espacio a la derecha del enlace */
 }
 
+.usuario:hover{
+    color: #007bff; /* Color azul al pasar el mouse */
+    text-decoration: none; /* Sin subrayado */
+}
+
 .menu-button{
     color: #ffff; /* Color de texto claro (blanco) */
     width: 90px;
     height: 90px; 
     margin-left: 25px;
     margin-right: 10px;
+}
+
+.menu-button:hover{
+    color: #007bff; /* Color azul al pasar el mouse */
+    text-decoration: none; /* Sin subrayado */
 }
 
 /*nav container*/
@@ -63,67 +73,63 @@
 
 /*footer*/
 
-.spacer{
-    flex: 1 1 auto;
-}
-
 .informatbar{
     background-color: #2E3036; /* Fondo del encabezado */
     color: #ffff;
-    padding: 2rem 0;
-    margin-top: auto; /* Alinea el pie de página al fondo */
-    position: sticky;
+    padding: 1rem 0;
     height: auto;
     width: 100%;
     top: 0;
+    margin-top: auto; /* Alinea el pie de página al fondo */
+    /*position: sticky;*/
     z-index: 1000;
 }
 
 .terms{
-    margin: 100px;
+    margin-left: 25px;
+    margin-right: 12px;
+    text-align: center;
+    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
+    font-size: 1.25rem;
+}
+
+.terms:hover{
+    color: #007bff;
 }
 
 .contact-info {
     flex: 1;
-    margin: 10px; /* Añade margen alrededor de cada sección */
-    min-width: 250px; /* Asegura un ancho mínimo para cada sección */
+    margin-left: 25px;
+    margin-right: 12px;
     text-align: center;
+    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
+    font-size: 1.25rem;
 }
 
 .social-media {
     flex: 1;
-    margin: 10px; /* Añade margen alrededor de cada sección */
-    min-width: 250px; /* Asegura un ancho mínimo para cada sección */
-    
+    margin-left: 25px;
+    margin-right: 12px;
+    align-items: center;
+    text-align: center;
+    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
+    font-size: 1.25rem;
 }
 
 .social-icons {
     display: flex;
     gap: 10px;
     margin: 10px 0px; /* Espacio entre los iconos sociales */
+    justify-content: center; /* Centra los iconos en el contenedor */
+    align-items: center; /* Centra verticalmente los iconos */
 }
 
-.social-icons a {
-    color: #333;
+.social-icons i {
+    color: #ffffff;
     font-size: 24px;
     text-decoration: none;
 }
 
-.social-icons a:hover {
+.social-icons i:hover {
     color: #007bff;
-}
-
-.usuario{
-    font-weight: 500;
-    margin-right: 12px;
-    text-align: center;
-}
-
-.sidenav-container{
-    height: 100%;
-    padding: 1rem 0rem;
-}
-
-.sidenav{
-    width: 250px;
 }

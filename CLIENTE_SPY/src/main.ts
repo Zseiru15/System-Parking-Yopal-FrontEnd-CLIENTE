@@ -26,8 +26,20 @@ bootstrapApplication(AppComponent,{
     providers:[
         provideRouter([
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+            { path: 'dashboard', component: DashboardComponent, 
+                children: [
+                    {
+                        path: 'login', component: LoginComponent
+                    },
+                    {
+                        path: 'register', component: RegisterComponent
+                    },
+                    {
+                        path: 'user-porfile', component: UserPorfileComponent
+                    },
+                ]
+            },
             { path: 'welcome', component: WelcomeComponent },
-            { path: 'dashboard', component: DashboardComponent },
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
             { path: 'user-profile', component: UserPorfileComponent },

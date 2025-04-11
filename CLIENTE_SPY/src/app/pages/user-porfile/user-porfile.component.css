@@ -15,77 +15,17 @@
   box-sizing: border-box; /* Asegura que el padding y borde no aumenten el tamaño total del elemento */
 }
 
-body {
-  min-height: 100vh; /* Altura mínima del viewport */
+.user-profile-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: var(--font-work-sans); /* Fuente para todo el cuerpo */
-  background-image: url('/public/parking1.jpg'); /* Imagen de fondo */
-  background-color: #f5f5f5; /* Color de respaldo si la imagen de fondo no carga */
-  background-size: cover; /* La imagen de fondo cubre toda la pantalla */
-  background-position: center; /* Centra la imagen de fondo */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-attachment: fixed; /* Fija la imagen al fondo de la página */
-  line-height: 1.6; /* Altura de línea general */
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura del viewport */
-}
-
-/* Estilos del encabezado */
-.main-header {
-  background-color: var(--primary-color); /* Fondo del encabezado */
-  padding: 1rem 0;
-  position: fixed; /* Fija el encabezado en la parte superior */
-  width: 100%;
-  top: 0;
-  z-index: 1000; /* Mantiene el encabezado por encima del resto del contenido */
-}
-
-.nav-container {
-  max-width: 1430px;
-  margin: 0 auto; /* Centra el contenedor de navegación */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 2rem;
-}
-
-.logo {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%; /* Hace la imagen del logo circular */
-  object-fit: cover; /* Ajusta la imagen dentro del contenedor */
-}
-
-.nav-links {
-  display: flex;
-  gap: 2rem; /* Espacio entre los enlaces de navegación */
-}
-
-.nav-links a {
-  color: var(--text-light); /* Color de texto claro (blanco) */
-  text-decoration: none;
-  font-family: var(--font-lustria); /* Fuente Lustria para los enlaces */
-  font-size: 1.25rem;
-  transition: color 0.3s ease; /* Transición suave al cambiar de color */
-}
-
-.nav-links a:hover {
-  color: #B6BAC3; /* Color de hover para los enlaces */
-}
-
-/* Estilos del contenido principal */
-.main-container {
-  background: rgba(239, 246, 255, 0.85); /* Fondo con opacidad */
-  border-radius: 15px; /* Bordes redondeados */
-  max-width: 1440px;
-  margin: 2rem auto;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  font-family: var(--font-work-sans);
+  background-image: url('/parking1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 1.6;
 }
 
 .main-content {
@@ -95,49 +35,37 @@ body {
   padding: 0 2rem;
 }
 
-/* Estilos para las tarjetas */
-.card {
-  background: rgba(255, 255, 255, 0.90);
-  border-radius: 12px;
-  margin-bottom: 15px;
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 15px;
 }
 
-.card-title {
-  font-size: 32px;
+/* Estilos del titulo */
+.title {
+  font-size: 24px;
   font-weight: 700;
   color: #242424;
   padding: 20px;
 }
 
-.card-content {
-  font-size: 20px;
-  color: #242424;
-  padding: 10px;
+/* Estilos de los items */
+.item {
+  color: #eab308;
+  margin-left: 20px;
 }
 
-.profile-image {
-  width: 142px;
-  height: 102px;
-  border-radius: 61px;
+.item:hover {
+  color: #fbbf24;
+  text-decoration: underline;
+  text-decoration-color: #000000;
 }
 
-.rating {
-  display: flex;
-  gap: 5px;
-}
-
-.rating div {
-  width: 25px;
-  height: 25px;
-  border-radius: 9999px;
-}
-
-.star-filled {
-  background: #FFD52F;
-}
-
-.star-empty {
-  background: #666666;
+.name-item{
+  color: #000000;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .social-buttons div {
@@ -159,6 +87,38 @@ body {
   background: linear-gradient(0deg, #1FAF38 0%, #60D669 100%);
 }
 
+/* Estilos para las tarjetas */
+.card {
+  background: rgba(255, 255, 255, 0.90);
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.card-content {
+  font-size: 20px;
+  color: #242424;
+  padding: 10px;
+}
+
+.rating {
+  display: flex;
+  gap: 5px;
+}
+
+.rating div {
+  width: 25px;
+  height: 25px;
+  border-radius: 9999px;
+}
+
+.star-filled {
+  background: #FFD52F;
+}
+
+.star-empty {
+  background: #666666;
+}
+
 .button {
   width: 263px;
   height: 75px;
@@ -172,35 +132,7 @@ body {
   cursor: pointer;
 }
 
-/* Estilos del pie de página */
-.main-footer {
-  background-color: var(--primary-color);
-  color: var(--text-light);
-  padding: 2rem 0;
-  margin-top: auto; /* Alinea el pie de página al fondo */
-}
-
-.footer-content {
-  max-width: 1430px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr; /* Tres columnas en el pie de página */
-  gap: 2rem;
-  padding: 0 2rem;
-}
-
-.social-icons {
-  display: flex;
-  gap: 1.5rem;
-  margin: 1rem 0;
-}
-
-.social-icons a {
-  color: var(--text-light);
-  font-size: 1.5rem;
-  transition: color 0.3s ease;
-}
-
-.social-icons a:hover {
-  color: #B6BAC3;
+.button:hover {
+  background: rgba(255, 255, 255, 0.90);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 }
