@@ -29,10 +29,10 @@
 }
 
 .main-content {
-  flex: 1;
   margin-top: 140px; /* Espacio superior para evitar que el contenido se superponga al encabezado fijo */
   margin-bottom: 30px;
-  padding: 0 2rem;
+  padding: 2rem 2rem 2rem 2rem; /* Espacio interno del contenedor principal */
+  background: rgba(255, 255, 255, 0.50);
 }
 
 .profile-image {
@@ -99,6 +99,40 @@
   color: #242424;
   padding: 10px;
 }
+
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+.vehicle-information {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-text {
+  flex: 1;
+  font-size: 16px;
+  color: #242424;
+  padding-right: 10px;
+}
+
+
+.vehicles {
+  border-radius: 50%;
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+}
+
 
 .rating {
   display: flex;

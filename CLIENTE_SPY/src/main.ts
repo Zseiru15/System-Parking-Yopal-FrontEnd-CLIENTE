@@ -29,13 +29,13 @@ bootstrapApplication(AppComponent,{
             { path: 'dashboard', component: DashboardComponent, 
                 children: [
                     {
-                        path: 'login', component: LoginComponent
-                    },
-                    {
-                        path: 'register', component: RegisterComponent
-                    },
-                    {
                         path: 'user-porfile', component: UserPorfileComponent
+                    },
+                    {
+                        path: 'terms-and-conditions', component: TermsAndConditionsComponent
+                    },
+                    {
+                        path: 'privacy-policies', component: PrivacyPoliciesComponent
                     },
                 ]
             },

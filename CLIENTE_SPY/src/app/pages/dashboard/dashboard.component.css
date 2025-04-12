@@ -14,16 +14,6 @@
 
 /*header*/
 
-.logo{
-    width: 90px;
-    height: 90px; 
-    border-radius: 50%; /* Hace la imagen del logo circular */
-    object-fit: cover; /* Ajusta la imagen dentro del contenedor */
-    margin-right: 100px;
-    margin-left: 25px;
-    background: #ffff;
-}
-
 .toolbar{
     background-color: #2E3036; /* Fondo del encabezado */
     padding: 1rem 0;
@@ -31,20 +21,6 @@
     width: 100%;
     top: 0;
     z-index: 1000; /* Mantiene el encabezado por encima del resto del contenido */
-}
-
-.usuario{
-    color: #ffff; /* Color de texto claro (blanco) */
-    text-decoration: none;
-    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
-    font-size: 1.25rem;
-    transition: color 0.3s ease; /* Transición suave al cambiar de color */
-    margin-right: 12px; /* Espacio a la derecha del enlace */
-}
-
-.usuario:hover{
-    color: #007bff; /* Color azul al pasar el mouse */
-    text-decoration: none; /* Sin subrayado */
 }
 
 .menu-button{
@@ -60,41 +36,54 @@
     text-decoration: none; /* Sin subrayado */
 }
 
-/*nav container*/
 
-.sidenav-container{
-    height: 100%;
+.usuario{
+    color: #ffff; /* Color de texto claro (blanco) */
+    text-decoration: none;
+    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
+    font-size: 1.25rem;
+    transition: color 0.3s ease; /* Transición suave al cambiar de color */
+    margin-right: 12px; /* Espacio a la derecha del enlace */
 }
 
+.usuario:hover{
+    color: #007bff; /* Color azul al pasar el mouse */
+    text-decoration: none; /* Sin subrayado */
+}
+
+.logo{
+    width: 90px;
+    height: 90px; 
+    border-radius: 50%; /* Hace la imagen del logo circular */
+    object-fit: cover; /* Ajusta la imagen dentro del contenedor */
+    margin-right: 100px;
+    margin-left: 25px;
+    background: #ffff;
+}
+
+/*nav container*/
+
 .sidenav{
-    
     width: 250px;
+}
+
+/*body*/
+
+.sidenav-container{
+    height: auto;
+    width: auto;
 }
 
 /*footer*/
 
 .informatbar{
-    background-color: #2E3036; /* Fondo del encabezado */
     color: #ffff;
+    background-color: #2E3036; /* Fondo del encabezado */
     padding: 1rem 0;
     height: auto;
     width: 100%;
     top: 0;
-    margin-top: auto; /* Alinea el pie de página al fondo */
-    /*position: sticky;*/
     z-index: 1000;
-}
-
-.terms{
-    margin-left: 25px;
-    margin-right: 12px;
-    text-align: center;
-    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
-    font-size: 1.25rem;
-}
-
-.terms:hover{
-    color: #007bff;
 }
 
 .contact-info {
@@ -106,9 +95,10 @@
     font-size: 1.25rem;
 }
 
+
 .social-media {
     flex: 1;
-    margin-left: 25px;
+    margin-left: 10px;
     margin-right: 12px;
     align-items: center;
     text-align: center;

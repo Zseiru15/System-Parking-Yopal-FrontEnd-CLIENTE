@@ -10,8 +10,8 @@
     <mat-sidenav mode="over" position="start" [(opened)]="showSidenav" class="sidenav">
         <mat-nav-list>
             <a mat-list-item routerLink="/dashboard/user-porfile" (click)="toggleSidenav()">Perfil</a>
-            <a mat-list-item routerLink="/dashboard/register" (click)="toggleSidenav()">Registro</a>
-            <a mat-list-item routerLink="/dashboard/login" (click)="toggleSidenav()">Login</a>
+            <a mat-list-item routerLink="/dashboard/user-porfile" (click)="toggleSidenav()">Perfil</a>
+            <a mat-list-item routerLink="/dashboard/privacy-policies" (click)="toggleSidenav()">Politicas de Privacidad</a>
             <a mat-list-item routerLink="/dashboard/terms-and-conditions" (click)="toggleSidenav()">Terminos y Condiciones</a>
         </mat-nav-list>
     </mat-sidenav>
@@ -21,8 +21,6 @@
 </mat-sidenav-container>
 
 <mat-toolbar color="primary" class="informatbar">
-    <span class="terms">Términos y condiciones</span>
-    <span class="spacer"></span>
     <span class="contact-info">
         <p>Calle 26A #14-63 Piso 1, Yopal Casanare Colombia</p>
         <p>Horario de atención: Lunes a domingo - 6:00 am a 10:00 pm</p>

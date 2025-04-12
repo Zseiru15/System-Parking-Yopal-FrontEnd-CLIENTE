@@ -16,5 +16,5 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './user-porfile.component.css'
 })
 export class UserPorfileComponent {
-
+  
 }
