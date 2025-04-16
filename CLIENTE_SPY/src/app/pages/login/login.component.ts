@@ -34,6 +34,7 @@ export class LoginComponent {
 
   login(){
     alert('Iniciando Sesion..')
+    this.router.navigate(['/dashboard']);
   }
 
   recoverPassword(){

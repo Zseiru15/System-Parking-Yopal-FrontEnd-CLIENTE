@@ -88,7 +88,7 @@ export class RegisterComponent {
   }
   goToDashboard() {
     console.log('Boton de registro clickeado');
-    this.router.navigate(['/user-porfile']);
+    this.router.navigate(['/dashboard']);
   }
 
 }
