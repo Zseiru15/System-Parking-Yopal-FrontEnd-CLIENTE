@@ -100,6 +100,34 @@
   /* Eleva el botón al pasar el ratón */
 }
 
+.social-media {
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 12px;
+  align-items: center;
+  text-align: center;
+  font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
+  font-size: 16px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0px; /* Espacio entre los iconos sociales */
+  justify-content: center; /* Centra los iconos en el contenedor */
+  align-items: center; /* Centra verticalmente los iconos */
+}
+
+.social-icons i {
+  color: #ffffff;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.social-icons i:hover {
+  color: #007bff;
+}
+
 .image-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

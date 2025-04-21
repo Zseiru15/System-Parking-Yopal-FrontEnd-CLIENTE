@@ -63,37 +63,21 @@ bootstrapApplication(AppComponent, {
           {
             path: 'comments', component: CommentsComponent
           },
-          {
-            path: 'privacy-policies', component: PrivacyPoliciesComponent
-          },
-          {
-            path: 'terms-and-conditions', component: TermsAndConditionsComponent
-          },
         ]
       },
       { path: 'welcome', component: WelcomeComponent, },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
-      { path: 'user-profile', component: UserPorfileComponent,
+      { path: 'user-porfile', component: UserPorfileComponent,
         children: [
           {
-            path: 'edit-profile', component: UserPorfileComponent
+            path: 'edit-profile', component: EditProfileComponent
           },
           {
             path: 'vehicle-registration', component: VehicleRegistrationComponent
           },
         ]
       },
-      { path: 'parking-registration', component: ParkingRegistrationComponent },
-      { path: 'parking-history', component: ParkingHistoryComponent },
-      { path: 'search-for-parking-spaces', component: SearchForParkingSpacesComponent },
-      { path: 'best-ofer', component: BestOfferComponent },
-      { path: 'best-ofer-history', component: BestOfferHistoryComponent },
-      { path: 'payment-gateway', component: PaymentGatewayComponent },
-      { path: 'buy-membership', component: BuyMembershipComponent },
-      { path: 'pending-payment-history', component: PendingPaymentHistoryComponent },
-      { path: 'late-payments', component: LatePaymentsComponent },
-      { path: 'comments', component: CommentsComponent },
       { path: 'privacy-policies', component: PrivacyPoliciesComponent },
       { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
     ]),

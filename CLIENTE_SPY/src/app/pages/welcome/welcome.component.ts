@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
     MatCardModule,
     MatTableModule,
     MatButtonModule,
-
   ],
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css'
