@@ -10,9 +10,19 @@
     <mat-sidenav mode="over" position="start" [(opened)]="showSidenav" class="sidenav">
         <mat-nav-list>
             <a mat-list-item routerLink="/dashboard/user-porfile" (click)="toggleSidenav()">Perfil</a>
-            <a mat-list-item routerLink="/dashboard/user-porfile" (click)="toggleSidenav()">Perfil</a>
+            <a mat-list-item routerLink="/dashboard/parking-registration" (click)="toggleSidenav()">Registro de Parqueaderos</a>
+            <a mat-list-item routerLink="/dashboard/parking-history" (click)="toggleSidenav()">Historial de Parqueaderos</a>
+            <a mat-list-item routerLink="/dashboard/search-for-parking-space" (click)="toggleSidenav()">Busqueda de Parqueaderos</a>
+            <a mat-list-item routerLink="/dashboard/best-offer" (click)="toggleSidenav()">Ofertas</a>
+            <a mat-list-item routerLink="/dashboard/best-offer-history" (click)="toggleSidenav()">Historial de Ofertas</a>
+            <a mat-list-item routerLink="/dashboard/payment-gateway" (click)="toggleSidenav()">Metodos de Pago</a>
+            <a mat-list-item routerLink="/dashboard/buy-membership" (click)="toggleSidenav()">Membresia</a>
+            <a mat-list-item routerLink="/dashboard/pending-payment-history" (click)="toggleSidenav()">Historial de Pagos</a>
+            <a mat-list-item routerLink="/dashboard/late-payments" (click)="toggleSidenav()">Pagos Atrasados</a>
+            <a mat-list-item routerLink="/dashboard/comments" (click)="toggleSidenav()">Comentarios</a>
             <a mat-list-item routerLink="/dashboard/privacy-policies" (click)="toggleSidenav()">Politicas de Privacidad</a>
             <a mat-list-item routerLink="/dashboard/terms-and-conditions" (click)="toggleSidenav()">Terminos y Condiciones</a>
+            <button mat-list-item (click)="logout()" class="logout-button">Cerrar Sesión</button>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

@@ -32,6 +32,7 @@
   margin: 0 auto;
   color: #ffffff;
   background-color: rgba(0, 0, 0, 0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
 }
 
 /* Estilo del inicio de sesion*/

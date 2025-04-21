@@ -1,1 +1,70 @@
-<p>payment-gateway works!</p>
+<div class="payment-gateway-container">
+  <mat-card class="main-content">
+    <mat-card-title class="title">
+      <h1>Pasarela de pago</h1>
+    </mat-card-title>
+    <mat-card class="payment-gateway-content">
+      <mat-card-title class="sub-title">
+        <h2>Informacion de contacto</h2>
+      </mat-card-title>
+      <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombres</mat-label>
+            <input matInput formControlName="firstName" placeholder="Ingrese sus Nombres">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="lastName" placeholder="Ingrese sus Apellidos">
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Correo electronico</mat-label>
+            <input matInput formControlName="email" placeholder="Correo electronico">
+          </mat-form-field>
+        </div>
+      </form>
+      <mat-card-title class="sub-title">
+        <h2>Metodo de pago</h2>
+      </mat-card-title>
+      <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
+        <div class="paypal-section">
+          <button mat-raised-button color="accent" class="paypal-btn" (click)="makePayment()">
+            <i class="fab fa-paypal fa-2x"></i>
+            Pagar con PayPal
+          </button>
+        </div>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre en la tarjeta</mat-label>
+            <input matInput formControlName="cardName" placeholder="Ingrese su nombre en la tarjeta">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Numero de tarjeta</mat-label>
+            <input matInput formControlName="cardNumber" placeholder="123 456 789">
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Fecha de expiracion</mat-label>
+            <input matInput type="date" formControlName="expirationDate" placeholder="Fecha de expiracion">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>CVC</mat-label>
+            <input matInput formControlName="cvc" placeholder="Codigo de seguridad">
+          </mat-form-field>
+        </div>
+      </form>
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox">
+          <span>Por favor acepte los terminos y condiciones antes de continuar</span>
+        </label>
+      </div>
+      <button mat-raised-button color="primary" class="submit-btn" (click)="makePayment()">Pagar</button>
+    </mat-card>
+  </mat-card>
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=ASBu1K0mQUvw7ijcmq2zqXkMbHsg9v6_k6d9LpMyYKR6dIH9yPf0zmKurpaibeM3Utx5Btlr6W0YNK1i&currency=USD"></script>

@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import {MatSidenavModule} from '@angular/material/sidenav'
 import {MatListModule} from '@angular/material/list'
 import {MatDividerModule } from '@angular/material/divider';
@@ -26,6 +27,8 @@ import {MatDividerModule } from '@angular/material/divider';
 })
 export class DashboardComponent {
 
+  constructor(private router: Router) {}
+
   usuario= 'Juan Cebolla';
   usuario2= 'Usuario Prueba1';
   usuario3= 'Usuario Prueba2';
@@ -34,6 +37,12 @@ export class DashboardComponent {
   toggleSidenav(){
     this.showSidenav = !this.showSidenav;
   }
-  
+
+  logout(){
+    // Implement logout logic here
+    alert('Sesion cerrada');
+    console.log('Logout clicked');
+    this.router.navigate(['/welcome']);
+  }
 
 }

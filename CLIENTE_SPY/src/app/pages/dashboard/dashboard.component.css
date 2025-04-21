@@ -1,125 +1,155 @@
 :root {
-    /* Variables de color y fuentes */
-    --primary-color: #2E3036; /* Color principal (fondo de la cabecera y pie de página) */
-    --text-light: white; /* Color claro para textos (blanco) */
-    --text-dark: black; /* Color oscuro para textos (negro) */
-    --font-lustria: 'Lustria', serif; /* Fuente Lustria para títulos */
-    --font-work-sans: 'Work Sans', sans-serif; /* Fuente Work Sans para cuerpo de texto */
-    --font-marko: 'Marko One', serif; /* Fuente Marko One para títulos específicos */
+  /* Variables de color y fuentes */
+  --primary-color: #2E3036;
+  /* Color principal (fondo de la cabecera y pie de página) */
+  --text-light: white;
+  /* Color claro para textos (blanco) */
+  --text-dark: black;
+  /* Color oscuro para textos (negro) */
+  --font-lustria: 'Lustria', serif;
+  /* Fuente Lustria para títulos */
+  --font-work-sans: 'Work Sans', sans-serif;
+  /* Fuente Work Sans para cuerpo de texto */
+  --font-marko: 'Marko One', serif;
+  /* Fuente Marko One para títulos específicos */
 }
 
-.spacer{
-    flex: 1 1 auto;
+.spacer {
+  flex: 1 1 auto;
 }
 
 /*header*/
 
-.toolbar{
-    background-color: #2E3036; /* Fondo del encabezado */
-    padding: 1rem 0;
-    height: auto;
-    width: 100%;
-    top: 0;
-    z-index: 1000; /* Mantiene el encabezado por encima del resto del contenido */
+.toolbar {
+  background-color: #2E3036;
+  /* Fondo del encabezado */
+  padding: 1rem 0;
+  height: auto;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  /* Mantiene el encabezado por encima del resto del contenido */
 }
 
-.menu-button{
-    color: #ffff; /* Color de texto claro (blanco) */
-    width: 90px;
-    height: 90px;
-    margin-left: 25px;
-    margin-right: 10px;
+.menu-button {
+  color: #ffff;
+  /* Color de texto claro (blanco) */
+  width: 90px;
+  height: 90px;
+  margin-left: 25px;
+  margin-right: 10px;
 }
 
-.menu-button:hover{
-    color: #007bff; /* Color azul al pasar el mouse */
-    text-decoration: none; /* Sin subrayado */
+.menu-button:hover {
+  color: #007bff;
+  /* Color azul al pasar el mouse */
+  text-decoration: none;
+  /* Sin subrayado */
 }
 
 
-.usuario{
-    color: #ffff; /* Color de texto claro (blanco) */
-    text-decoration: none;
-    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
-    font-size: 1.25rem;
-    transition: color 0.3s ease; /* Transición suave al cambiar de color */
-    margin-right: 12px; /* Espacio a la derecha del enlace */
+.usuario {
+  color: #ffff;
+  /* Color de texto claro (blanco) */
+  text-decoration: none;
+  font-family: 'Lustria', serif;
+  /* Fuente Lustria para los enlaces */
+  font-size: 1.25rem;
+  transition: color 0.3s ease;
+  /* Transición suave al cambiar de color */
+  margin-right: 12px;
+  /* Espacio a la derecha del enlace */
 }
 
-.usuario:hover{
-    color: #007bff; /* Color azul al pasar el mouse */
-    text-decoration: none; /* Sin subrayado */
+.usuario:hover {
+  color: #007bff;
+  /* Color azul al pasar el mouse */
+  text-decoration: none;
+  /* Sin subrayado */
 }
 
-.logo{
-    width: 90px;
-    height: 90px;
-    border-radius: 50%; /* Hace la imagen del logo circular */
-    object-fit: cover; /* Ajusta la imagen dentro del contenedor */
-    margin-right: 100px;
-    margin-left: 25px;
-    background: #ffff;
+.logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  /* Hace la imagen del logo circular */
+  object-fit: cover;
+  /* Ajusta la imagen dentro del contenedor */
+  margin-right: 100px;
+  margin-left: 25px;
+  background: #ffff;
 }
 
 /*nav container*/
 
-.sidenav{
-    width: 250px;
+.sidenav {
+  width: 250px;
 }
 
 /*body*/
 
-.sidenav-container{
-    min-height: 593px;
-    max-height: auto;
-    width: auto;
+.sidenav-container {
+  min-height: 593px;
+  max-height: auto;
+  width: auto;
+}
+
+.logout-button {
+  background: #df4141;
+  width: 80%;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 10px auto;
+  font-family: 'Lustria', serif;
 }
 
 /*footer*/
 
 .informatbar{
-    color: #ffff;
-    background-color: #2E3036; /* Fondo del encabezado */
-    padding: 1rem 0;
-    height: auto;
-    width: 100%;
-    top: 0;
+  color: #ffff;
+  background-color: #2E3036; /* Fondo del encabezado */
+  padding: 1rem 0;
+  height: auto;
+  width: 100%;
+  top: 0;
 }
 
 .contact-info {
-    flex: 1;
-    margin-left: 25px;
-    margin-right: 12px;
-    text-align: center;
-    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
-    font-size: 1.25rem;
+  flex: 1;
+  margin-left: 25px;
+  margin-right: 12px;
+  text-align: center;
+  font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
+  font-size: 1.25rem;
 }
 
 
 .social-media {
-    flex: 1;
-    margin-left: 10px;
-    margin-right: 12px;
-    align-items: center;
-    text-align: center;
-    font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
-    font-size: 1.25rem;
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 12px;
+  align-items: center;
+  text-align: center;
+  font-family: 'Lustria', serif; /* Fuente Lustria para los enlaces */
+  font-size: 1.25rem;
 }
 
 .social-icons {
-    display: flex;
-    gap: 10px;
-    margin: 10px 0px; /* Espacio entre los iconos sociales */
-    justify-content: center; /* Centra los iconos en el contenedor */
-    align-items: center; /* Centra verticalmente los iconos */
+  display: flex;
+  gap: 10px;
+  margin: 10px 0px; /* Espacio entre los iconos sociales */
+  justify-content: center; /* Centra los iconos en el contenedor */
+  align-items: center; /* Centra verticalmente los iconos */
 }
 
 .social-icons i {
-    color: #ffffff;
-    font-size: 24px;
-    text-decoration: none;
+  color: #ffffff;
+  font-size: 24px;
+  text-decoration: none;
 }
 
 .social-icons i:hover {
-    color: #007bff;
+  color: #007bff;
 }

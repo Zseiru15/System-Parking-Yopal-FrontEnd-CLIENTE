@@ -1,26 +1,48 @@
 <div class="user-profile-container">
-    <mat-card class="main-content">
-        <img alt="Profile-picture" class="profile-image"
-            src="https://storage.googleapis.com/a1aa/image/LKh9tJ1QRV4RBpdil8Qhl88ObEQvlYBrZszknVs8UfSeuovTA.jpg" />
-        <mat-card-title class="title">Lorena Rincon</mat-card-title>
-        <div class="card">
-            <mat-card class="card-content">
-                <mat-card-title class="title">Mis Vehiculos</mat-card-title>
-                <div class="vehicle-grid">
-                    <mat-card class="vehicle-information">
-                        <div class="vehicle-text">Automovil Marca: Toyota Corolla 2020 Placa: ABC-123</div>
-                        <img src="/corolla-2020.jpg" alt="corolla-2020" class="vehicles">
-                    </mat-card>
-                    <mat-card class="vehicle-information">
-                        <div class="vehicle-text">Motocicleta Honda XR 2020 ABC-12A</div>
-                        <img src="/xr150l.png" alt="corolla-2020" class="vehicles">
-                    </mat-card>
-                    <mat-card class="vehicle-information">
-                        <div class="vehicle-text">Bicicleta Marca GT Avalanche 2022 Codigo de modelo: G27301M</div>
-                        <img src="/bicicleta.jpg" alt="corolla-2020" class="vehicles">
-                    </mat-card>
-                </div>
-            </mat-card>
+  <mat-card class="main-content">
+    <div class="form-row">
+      <img alt="Profile-picture" class="profile-image"
+        src="https://storage.googleapis.com/a1aa/image/LKh9tJ1QRV4RBpdil8Qhl88ObEQvlYBrZszknVs8UfSeuovTA.jpg" />
+      <mat-card-title class="title">Lorena Rincon</mat-card-title>
+    </div>
+    <div class="form-row">
+      <div class="btn-group">
+        <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar Perfil</button>
+        <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('registro')">Registro de Vehiculos</button>
+      </div>
+    </div>
+    <div class="card">
+      <mat-card class="card-content">
+        <mat-card-title class="title">Mis Vehiculos</mat-card-title>
+        <div class="vehicle-grid">
+          <mat-card class="vehicle-information">
+            <div class="vehicle-text">Automovil Marca: Toyota Corolla 2020 Placa: ABC-123</div>
+            <img src="/corolla-2020.jpg" alt="corolla-2020" class="vehicles">
+          </mat-card>
+          <mat-card class="vehicle-information">
+            <div class="vehicle-text">Motocicleta Honda XR 2020 ABC-12A</div>
+            <img src="/xr150l.png" alt="corolla-2020" class="vehicles">
+          </mat-card>
+          <mat-card class="vehicle-information">
+            <div class="vehicle-text">Bicicleta Marca GT Avalanche 2022 Codigo de modelo: G27301M</div>
+            <img src="/bicicleta.jpg" alt="corolla-2020" class="vehicles">
+          </mat-card>
         </div>
-    </mat-card>
+      </mat-card>
+    </div>
+  </mat-card>
 </div>
+
+<!-- Vista Dinámica como Overlay -->
+<div class="overlay" *ngIf="vistaSeleccionada">
+  <div class="overlay-content">
+    <button mat-icon-button class="close-btn" (click)="cerrarVista()">
+      ✖
+    </button>
+    <ng-container [ngSwitch]="vistaSeleccionada">
+      <app-edit-profile *ngSwitchCase="'editar'"></app-edit-profile>
+      <app-vehicle-registration *ngSwitchCase="'registro'"></app-vehicle-registration>
+    </ng-container>
+  </div>
+</div>
+

@@ -41,10 +41,12 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      userName: ['', Validators.required],
+      documentNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      birthDate: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
+      birthDate: ['', Validators.required],
       gender: ['', Validators.required],
     })
   }
@@ -63,7 +65,7 @@ export class RegisterComponent {
 
       console.log('Dato extendido', extededData)
 
-      this.apiService.post(API_URLS.CRUD.Api_crud, extededData).subscribe({
+      this.apiService.post(`${API_URLS.MID}/usuarios`, extededData).subscribe({
         next: (response) => {
           console.log('registro exitoso')
           console.log('Response', response)

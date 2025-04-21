@@ -1,0 +1,97 @@
+.buy-container {
+  min-height: 100vh;
+  display: flex;
+  font-family: var(--font-work-sans);
+  background-image: url('/fondo-general.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 1.6;
+}
+
+.main-content {
+  background: rgba(239, 246, 255, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  border-radius: 15px;
+  flex: 1;
+  margin: 80px;
+  padding: 0 2rem;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px;
+  text-align: center;
+}
+
+.buy-membership-content {
+  background: rgba(182, 186, 195, 0);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: none;
+  margin-bottom: 50px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
+}
+
+.membresia{
+  background: rgba(255, 255, 255, 0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  margin: 20px
+}
+
+.sub-title {
+  background: rgb(182, 186, 195);
+  font-size: 24px;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border: 1px solid #000000;
+  border-bottom: none;
+}
+
+.informacion{
+  background: rgb(219, 234, 254);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border: 1px solid #000000;
+  border-top: none;
+}
+
+.comprar{
+  background: #4170df;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  font-family: var(--font-lustria);
+  align-items: center;
+  width: 80%;
+  padding: 1rem;
+  margin: 1rem auto;
+}

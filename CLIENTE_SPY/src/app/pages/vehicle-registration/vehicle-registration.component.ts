@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   standalone: true,
-  selector: 'app-edit-profile',
+  selector: 'app-vehicle-registration',
   imports: [
     CommonModule,
     MatCardModule,
@@ -21,23 +21,20 @@ import { HttpClient } from '@angular/common/http';
     MatIconModule,
     ReactiveFormsModule
   ],
-  templateUrl: './edit-profile.component.html',
-  styleUrl: './edit-profile.component.css'
+  templateUrl: './vehicle-registration.component.html',
+  styleUrl: './vehicle-registration.component.css'
 })
-export class EditProfileComponent {
+export class VehicleRegistrationComponent {
   hidePassword= true;
   editFrom: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private http: HttpClient) {
     this.editFrom = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      userName: ['', Validators.required],
-      documentNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      birthDate: ['', Validators.required],
+      vehicleType: ['', Validators.required],
+      vehicleBrand: ['', Validators.required],
+      vehicleModel: ['', Validators.required],
+      vehicleYear: ['', Validators.required],
+      vehiclePlate: ['', Validators.required],
     })
   }
 
@@ -45,14 +42,11 @@ export class EditProfileComponent {
     if (this.editFrom.invalid) return;
 
     const formData = new FormData();
-    formData.append('firstName', this.editFrom.value.firstName);
-    formData.append('lastName', this.editFrom.value.lastName);
-    formData.append('userName', this.editFrom.value.userName);
-    formData.append('documentNumber', this.editFrom.value.documentNumber);
-    formData.append('email', this.editFrom.value.email);
-    formData.append('password', this.editFrom.value.password);
-    formData.append('confirmPassword', this.editFrom.value.confirmPassword);
-    formData.append('birthDate', this.editFrom.value.birthDate);
+    formData.append('vehicleType', this.editFrom.value.vehicleType);
+    formData.append('vehicleBrand', this.editFrom.value.vehicleBrand);
+    formData.append('vehicleModel', this.editFrom.value.vehicleModel);
+    formData.append('vehicleYear', this.editFrom.value.vehicleYear);
+    formData.append('vehiclePlate', this.editFrom.value.vehiclePlate);
 
     if (this.selectedFile) {
       formData.append('profileImage', this.selectedFile); // 'profileImage' debe coincidir con el backend
@@ -97,5 +91,4 @@ onFileSelected(event: Event): void {
     reader.readAsDataURL(file);
   }
 }
-
 }

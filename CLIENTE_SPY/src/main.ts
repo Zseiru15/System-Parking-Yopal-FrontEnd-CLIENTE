@@ -21,43 +21,83 @@ import { ParkingHistoryComponent } from './app/pages/parking-history/parking-his
 import { ParkingRegistrationComponent } from './app/pages/parking-registration/parking-registration.component';
 import { LatePaymentsComponent } from './app/pages/late-payments/late-payments.component';
 import { DashboardComponent } from './app/pages/dashboard/dashboard.component';
+import { VehicleRegistrationComponent } from './app/pages/vehicle-registration/vehicle-registration.component';
 
-bootstrapApplication(AppComponent,{
-    providers:[
-        provideRouter([
-            { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-            { path: 'dashboard', component: DashboardComponent,
-                children: [
-                    {
-                        path: 'user-porfile', component: UserPorfileComponent
-                    },
-                    {
-                        path: 'terms-and-conditions', component: TermsAndConditionsComponent
-                    },
-                    {
-                        path: 'privacy-policies', component: PrivacyPoliciesComponent
-                    },
-                ]
-            },
-            { path: 'welcome', component: WelcomeComponent, },
-            { path: 'login', component: LoginComponent },
-            { path: 'register', component: RegisterComponent },
-            { path: 'user-profile', component: UserPorfileComponent },
-            { path: 'edit-profile', component: EditProfileComponent },
-            { path: 'parking-registration', component: ParkingRegistrationComponent },
-            { path: 'best-ofer', component: BestOfferComponent },
-            { path: 'best-ofer-history', component: BestOfferHistoryComponent },
-            { path: 'search-for-parking-spaces', component: SearchForParkingSpacesComponent },
-            { path: 'parking-history', component: ParkingHistoryComponent },
-            { path: 'payment-gateway', component: PaymentGatewayComponent },
-            { path: 'buy-membership', component: BuyMembershipComponent },
-            { path: 'pending-payment-history', component: PendingPaymentHistoryComponent},
-            { path: 'late-payments', component: LatePaymentsComponent},
-            { path: 'comments', component: CommentsComponent },
-            { path: 'privacy-policies', component: PrivacyPoliciesComponent },
-            { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
-          ]),
-        provideAnimations(),
-        provideHttpClient()
-    ]
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter([
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+      {
+        path: 'dashboard', component: DashboardComponent,
+        children: [
+          {
+            path: 'user-porfile', component: UserPorfileComponent
+          },
+          {
+            path: 'parking-registration', component: ParkingRegistrationComponent
+          },
+          {
+            path: 'parking-history', component: ParkingHistoryComponent
+          },
+          {
+            path: 'search-for-parking-space', component: SearchForParkingSpacesComponent
+          },
+          {
+            path: 'best-offer', component: BestOfferComponent
+          },
+          {
+            path: 'best-offer-history', component: BestOfferHistoryComponent
+          },
+          {
+            path: 'payment-gateway', component: PaymentGatewayComponent
+          },
+          {
+            path: 'buy-membership', component: BuyMembershipComponent
+          },
+          {
+            path: 'pending-payment-history', component: PendingPaymentHistoryComponent
+          },
+          {
+            path: 'late-payments', component: LatePaymentsComponent
+          },
+          {
+            path: 'comments', component: CommentsComponent
+          },
+          {
+            path: 'privacy-policies', component: PrivacyPoliciesComponent
+          },
+          {
+            path: 'terms-and-conditions', component: TermsAndConditionsComponent
+          },
+        ]
+      },
+      { path: 'welcome', component: WelcomeComponent, },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: 'user-profile', component: UserPorfileComponent,
+        children: [
+          {
+            path: 'edit-profile', component: UserPorfileComponent
+          },
+          {
+            path: 'vehicle-registration', component: VehicleRegistrationComponent
+          },
+        ]
+      },
+      { path: 'parking-registration', component: ParkingRegistrationComponent },
+      { path: 'parking-history', component: ParkingHistoryComponent },
+      { path: 'search-for-parking-spaces', component: SearchForParkingSpacesComponent },
+      { path: 'best-ofer', component: BestOfferComponent },
+      { path: 'best-ofer-history', component: BestOfferHistoryComponent },
+      { path: 'payment-gateway', component: PaymentGatewayComponent },
+      { path: 'buy-membership', component: BuyMembershipComponent },
+      { path: 'pending-payment-history', component: PendingPaymentHistoryComponent },
+      { path: 'late-payments', component: LatePaymentsComponent },
+      { path: 'comments', component: CommentsComponent },
+      { path: 'privacy-policies', component: PrivacyPoliciesComponent },
+      { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
+    ]),
+    provideAnimations(),
+    provideHttpClient()
+  ]
 }).catch(err => console.error(err));
