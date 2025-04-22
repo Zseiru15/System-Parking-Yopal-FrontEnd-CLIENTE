@@ -1,1 +1,75 @@
-<p>comments works!</p>
+<div class="comments-container">
+    <mat-card class="main-content">
+        <div class="title">
+            <h1>Comentarios</h1>
+        </div>
+        <div class="form-row">
+            <mat-card class="comment-content">
+                <mat-card-content>
+                    <img alt="Profile-picture" class="profile-image"
+                        src="https://storage.googleapis.com/a1aa/image/LKh9tJ1QRV4RBpdil8Qhl88ObEQvlYBrZszknVs8UfSeuovTA.jpg" />
+                    <form [formGroup]="commentForm" (ngSubmit)="comment()">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label>Nombre de usuario</mat-label>
+                                <input matInput formControlName="userName" placeholder="Ingrese su nombre de usuario">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label>Estacionamiento</mat-label>
+                                <mat-select formControlName="parkingName">
+                                    <mat-option value="P1">Masculino</mat-option>
+                                    <mat-option value="P2">Femenino</mat-option>
+                                    <mat-option value="otro">Otro</mat-option>
+                                    <mat-option value="prefiero-no-decirlo">Prefiero no decirlo</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label>Comentario</mat-label>
+                                <input matInput formControlName="comment" placeholder="Comentario">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label>Calificacion</mat-label>
+                                <input matInput formControlName="classification" placeholder="calificacion">
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </mat-card-content>
+                <div class="actions">
+                    <button mat-raised-button color="primary" class="submit-btn"
+                        (click)="goToregister()">Registrarse</button>
+                    <button mat-raised-button color="primary" class="submit-btn" (click)="goToLogin()">Iniciar
+                        Sesion</button>
+                </div>
+            </mat-card>
+            <mat-card class="comment-content">
+                <mat-card-content>
+                    <img alt="Profile-picture" class="profile-image"
+                        src="https://storage.googleapis.com/a1aa/image/LKh9tJ1QRV4RBpdil8Qhl88ObEQvlYBrZszknVs8UfSeuovTA.jpg" />
+                    <form [formGroup]="commentForm" (ngSubmit)="comment()">
+                        <div class="form-group">
+                            <div class="rol">
+                                USUARIO
+                            </div>
+                            <div class="userName">
+                                Valentina Farfan
+                            </div>
+                            <div class="parkingName">
+                                Parqueadero la 24
+                            </div>
+                            <div class="comment">
+                                ¡WOW! 😎 espectacular servicio
+                            </div>
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label>Calificacion</mat-label>
+                                <input matInput formControlName="classification" placeholder="calificacion">
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+            <mat-card>
+                comentario
+            </mat-card>
+        </div>
+    </mat-card>
+</div>

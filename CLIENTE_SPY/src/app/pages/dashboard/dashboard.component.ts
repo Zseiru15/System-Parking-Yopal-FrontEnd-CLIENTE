@@ -9,7 +9,6 @@ import {MatSidenavModule} from '@angular/material/sidenav'
 import {MatListModule} from '@angular/material/list'
 import {MatDividerModule } from '@angular/material/divider';
 
-
 @Component({
   selector: 'app-dashboard',
   imports: [
