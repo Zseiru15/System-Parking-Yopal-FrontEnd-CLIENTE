@@ -66,6 +66,12 @@ bootstrapApplication(AppComponent, {
           {
             path: 'comments', component: CommentsComponent
           },
+          {
+            path: 'privacy-policies', component: PrivacyPoliciesComponent
+          },
+          {
+            path: 'terms-and-conditions', component: TermsAndConditionsComponent
+          },
         ]
       },
       { path: 'user-porfile', component: UserPorfileComponent,
