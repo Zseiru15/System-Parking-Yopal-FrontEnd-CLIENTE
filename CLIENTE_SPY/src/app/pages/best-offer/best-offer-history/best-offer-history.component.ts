@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { BestOfferComponent } from "../best-offer.component";
+
 
 @Component({
   selector: 'app-best-offer-history',
@@ -21,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
-  ],
+    BestOfferComponent
+],
   templateUrl: './best-offer-history.component.html',
   styleUrl: './best-offer-history.component.css'
 })
@@ -29,7 +32,7 @@ export class BestOfferHistoryComponent {
 
   constructor(private http: HttpClient, private dialog: MatDialog) { }
 
-  displayedColumns: string[] = ['id', 'nombre', 'direccion', 'valor original', 'valor en promocion','estado'];
+  displayedColumns: string[] = ['id', 'nombre', 'direccion', 'valor original', 'valor en promocion', 'estado'];
 
   dataSource = [
     { Id: 1, Nombre: 'Parking 1', Direccion: 'calle-falsa-1', ValorOriginal: '1.000', ValorPromocion: '500', Estado: true },
@@ -59,29 +62,29 @@ export class BestOfferHistoryComponent {
   }
 
   consultarDatos(): void {
-
-    this.http.get<any[]>(API_URLS.CRUD.Api_crud).subscribe(
-      (data) => {
-        console.log('Estos son los datos', data)
-        this.datafilter = data;
-        this.dataSource = data;
-        console.log('Esto es lo que le paso a la tabla', this.dataSource)
+    let url: string;
+    url = API_URLS.CRUD.Api_crud + '/Promociones';
+    this.http.get<any>(url).subscribe(
+      (response) => {
+        console.log('Estos son los datos completos', response);
+        this.datafilter = response.data;  // Aquí accedes a la propiedad "data"
+        this.dataSource = response.data;  // Aquí igual
+        console.log('Esto es lo que le paso a la tabla', this.dataSource);
       },
       (error) => {
-        console.error('Error al obtener datos', error)
+        console.error('Error al obtener datos', error);
       }
     );
   }
 
-  onFileSelected(event: Event, row: any){
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0){
-      const file = input.files[0]
-      console.log(file)
-      console.log ("Esta es la fila ", row)
-      alert("Documento seleccionado: " + file.name)
-      //enviarlo a un api o guardarlo en una base de datos
-      
-    }
+  vistaSeleccionada: 'registro' | '' = '';
+
+  mostrarVista(vista: 'registro') {
+    this.vistaSeleccionada = vista;
   }
+
+  cerrarVista() {
+    this.vistaSeleccionada = '';
+  }
+
 }

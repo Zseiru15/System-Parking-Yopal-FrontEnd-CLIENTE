@@ -1,1 +1,71 @@
-<p>pending-payment-history works!</p>
+<div class="pending-payment-history-container">
+    <mat-card class="pending-payment-history-card">
+        <mat-card-title class="title">Historial de pagos</mat-card-title>
+        <mat-card-content>
+            <p>Aqui pueden realizar consultar el estado de los pagos</p>
+            <div class="form-row">
+      <div class="form-row">
+        <button mat-raised-button color="primary" class="submit-btn" (click)="consultarDatos()">Consultar</button>
+      </div>
+    </div>
+            
+
+            <div class="filtros">
+                <mat-form-field apparent="fill">
+                    <mat-label>id</mat-label>
+                    <input matInput [(ngModel)]="filtros.Id" (input)="aplicarFiltros()" placeholder="Buscar Id">
+                </mat-form-field>
+                <mat-form-field apparent="fill">
+                    <mat-label>usuario</mat-label>
+                    <input matInput [(ngModel)]="filtros.Id_Usuarios_fk" (input)="aplicarFiltros()"
+                        placeholder="Buscar Nombre">
+                </mat-form-field>
+                <mat-form-field apparent="fill">
+                    <mat-label>estacionamiento</mat-label>
+                    <input matInput [(ngModel)]="filtros.estacionamiento" (input)="aplicarFiltros()"
+                        placeholder="Buscar Direccion">
+                </mat-form-field>
+                <mat-form-field apparent="fill">
+                    <mat-label>tipo de pago</mat-label>
+                    <input matInput [(ngModel)]="filtros.Id_Tipo_Pago_fk" (input)="aplicarFiltros()"
+                        placeholder="Buscar Valor">
+                </mat-form-field>
+                <mat-form-field apparent="fill">
+                    <mat-label>estado</mat-label>
+                    <input matInput [(ngModel)]="filtros.Estado" (input)="aplicarFiltros()" placeholder="true/false">
+                </mat-form-field>
+            </div>
+
+            <table mat-table [dataSource]="datafilter" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>id</th>
+                    <td mat-cell *matCellDef="let element">{{element.Id}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="usuario">
+                    <th mat-header-cell *matHeaderCellDef>usuario</th>
+                    <td mat-cell *matCellDef="let element">{{element.Id_Usuarios_fk}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="estacionamiento">
+                    <th mat-header-cell *matHeaderCellDef>estacionamiento/th>
+                    <td mat-cell *matCellDef="let element">{{element.estacionamiento}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="tipo de pago">
+                    <th mat-header-cell *matHeaderCellDef>tipo de pago</th>
+                    <td mat-cell *matCellDef="let element">{{element.Id_Tipo_Pago_fk}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="estado">
+                    <th mat-header-cell *matHeaderCellDef>estado</th>
+                    <td mat-cell *matCellDef="let element">{{element.Estado}}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+</div>

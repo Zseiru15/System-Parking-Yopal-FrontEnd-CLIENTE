@@ -19,7 +19,7 @@ export class MidService {
 
   // Ejemplo: método para login
   loginUser(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/usuarios/login`, data);
+    return this.http.post<any>(`${this.baseUrl}/usuarios/login`, data);
   }
 
   // Puedes seguir agregando más métodos aquí para otros endpoints

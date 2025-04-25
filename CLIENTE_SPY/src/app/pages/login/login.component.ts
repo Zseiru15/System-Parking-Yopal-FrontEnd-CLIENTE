@@ -24,7 +24,7 @@ import { AuthService } from '../../../services/auth.service'; // Ajusta según e
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  hidePassword= true;
+  hidePassword = true;
   loginForm: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) {
@@ -40,12 +40,12 @@ export class LoginComponent {
 
       this.authService.login(username, password).subscribe({
         next: (res) => {
-          localStorage.setItem('token', res.token); // Aquí el token
-          this.router.navigate(['/dashboard']); // Redirección segura
+          localStorage.setItem('token', res.token); // Ajusta esto si tu API devuelve el token en otra propiedad
+          this.router.navigate(['/dashboard']);
         },
-        error: (err) => {
-          alert('Credenciales incorrectas o error de servidor');
-          console.error('Login error:', err);
+        error: (err: any) => {
+          alert('Credenciales incorrectas o error del servidor');
+          console.error('Error de login:', err);
         }
       });
     } else {
@@ -53,16 +53,17 @@ export class LoginComponent {
     }
   }
 
-  goToRegister(){
+
+  goToRegister() {
     console.log('Boton de registro clickeado');
     this.router.navigate(['/register']);
   }
 
-  recoverPassword(){
+  recoverPassword() {
     alert('Recuperacion Contraseña')
   }
 
-  createAccount(){
+  createAccount() {
     this.router.navigate(['/register']);
   }
 
