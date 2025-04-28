@@ -8,12 +8,12 @@
         <button mat-raised-button color="primary" class="submit-btn" (click)="consultarDatos()">Consultar</button>
       </div>
     </div>
-            
+
 
             <div class="filtros">
                 <mat-form-field apparent="fill">
                     <mat-label>id</mat-label>
-                    <input matInput [(ngModel)]="filtros.Id" (input)="aplicarFiltros()" placeholder="Buscar Id">
+                    <input matInput [(ngModel)]="filtros.Id_Pagos" (input)="aplicarFiltros()" placeholder="Buscar Id">
                 </mat-form-field>
                 <mat-form-field apparent="fill">
                     <mat-label>usuario</mat-label>
@@ -22,7 +22,7 @@
                 </mat-form-field>
                 <mat-form-field apparent="fill">
                     <mat-label>estacionamiento</mat-label>
-                    <input matInput [(ngModel)]="filtros.estacionamiento" (input)="aplicarFiltros()"
+                    <input matInput [(ngModel)]="filtros.Id_Estacionamientos_fk" (input)="aplicarFiltros()"
                         placeholder="Buscar Direccion">
                 </mat-form-field>
                 <mat-form-field apparent="fill">
@@ -40,7 +40,7 @@
 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef>id</th>
-                    <td mat-cell *matCellDef="let element">{{element.Id}}</td>
+                    <td mat-cell *matCellDef="let element">{{element.Id_Pagos}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="usuario">
@@ -49,8 +49,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="estacionamiento">
-                    <th mat-header-cell *matHeaderCellDef>estacionamiento/th>
-                    <td mat-cell *matCellDef="let element">{{element.estacionamiento}}</td>
+                    <th mat-header-cell *matHeaderCellDef>estacionamiento</th>
+                    <td mat-cell *matCellDef="let element">{{element.Id_Estacionamientos_fk}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="tipo de pago">

@@ -32,16 +32,16 @@ export class PendingPaymentHistoryComponent {
   displayedColumns: string[] = ['id', 'usuario', 'estacionamiento', 'tipo de pago', 'estado'];
 
   dataSource = [
-    { Id: 1, Id_Usuarios_fk: 'Parking 1', estacionamiento: 'calle-falsa-1', Id_Tipo_Pago_fk: '1.000', Estado: true },
-    { Id: 2, Id_Usuarios_fk: 'Parking 2', estacionamiento: 'calle-falsa-2', Id_Tipo_Pago_fk: '2.000', Estado: true },
-    { Id: 3, Id_Usuarios_fk: 'Parking 3', estacionamiento: 'calle-falsa-3', Id_Tipo_Pago_fk: '3.000', Estado: true },
-    { Id: 4, Id_Usuarios_fk: 'Parking 4', estacionamiento: 'calle-falsa-4', Id_Tipo_Pago_fk: '4.000', Estado: true }
+    { Id_Pagos: 1, Id_Usuarios_fk: 'Parking 1', Id_Estacionamientos_fk: 'calle-falsa-1', Id_Tipo_Pago_fk: '1.000', Estado: true },
+    { Id_Pagos: 2, Id_Usuarios_fk: 'Parking 2', Id_Estacionamientos_fk: 'calle-falsa-2', Id_Tipo_Pago_fk: '2.000', Estado: true },
+    { Id_Pagos: 3, Id_Usuarios_fk: 'Parking 3', Id_Estacionamientos_fk: 'calle-falsa-3', Id_Tipo_Pago_fk: '3.000', Estado: true },
+    { Id_Pagos: 4, Id_Usuarios_fk: 'Parking 4', Id_Estacionamientos_fk: 'calle-falsa-4', Id_Tipo_Pago_fk: '4.000', Estado: true }
   ];
 
   filtros = {
-    Id: '',
+    Id_Pagos: '',
     Id_Usuarios_fk: '',
-    estacionamiento: '',
+    Id_Estacionamientos_fk: '',
     Id_Tipo_Pago_fk: '',
     Estado: ''
   }
