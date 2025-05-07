@@ -35,10 +35,10 @@ export class BestOfferHistoryComponent {
   displayedColumns: string[] = ['id', 'nombre', 'direccion', 'valor original', 'valor en promocion', 'estado'];
 
   dataSource = [
-    { Id: 1, Nombre: 'Parking 1', Direccion: 'calle-falsa-1', ValorOriginal: '1.000', ValorPromocion: '500', Estado: true },
-    { Id: 2, Nombre: 'Parking 2', Direccion: 'calle-falsa-2', ValorOriginal: '2.000', ValorPromocion: '500', Estado: true },
-    { Id: 3, Nombre: 'Parking 3', Direccion: 'calle-falsa-3', ValorOriginal: '3.000', ValorPromocion: '500', Estado: true },
-    { Id: 4, Nombre: 'Parking 4', Direccion: 'calle-falsa-4', ValorOriginal: '4.000', ValorPromocion: '500', Estado: true }
+    { Id: 1, Nombres: 'Parking 1', Direccion: 'calle-falsa-1', ValorOriginal: '1.000', ValorPromocion: '500', Estado: true },
+    { Id: 2, Nombres: 'Parking 2', Direccion: 'calle-falsa-2', ValorOriginal: '2.000', ValorPromocion: '500', Estado: true },
+    { Id: 3, Nombres: 'Parking 3', Direccion: 'calle-falsa-3', ValorOriginal: '3.000', ValorPromocion: '500', Estado: true },
+    { Id: 4, Nombres: 'Parking 4', Direccion: 'calle-falsa-4', ValorOriginal: '4.000', ValorPromocion: '500', Estado: true }
   ];
 
   filtros = {

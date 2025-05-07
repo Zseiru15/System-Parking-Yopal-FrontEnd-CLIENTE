@@ -33,6 +33,10 @@ export class DashboardComponent {
   usuario3= 'Usuario Prueba2';
   showSidenav= false;
 
+  Profile(){
+    this.router.navigate(['/user-profile']);
+  }
+
   toggleSidenav(){
     this.showSidenav = !this.showSidenav;
   }
