@@ -36,9 +36,9 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
+      const { email, password } = this.loginForm.value;
 
-      this.authService.login(username, password).subscribe({
+      this.authService.login(email, password).subscribe({
         next: (res) => {
           localStorage.setItem('token', res.token); // Ajusta esto si tu API devuelve el token en otra propiedad
           this.router.navigate(['/dashboard']);
