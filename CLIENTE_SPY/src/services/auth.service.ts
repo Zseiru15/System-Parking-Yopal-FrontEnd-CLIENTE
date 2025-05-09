@@ -7,8 +7,8 @@ export class AuthService {
 
   constructor(private midService: MidService) {}
 
-  login(username: string, password: string): Observable<any> {
-    return this.midService.loginUser({ username, password });
+  login(email: string, password: string): Observable<any> {
+    return this.midService.loginUser({ email, password });
   }
 
   register(firstName: string, lastName: string, documentNumber: string, phone: number, email: string, password: string): Observable<any> {
