@@ -12,7 +12,7 @@ export class AuthService {
   }
 
   register(firstName: string, lastName: string, documentNumber: string, phone: number, email: string, password: string): Observable<any> {
-    return this.midService.loginUser({ firstName, lastName, documentNumber, phone, email, password });
+    return this.midService.registerUser({ firstName, lastName, documentNumber, phone, email, password });
   }
 
   isLoggedIn(): boolean {
@@ -22,5 +22,5 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
   }
-  
+
 }

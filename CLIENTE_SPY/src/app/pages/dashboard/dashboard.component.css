@@ -88,6 +88,62 @@
   width: auto;
 }
 
+.sidenav {
+  width: 280px;
+  background-color: rgb(46, 48, 54);
+  color: #ffffff;
+  padding-top: 20px;
+  box-shadow: 2px 0 8px rgb(46, 48, 54);
+}
+
+/* Forzar color blanco en todo dentro del sidenav y expansion panel */
+.sidenav *,
+.sidenav {
+  color: white !important;
+}
+
+/* Opcional: mejorar contraste del texto deshabilitado (como "Historial") */
+.sidenav mat-list-item.mat-list-item-disabled {
+  opacity: 0.6;
+  color: #ccc !important;
+}
+
+mat-expansion-panel {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+mat-expansion-panel-header {
+  font-size: 15px;
+  color: #e0e0e0;
+}
+
+/* Opcional: mejora visibilidad del encabezado del expansion-panel */
+mat-expansion-panel-header {
+  color: #ffffff !important;
+}
+
+/* Cuerpo del panel */
+.mat-expansion-panel-body {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+mat-list-item {
+  color: #cbd5e1;
+  font-size: 14px;
+  padding-left: 16px;
+}
+
+mat-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 3px solid #3b82f6; /* azul Tailwind blue-500 */
+  cursor: pointer;
+}
+.mat-accordion {
+  margin-top: 8px;
+}
+
 .logout-button {
   background: #df4141;
   width: 80%;
@@ -99,12 +155,8 @@
   font-family: 'Lustria', serif;
 }
 
-
-/*nav container*/
-
-.sidenav {
-  width: 250px;
-  background: rgb(176, 179, 189);
+.logout-button:hover {
+  background-color: rgb(223, 65, 65, 80%);
 }
 
 /*footer*/

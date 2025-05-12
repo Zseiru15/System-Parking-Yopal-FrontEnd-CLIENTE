@@ -44,69 +44,6 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
-/* ubicacion del input Usuario/Administrador*/
-.user-type {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid var(--text-light);
-  position: relative;
-}
-
-/* Estilo del input Usuario/Administrador*/
-.user-type button {
-  background: none;
-  border: none;
-  color: var(--text-light);
-  font-size: 20px;
-  font-family: var(--font-lustria);
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-}
-
-/* Estilo del input activo*/
-.user-type button.active {
-  font-weight: bold;
-}
-
-/* Estilo de la linea separadora*/
-.user-type::after {
-  content: '';
-  position: absolute;
-  left: 45%;
-  height: 40px;
-  width: 2px;
-  background: #ffffff;
-  bottom: 0;
-}
-
-/*Estilo prueba*/
-.demo-stepper {
-  margin-top: 8px;
-}
-
-.demo-form-field {
-  margin-top: 16px;
-}
-
-.demo-radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
-}
-
-.demo-radio-button {
-  margin: 5px;
-}
-/*Estilo prueba*/
-
-.form-row {
-  /* Filas para organizar elementos en la misma línea */
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 1rem;
-}
-
 .form-group {
   /* Contenedor para cada grupo de entrada */
   margin-bottom: 1.5rem;

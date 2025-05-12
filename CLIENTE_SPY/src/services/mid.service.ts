@@ -14,7 +14,7 @@ export class MidService {
 
   // Ejemplo: método para registrar usuario
   registerUser(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/usuarios`, data);
+    return this.http.post<any>(`${this.baseUrl}/usuarios`, data);
   }
 
   // Ejemplo: método para login
@@ -23,4 +23,8 @@ export class MidService {
   }
 
   // Puedes seguir agregando más métodos aquí para otros endpoints
+
+  obtenerComentarios(): Observable<any> {
+    return this.http.get(this.baseUrl + '/comentarios',);
+  }
 }

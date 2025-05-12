@@ -1,18 +1,25 @@
 /* CSS General */
 :root {
   /* Variables de color y fuentes */
-  --primary-color: #2E3036; /* Color principal (fondo de la cabecera y pie de página) */
-  --text-light: white; /* Color claro para textos (blanco) */
-  --text-dark: black; /* Color oscuro para textos (negro) */
-  --font-lustria: 'Lustria', serif; /* Fuente Lustria para títulos */
-  --font-work-sans: 'Work Sans', sans-serif; /* Fuente Work Sans para cuerpo de texto */
-  --font-marko: 'Marko One', serif; /* Fuente Marko One para títulos específicos */
+  --primary-color: #2E3036;
+  /* Color principal (fondo de la cabecera y pie de página) */
+  --text-light: white;
+  /* Color claro para textos (blanco) */
+  --text-dark: black;
+  /* Color oscuro para textos (negro) */
+  --font-lustria: 'Lustria', serif;
+  /* Fuente Lustria para títulos */
+  --font-work-sans: 'Work Sans', sans-serif;
+  /* Fuente Work Sans para cuerpo de texto */
+  --font-marko: 'Marko One', serif;
+  /* Fuente Marko One para títulos específicos */
 }
 
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Asegura que el padding y borde no aumenten el tamaño total del elemento */
+  box-sizing: border-box;
+  /* Asegura que el padding y borde no aumenten el tamaño total del elemento */
 }
 
 .user-profile-container {
@@ -29,9 +36,11 @@
 }
 
 .main-content {
-  margin-top: 140px; /* Espacio superior para evitar que el contenido se superponga al encabezado fijo */
+  margin-top: 140px;
+  /* Espacio superior para evitar que el contenido se superponga al encabezado fijo */
   margin-bottom: 30px;
-  padding: 2rem 2rem 2rem 2rem; /* Espacio interno del contenedor principal */
+  padding: 2rem 2rem 2rem 2rem;
+  /* Espacio interno del contenedor principal */
   background: rgba(255, 255, 255, 0.50);
   margin: 100px;
   backdrop-filter: blur(10px);
@@ -110,6 +119,11 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.vehicle-information:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgb(46, 48, 54);
+}
+
 .vehicle-text {
   flex: 1;
   font-size: 16px;
@@ -117,6 +131,11 @@
   padding-right: 10px;
 }
 
+.vehicle-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
 
 .vehicles {
   border-radius: 50%;
@@ -139,6 +158,11 @@
   font-family: var(--font-lustria);
 }
 
+.submit-btn:hover {
+  transform: scale(1.1);
+  background: rgb(55, 108, 219);
+  color: #ffffff;
+}
 
 .btn-group {
   display: flex;
@@ -152,7 +176,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* oscuro translúcido */
+  background-color: rgba(0, 0, 0, 0.7);
+  /* oscuro translúcido */
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -184,6 +209,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

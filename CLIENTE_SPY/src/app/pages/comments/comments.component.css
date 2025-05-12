@@ -1,146 +1,259 @@
+:root {
+  /* Variables de color y fuentes */
+  --primary-color: #2E3036;
+  /* Color principal (fondo de la cabecera y pie de página) */
+  --text-light: white;
+  /* Color claro para textos (blanco) */
+  --text-dark: black;
+  /* Color oscuro para textos (negro) */
+  --font-lustria: 'Lustria', serif;
+  /* Fuente Lustria para títulos */
+  --font-work-sans: 'Work Sans', sans-serif;
+  /* Fuente Work Sans para cuerpo de texto */
+  --font-marko: 'Marko One', serif;
+  /* Fuente Marko One para títulos específicos */
+}
+
 .comments-container {
-    max-height: auto;
-    display: flex;
-    flex-direction: column;
-    font-family: var(--font-work-sans);
-    background-image: url('/fondo-general.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    line-height: 1.6;
+  max-height: auto;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-work-sans);
+  background-image: url('/fondo-general.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 1.6;
 }
 
 .main-content {
-    width: auto;
-    height: auto;
-    padding: 2rem 2rem 2rem 2rem;
-    /* Espacio interno del contenedor principal */
-    background: rgba(255, 255, 255, 0.50);
-    margin: 100px auto;
-    backdrop-filter: blur(10px);
+  width: auto;
+  height: auto;
+  padding: 1rem 2rem 3rem 2rem;
+  /* Espacio interno del contenedor principal */
+  background: rgba(255, 255, 255, 0.50);
+  margin: auto;
+  backdrop-filter: blur(10px);
 }
 
 /* Estilos del titulo */
 .title {
-    text-align: center;
-    width: 100%;
-    display: block;
-    font-size: 2rem;
-    font-weight: bold;
-}
-
-.profile-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 15px auto;
-    /* Centra horizontalmente */
-    display: block;
-    /* Asegura que el margin funcione */
-}
-
-.comment-content {
-    background-color: rgb(46, 48, 54);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem;
+  text-align: center;
+  width: 100%;
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 .form-row {
-    /* Filas para organizar elementos en la misma línea */
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 1rem;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+
+/* Formulario fijo */
+.formulario-cajon {
+  flex: 0 0 320px;
 }
 
 .form-group {
-    /* Contenedor para cada grupo de entrada */
-    margin-bottom: 1.5rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    position: relative;
-    font-family: var(--font-lustria);
-    font-size: 20px;
+  /* Contenedor para cada grupo de entrada */
+  margin-bottom: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  font-family: var(--font-lustria);
+  font-size: 20px;
 }
 
 .form-group label {
-    /* Estilo de las etiquetas */
-    display: block;
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-    font-size: 20px;
+  /* Estilo de las etiquetas */
+  display: block;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+  font-size: 20px;
 }
 
 /*Estilo de formularios y botones*/
 .full-width {
-    color: #ffffff;
-    width: auto;
-    height: 60px;
-    margin-bottom: 15px;
-    padding: 0.5rem;
-    border-radius: 10px;
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid transparent;
+  color: #ffffff;
+  width: auto;
+  height: 60px;
+  margin-bottom: 15px;
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid transparent;
 }
 
 .actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
-.submit-btn-legister {
-    min-width: 20%;
-    max-width: 100%;
-    padding: 1rem;
-    background: #ffffff;
-    color: #4170df;
-    border: 1px dashed #007bff;
-    border-radius: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    margin: 1rem 0;
-    font-family: var(--font-lustria);
+.submit-btn {
+  min-width: 20%;
+  max-width: 100%;
+  padding: 1rem;
+  background: rgb(55, 108, 219);
+  color: rgb(255, 255, 255);
+  border: 2px dashed rgb(255, 255, 255);
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 1rem 0;
+  font-family: var(--font-lustria);
 }
 
-.submit-btn-login {
-    min-width: 20%;
-    max-width: 100%;
-    padding: 1rem;
-    background: #ffffff;
-    color: #4170df;
-    border: 1px dashed #007bff;
-    border-radius: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    margin: 1rem 0;
-    font-family: var(--font-lustria);
+.submit-btn:hover {
+  transform: scale(1.1);
+  background: rgb(255, 255, 255);
+  color: rgb(55, 108, 219);
+  border: 2px dashed rgb(55, 108, 219);
 }
 
-.rol{
-    color: #ffffff;
-    font-size: 14px;
+/* Comentarios en scroll */
+.comentarios-cajon {
+  flex: 1;
+  max-height: 725px;
+  overflow-y: auto;
+  border-radius: 10px;
 }
 
-.userName{
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: bold;
+.filtros {
+  justify-content: center;
+  display: flex;
+  gap: 1rem;
 }
 
-.parkingName{
-    color: #ffffff;
-    font-size: 18px;
+.reset-btn {
+  margin: 0.5rem 0.5rem 0.5rem 1rem;
+  color: #ffffff;
+  background-color: rgb(55, 108, 219);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+  font-size: 16px;
 }
 
-.comment{
-    color: #ffffff;
-    font-size: 20px;
+.reset-btn:hover {
+  transform: scale(1.1);
+  color: rgb(55, 108, 219);
+  background-color: rgb(255, 255, 255);
+}
+
+/* Comentarios distribuidos en filas de hasta 4 */
+.comentarios-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  justify-content: center
+}
+
+.comment-content {
+  background-color: rgb(46, 48, 54);
+  flex: 1 1 calc(25% - 1rem);
+  min-width: 250px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding: 1.5rem;
+  gap: 1rem;
+  border-radius: 10px;
+}
+
+.comment-content:hover {
+  transform: scale(1.05);
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 15px auto;
+  /* Centra horizontalmente */
+  display: block;
+  /* Asegura que el margin funcione */
+}
+
+.comentario-fecha {
+  font-size: 16px;
+  color: rgb(55, 108, 219);
+  margin: 0.5px;
+}
+
+.comentario-nombre {
+  font-weight: bold;
+  font-size: 28px;
+  margin-top: 0px;
+  margin-bottom: 1px;
+  color: #ffffff;
+}
+
+.comentario-estacionamiento {
+  font-size: 18px;
+  color: rgb(55, 108, 219);
+  margin: 0.5px;
+}
+
+.comentario-comentario {
+  font-size: 22px;
+  color: #ffffff;
+  margin: 4px 0;
+}
+
+.comentario-calificacion {
+  font-size: 18px;
+  color: #ffffff;
+  margin: 4px 0;
+}
+
+.estrella {
+  font-size: 24px;
+  margin-right: 4px;
+}
+
+.estrella-llena {
+  color: rgb(255, 200, 61);
+}
+
+.estrella-vacia {
+  color: #ffffff;
+}
+
+.estrella-media {
+  background: linear-gradient(to right, rgb(255, 200, 61) 50%, rgb(255, 255, 255) 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 1200px) {
+  .comment-content {
+    flex: 1 1 calc(33.33% - 2rem);
+    /* 3 por fila */
+  }
+}
+
+@media (max-width: 768px) {
+  .comment-content {
+    flex: 1 1 calc(50% - 2rem);
+    /* 2 por fila */
+  }
+}
+
+@media (max-width: 350px) {
+  .comment-content {
+    flex: 1 1 100%;
+    /* 1 por fila en móvil */
+  }
 }

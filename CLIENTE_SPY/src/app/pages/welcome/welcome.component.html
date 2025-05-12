@@ -1,6 +1,6 @@
 <div class="welcome-container">
   <mat-card class="welcome-title-container">
-    <mat-card-title class="welcome-title">Bienvenidos</mat-card-title>
+    <mat-card-title class="welcome-title">BIENVENIDOS</mat-card-title>
   </mat-card>
 
   <mat-card class="welcome-section">
@@ -8,29 +8,42 @@
       <p>Nos alegra tenerte con nosotros en Parqueadero SPY. Aquí, nos tomamos muy en serio la seguridad de tu
         vehículo. Con sistemas de vigilancia avanzada y un personal atento, puedes estar seguro de que tu
         auto estará bien cuidado. Disfruta de tu día, nosotros nos encargamos del resto.</p>
-      <mat-card-content class="contact-box">
-        <button mat-raised-button color="primary" (click)="goToLogin()" class="web-button">Iniciar Sesion</button>
-        <!-- Botón para acceder a la página web -->
-        <button mat-raised-button color="primary" (click)="goToRegister()" class="web-button">Registrarse</button>
-        <!-- Botón para acceder a la página web -->
+      <mat-card-content class="options-container">
+        <mat-card-content class="contact-box">
+          <i class="fa-solid fa-circle-user" style="font-size: 50px; Color: #ffffff"></i>
+          <button mat-raised-button color="primary" (click)="goToLogin()" class="web-button"><i
+              class="fa-solid fa-sign-in-alt"></i>
+            Iniciar Sesion</button>
+        </mat-card-content>
+        <img src="/logo.png" alt="SPY" class="logo">
+        <mat-card-content class="contact-box">
+          <div class="user-icon"><i class="fa-solid fa-user-plus" style="font-size: 50px; Color: #ffffff"></i></div>
+          <button mat-raised-button color="primary" (click)="goToRegister()" class="web-button">Registrarse</button>
+          <!-- Botón para acceder a la página web -->
+        </mat-card-content>
       </mat-card-content>
       <span class="social-media">
         <h2 class="social-media">Síguenos</h2>
         <div class="social-icons">
-          <i class="fab fa-facebook fa-2x"></i>
-          <i class="fab fa-twitter fa-2x"></i>
-          <i class="fab fa-instagram fa-2x"></i>
-          <i class="fab fa-linkedin fa-2x"></i>
-          <i class="fab fa-github fa-2x"></i>
+          <a href="https://www.facebook.com/share/16GgMQzg1D/" target="_blank"><i class="fab fa-facebook fa-2x"
+              style="font-size:40px"></i></a>
+          <a href="https://www.instagram.com/camilo_ordonez_u?igsh=azRsN3h0NHExcTR1" target="_blank"><i
+              class="fab fa-instagram fa-2x" style="font-size: 40px"></i></a>
+          <a href="https://x.com/OrdonezCamilo15" target="_blank"><i class="fab fa-x-twitter fa-2x"
+              style="font-size: 40px"></i></a>
+          <a href="www.linkedin.com/in/sneyder-camilo-ordoñez-uscategui-0008111b8" target="_blank"><i
+              class="fab fa-linkedin fa-2x" style="font-size: 40px"></i></a>
+          <a href="https://github.com/Zseiru15" target="_blank"><i class="fab fa-github fa-2x"
+              style="font-size: 40px"></i></a>
         </div>
-        <p>&#64;SystemParkingYopal</p>
+        <p class="social-media">&#64;SystemParkingYopal</p>
       </span>
     </mat-card-content>
 
-    <mat-card-content class="image-gallery">
-      <img src="parking1.jpg" alt="Instalaciones del parqueadero">
-      <!-- Imagen de las instalaciones del parqueadero -->
-      <img src="parking2.jpg" alt="Área de estacionamiento"> <!-- Imagen del área de estacionamiento -->
-    </mat-card-content>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" [ngStyle]="{'transform': getTransform()}">
+        <img *ngFor="let img of images" [src]="img" alt="Foto carrusel" />
+      </div>
+    </div>
   </mat-card>
 </div>
