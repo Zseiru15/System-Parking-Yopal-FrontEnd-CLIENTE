@@ -3,14 +3,8 @@
     <mat-card class="login-form">
       <h1 class="title">Iniciar Sesion</h1>
       <p class="subtitle">Ingrese sus credenciales para continuar</p>
-
-      <div class="user-type">
-        <button type="button" class="user-btn active">Usuario</button>
-        <button type="button" class="admin-btn">Administrador</button>
-      </div>
-
+      
       <mat-card class="login-form" [formGroup]="loginForm">
-        <!-- Campo de Usuario -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Correo electronico</mat-label>
           <input matInput formControlName="email" placeholder="Correo electronico">

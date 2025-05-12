@@ -8,7 +8,7 @@ import { API_URLS } from '../config/api-config';
 })
 export class MidService {
 
-  private baseUrl = `http://${API_URLS.MID.Api_mid}`;
+  private baseUrl = `${API_URLS.MID.Api_mid}`;
 
   constructor(private http: HttpClient) {}
 

@@ -71,13 +71,22 @@ export class CommentsComponent implements OnInit {
 
   aplicarFiltros(): void {
     this.comentariosFiltrados = this.comentariosOriginal.filter(comentario => {
-      const coincideEstrellas = this.filtros.estrellas ? Math.floor(comentario.Calificacion) === this.filtros.estrellas : true;
-      const coincideEstacionamiento = this.filtros.estacionamiento ? comentario.Estacionamiento === this.filtros.estacionamiento : true;
-      const coincideFecha = this.filtros.fecha ? new Date(comentario.Fecha).toDateString() === new Date(this.filtros.fecha).toDateString() : true;
+      const coincideEstrellas = this.filtros.estrellas != null
+        ? Math.floor(comentario.Calificacion) === this.filtros.estrellas
+        : true;
+
+      const coincideEstacionamiento = this.filtros.estacionamiento
+        ? comentario.Estacionamiento === this.filtros.estacionamiento
+        : true;
+
+      const coincideFecha = this.filtros.fecha
+        ? new Date(comentario.Fecha).toDateString() === new Date(this.filtros.fecha).toDateString()
+        : true;
 
       return coincideEstrellas && coincideEstacionamiento && coincideFecha;
     });
   }
+
 
 
   resetFiltros() {

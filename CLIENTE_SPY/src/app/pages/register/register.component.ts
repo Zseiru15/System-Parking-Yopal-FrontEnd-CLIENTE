@@ -48,53 +48,32 @@ export class RegisterComponent {
   }
 
   register() {
-    if (this.registerForm.valid) {
-      const { firstName, lastName, documentNumber, phone, email, password } = this.registerForm.value;
-
-      this.authService.register(firstName, lastName, documentNumber, phone, email, password).subscribe({
-        next: (res) => {
-          localStorage.setItem('token', res.token); // Ajusta esto si tu API devuelve el token en otra propiedad
-          console.log('Registro exitoso', res);
-          alert('Registro exitoso');
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err: any) => {
-          alert('Credenciales incorrectas o error del servidor');
-          console.error('Error de registro:', err);
-        }
-      });
-    } else {
+    if (!this.registerForm.valid) {
       alert('Por favor complete todos los campos');
+      return;
     }
 
-    console.log('Registro Exitoso')
     const formData = this.registerForm.value;
-    console.log('datos capturados', formData)
 
-    const extededData = {
+    const extendedData = {
       ...formData,
       Fecha_Creacion: new Date().toISOString(),
       role: 'user',
-    }
+    };
 
-    console.log('Dato extendido', extededData)
-    const jsonData = JSON.stringify(formData, null, 2)
+    const jsonData = JSON.stringify(extendedData);
 
     this.apiService.post(`http://localhost:8082/v1/usuarios`, jsonData).subscribe({
       next: (response) => {
-        console.log('registro exitoso')
-        console.log('Response', response)
-        alert('Se creo el usuario')
+        console.log('Registro exitoso', response);
+        alert('Usuario creado con éxito');
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
-        console.log('Ojo, error en el post')
-        alert('Error al guardar el usuario')
+        console.error('Error en el registro:', error);
+        alert('Error al guardar el usuario o ya existe');
       }
-    })
-
-
-
-    console.log('Datos json', jsonData)
+    });
   }
 
   goToLogin() {
