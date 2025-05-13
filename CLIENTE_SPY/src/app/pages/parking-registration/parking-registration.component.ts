@@ -32,7 +32,6 @@ export class ParkingRegistrationComponent {
   registerForm: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private apiService: ApiService) {
-
     this.registerForm = this.fb.group({
       parkingName: ['', Validators.required],
       latitude: ['', Validators.required],
@@ -58,20 +57,23 @@ export class ParkingRegistrationComponent {
 
     const extendedData = {
       ...formData,
-      Fecha_Creacion: new Date().toISOString(),
     };
 
     const jsonData = JSON.stringify(extendedData);
 
+    console.log (jsonData)
+    
     this.apiService.post(`http://localhost:8082/v1/parqueaderos`, jsonData).subscribe({
+
       next: (response) => {
         console.log('Registro exitoso', response);
-        alert('Usuario creado con éxito');
+        alert('Parqueadero creado con éxito');
+
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error('Error en el registro:', error);
-        alert('Error al guardar el usuario o ya existe');
+        alert('Error al guardar el parqueadero o ya existe');
       }
     });
   }
