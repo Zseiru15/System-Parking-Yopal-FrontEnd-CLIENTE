@@ -7,24 +7,27 @@ import { API_URLS } from '../config/api-config';
   providedIn: 'root'
 })
 export class MidService {
-
   private baseUrl = `${API_URLS.MID.Api_mid}`;
 
   constructor(private http: HttpClient) {}
 
-  // Ejemplo: método para registrar usuario
   registerUser(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/usuarios`, data);
   }
 
-  // Ejemplo: método para login
   loginUser(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/usuarios/login`, data);
   }
 
-  // Puedes seguir agregando más métodos aquí para otros endpoints
-
   obtenerComentarios(): Observable<any> {
-    return this.http.get(this.baseUrl + '/comentarios',);
+    return this.http.get(this.baseUrl + '/comentarios');
+  }
+
+  postComentario(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/comentarios`, data);
+  }
+
+  getParqueaderos(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/parqueaderos`);
   }
 }

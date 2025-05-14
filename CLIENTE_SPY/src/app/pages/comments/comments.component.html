@@ -20,11 +20,10 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Estacionamiento</mat-label>
-                  <mat-select formControlName="parkingName">
-                    <mat-option value="P1">Masculino</mat-option>
-                    <mat-option value="P2">Femenino</mat-option>
-                    <mat-option value="otro">Otro</mat-option>
-                    <mat-option value="prefiero-no-decirlo">Prefiero no decirlo</mat-option>
+                  <mat-select formControlName="parkingId">
+                    <mat-option *ngFor="let parking of parkingList" [value]="parking.Id">
+                      {{ parking.Nombres }}
+                    </mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="full-width">
@@ -39,6 +38,7 @@
             </form>
           </mat-card-content>
           <div class="actions">
+            <button mat-raised-button color="primary" class="submit-btn" (click)="comment()">Enviar</button>
             <button mat-raised-button color="primary" class="submit-btn" (click)="goToregister()">Registrarse</button>
             <button mat-raised-button color="primary" class="submit-btn" (click)="goToLogin()">Iniciar
               Sesion</button>
@@ -49,32 +49,33 @@
       <!-- Cajón Comentarios con scroll y filas -->
       <div class="comentarios-cajon">
         <div class="filtros">
-        <mat-form-field appearance="fill" class="filtro">
-          <mat-label>Estrellas</mat-label>
-          <mat-select [(ngModel)]="filtros.estrellas" (selectionChange)="aplicarFiltros()">
-            <mat-option [value]="null">Todas</mat-option>
-            <mat-option *ngFor="let n of [5,4,3,2,1,0]" [value]="n">{{ n }} estrellas</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field appearance="fill" class="filtro">
+            <mat-label>Estrellas</mat-label>
+            <mat-select [(ngModel)]="filtros.estrellas" (selectionChange)="aplicarFiltros()">
+              <mat-option [value]="null">Todas</mat-option>
+              <mat-option *ngFor="let n of [5,4,3,2,1,0]" [value]="n">{{ n }} estrellas</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Estacionamiento</mat-label>
-          <mat-select [(ngModel)]="filtros.estacionamiento" (selectionChange)="aplicarFiltros()">
-            <mat-option value="">Todos</mat-option>
-            <mat-option *ngFor="let estacionamiento of obtenerEstacionamientos()" [value]="estacionamiento">
-              {{ estacionamiento }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Estacionamiento</mat-label>
+            <mat-select [(ngModel)]="filtros.estacionamiento" (selectionChange)="aplicarFiltros()">
+              <mat-option value="">Todos</mat-option>
+              <mat-option *ngFor="let estacionamiento of obtenerEstacionamientos()" [value]="estacionamiento">
+                {{ estacionamiento }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <input matInput [matDatepicker]="picker" [(ngModel)]="filtros.fecha" (dateChange)="aplicarFiltros()" placeholder="Filtrar por fecha">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <input matInput [matDatepicker]="picker" [(ngModel)]="filtros.fecha" (dateChange)="aplicarFiltros()"
+              placeholder="Filtrar por fecha">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-        <button class="reset-btn" mat-raised-button color="primary" (click)="resetFiltros()">Limpiar</button>
-      </div>
+          <button class="reset-btn" mat-raised-button color="primary" (click)="resetFiltros()">Limpiar</button>
+        </div>
         <div class="comentarios-grid">
           <div *ngFor="let comentario of comentariosFiltrados" class="comment-content">
             <img *ngIf="getBase64ImageSrc(comentario.Foto)" [src]="getBase64ImageSrc(comentario.Foto)"

@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-comments',
@@ -29,7 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatIconModule,
     FormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
@@ -37,12 +38,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 export class CommentsComponent implements OnInit {
   comentariosOriginal: any[] = [];
   comentariosFiltrados: any[] = [];
+  parkingList: any[] = []; // <== Aquí almacenamos los parqueaderos
   commentForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private midService: MidService) {
+  constructor(private fb: FormBuilder, private router: Router, private midService: MidService, private apiService: ApiService) {
     this.commentForm = this.fb.group({
       userName: ['', Validators.required],
-      parkingName: ['', Validators.required],
+      parkingId: ['', Validators.required], // Asegúrate de usar "parkingId"
       comment: ['', Validators.required],
       classification: ['', Validators.required],
     });
@@ -56,18 +58,35 @@ export class CommentsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.obtenerComentarios();
+    this.obtenerParqueaderos(); // <== Cargar parqueaderos al iniciar
+  }
+
+  obtenerComentarios(): void {
     this.midService.obtenerComentarios().subscribe({
       next: (resp) => {
         if (resp.Success) {
           this.comentariosOriginal = (resp.Data as any[]).sort((a, b) => new Date(b.Fecha).getTime() - new Date(a.Fecha).getTime());
-
-          // Mostrar todos al inicio
           this.comentariosFiltrados = [...this.comentariosOriginal];
         }
       }
     });
   }
 
+  obtenerParqueaderos(): void {
+    this.midService.getParqueaderos().subscribe({
+      next: (res: any) => {
+        if (res.Success) {
+          this.parkingList = res.Data;
+        }
+      },
+      error: (err: any) => {
+        console.error('❌ Error al obtener parqueaderos', err);
+        alert('No se pudieron cargar los parqueaderos');
+      }
+    });
+
+  }
 
   aplicarFiltros(): void {
     this.comentariosFiltrados = this.comentariosOriginal.filter(comentario => {
@@ -86,8 +105,6 @@ export class CommentsComponent implements OnInit {
       return coincideEstrellas && coincideEstacionamiento && coincideFecha;
     });
   }
-
-
 
   resetFiltros() {
     this.filtros = {
@@ -141,10 +158,41 @@ export class CommentsComponent implements OnInit {
     return estrellas;
   }
 
-
-
   comment() {
-    // Aún sin implementación
+    if (!this.commentForm.valid) {
+      alert('Por favor complete todos los campos');
+      return;
+    }
+
+    const formData = this.commentForm.value;
+
+    // ✅ Validación personalizada para clasificación
+    const calificacion = Number(formData.classification);
+    if (isNaN(calificacion) || calificacion < 1 || calificacion > 5) {
+      alert('La calificación debe ser un número entre 1 y 5');
+      return;
+    }
+
+    const extendedData = {
+      ...formData,
+      Fecha_Creacion: new Date().toISOString(),
+      role: 'user', // si lo necesitas para backend
+    };
+
+    this.apiService.post(`http://localhost:8082/v1/comentarios`, extendedData).subscribe({
+      next: (response) => {
+        console.log('✅ Comentario registrado', response);
+        alert('Comentario enviado con éxito');
+        this.commentForm.reset();
+
+        // 🔄 Recargar comentarios (visualizador en el siguiente paso)
+        this.obtenerComentarios();
+      },
+      error: (error) => {
+        console.error('❌ Error en el envío del comentario:', error);
+        alert('Error al enviar el comentario');
+      }
+    });
   }
 
   goToLogin() {
