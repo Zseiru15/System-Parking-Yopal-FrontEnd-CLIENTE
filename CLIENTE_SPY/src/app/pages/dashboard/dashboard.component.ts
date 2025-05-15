@@ -29,7 +29,7 @@ import { MatDividerModule } from '@angular/material/divider';
 export class DashboardComponent {
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   usuario = 'Juan Cebolla';
   usuario2 = 'Usuario Prueba1';
@@ -51,10 +51,24 @@ export class DashboardComponent {
   }
 
   logout() {
-    alert('Sesión cerrada');
-    console.log('Logout clicked');
+    const usuario = localStorage.getItem('usuario');
+    const parsedUser = usuario ? JSON.parse(usuario) : null;
+    let rol = 'usuario';
+    if (parsedUser && parsedUser.IdRolesFk && parsedUser.IdRolesFk.Nombre) {
+      rol = parsedUser.IdRolesFk.Nombre.toLowerCase();
+    }
+
+
+    alert(`Sesión cerrada (${rol})`);
+    console.log('Logout clicked para rol:', rol);
+
+    // Cerrar sesión
+    localStorage.removeItem('usuario');
+
+    // Redirigir según el rol si lo deseas
     this.router.navigate(['/welcome']);
     this.closeAllPanels();
     this.showSidenav = false;
   }
+
 }

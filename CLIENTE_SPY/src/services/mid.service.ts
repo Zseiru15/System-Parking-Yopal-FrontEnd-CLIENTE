@@ -9,14 +9,14 @@ import { API_URLS } from '../config/api-config';
 export class MidService {
   private baseUrl = `${API_URLS.MID.Api_mid}`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   registerUser(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/usuarios`, data);
   }
 
   loginUser(data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/usuarios/login`, data);
+    return this.http.post(`${API_URLS.MID.Api_mid}/usuarios/login`, data);
   }
 
   obtenerComentarios(): Observable<any> {

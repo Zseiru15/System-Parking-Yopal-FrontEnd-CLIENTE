@@ -123,7 +123,7 @@
 /* Comentarios en scroll */
 .comentarios-cajon {
   flex: 1;
-  max-height: 725px;
+  max-height: 865px;
   overflow-y: auto;
   border-radius: 10px;
 }
