@@ -8,6 +8,8 @@ import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansi
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { AuthService } from '../../../services/auth.service';
+import { NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,12 +31,27 @@ import { MatDividerModule } from '@angular/material/divider';
 export class DashboardComponent {
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
 
-  constructor(private router: Router) { }
+  currentRoute: string = '';
 
-  usuario = 'Juan Cebolla';
-  usuario2 = 'Usuario Prueba1';
-  usuario3 = 'Usuario Prueba2';
+  constructor(private router: Router, private authService: AuthService) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.urlAfterRedirects;
+      }
+    });
+  }
+
+
   showSidenav = false;
+
+  usuario: any;
+
+  ngOnInit() {
+    const userData = localStorage.getItem('usuario');
+    if (userData) {
+      this.usuario = JSON.parse(userData);
+    }
+  }
 
   Profile() {
     this.router.navigate(['/user-profile']);

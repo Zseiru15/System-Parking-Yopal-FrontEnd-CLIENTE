@@ -5,7 +5,7 @@ import { MidService } from './mid.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  constructor(private midService: MidService) {}
+  constructor(private midService: MidService) { }
 
   login(email: string, password: string): Observable<any> {
     return this.midService.loginUser({ email, password });
@@ -22,5 +22,11 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
   }
+
+  getUsuarioActual() {
+    const data = localStorage.getItem('usuario');
+    return data ? JSON.parse(data) : null;
+  }
+
 
 }

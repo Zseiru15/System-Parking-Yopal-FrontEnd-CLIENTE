@@ -3,7 +3,7 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span class="spacer"></span>
-  <span class="usuario" (click)="Profile()">{{usuario}}</span>
+  <span class="usuario" *ngIf="!currentRoute.includes('/dashboard/user-porfile')" (click)="Profile()">{{ usuario?.Nombres }} {{ usuario?.Apellidos }}</span>
   <img src="/logo.png" alt="SPY" class="logo">
 </mat-toolbar>
 

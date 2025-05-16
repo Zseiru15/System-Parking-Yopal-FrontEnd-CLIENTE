@@ -1,47 +1,60 @@
 <div class="user-profile-container">
   <mat-card class="main-content">
+    <!-- Información de Usuario -->
     <div class="form-row">
-      <img alt="Profile-picture" class="profile-image" src="https://storage.googleapis.com/a1aa/image/LKh9tJ1QRV4RBpdil8Qhl88ObEQvlYBrZszknVs8UfSeuovTA.jpg" />
-      <mat-card-title class="title">Lorena Rincon</mat-card-title>
+      <div mat-card-avatar class="profile-image">
+        <img *ngIf="usuario?.Imagen" [src]="getBase64ImageSrc(usuario.Imagen)" alt="Imagen de perfil"
+          class="profile-image" />
+      </div>
+      <mat-card-title class="title">{{ usuario?.Nombres }} {{ usuario?.Apellidos }}</mat-card-title>
+      <div class="form-group">
+        <mat-card-subtitle><strong>Rol:</strong> {{ usuario?.IdRolesFk?.Cargos }}</mat-card-subtitle>
+        <p><strong>Email:</strong> {{ usuario?.Email }}</p>
+        <p><strong>Teléfono:</strong> {{ usuario?.Telefono }}</p>
+      </div>
     </div>
+
+    <!-- Botones -->
     <div class="form-row">
       <div class="btn-group">
         <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar Perfil</button>
-        <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('registro')">Registro de Vehiculos</button>
+        <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('registro')">Registro de Vehículos</button>
       </div>
     </div>
+
+    <!-- Vehículos del Usuario -->
     <div class="card">
       <mat-card class="card-content">
-        <mat-card-title class="title">Mis Vehiculos</mat-card-title>
-        <div class="vehicle-grid">
-          <mat-card class="vehicle-information">
-            <div class="vehicle-text">Automovil Marca: Toyota Corolla 2020 Placa: ABC-123</div>
-            <img src="/corolla-2020.jpg" alt="corolla-2020" class="vehicles">
-          </mat-card>
-          <mat-card class="vehicle-information">
-            <div class="vehicle-text">Motocicleta Honda XR 2020 ABC-12A</div>
-            <img src="/xr150l.png" alt="corolla-2020" class="vehicles">
-          </mat-card>
-          <mat-card class="vehicle-information">
-            <div class="vehicle-text">Bicicleta Marca GT Avalanche 2022 Codigo de modelo: G27301M</div>
-            <img src="/bicicleta.jpg" alt="corolla-2020" class="vehicles">
+        <mat-card-title class="title">Mis Vehículos</mat-card-title>
+        <!-- Lista de Vehículos -->
+        <div class="vehicle-grid" *ngIf="vehiculos.length > 0; else sinVehiculos">
+          <mat-card class="vehicle-information" *ngFor="let v of vehiculos">
+            <div class="vehicle-text">
+              {{ v.Tipo }} Marca: {{ v.Marca }} {{ v.Modelo || '' }}<br>
+              Placa: {{ v.Placa || 'N/A' }}
+            </div>
+            <img [src]="v.Imagen ? getBase64ImageSrc(v.Imagen) : '/assets/default-vehicle.jpg'" 
+                 [alt]="v.Marca || 'Vehículo'" 
+                 class="vehicles">
           </mat-card>
         </div>
+        <!-- Sin Vehículos -->
+        <ng-template #sinVehiculos>
+          <p style="margin: 1rem; color: gray;">No tienes vehículos registrados.</p>
+        </ng-template>
       </mat-card>
     </div>
+    
   </mat-card>
 </div>
 
 <!-- Vista Dinámica como Overlay -->
 <div class="overlay" *ngIf="vistaSeleccionada">
   <div class="overlay-content">
-    <button mat-icon-button class="close-btn" (click)="cerrarVista()">
-      ✖
-    </button>
+    <button mat-icon-button class="close-btn" (click)="cerrarVista()">✖</button>
     <ng-container [ngSwitch]="vistaSeleccionada">
       <app-edit-profile *ngSwitchCase="'editar'"></app-edit-profile>
       <app-vehicle-registration *ngSwitchCase="'registro'"></app-vehicle-registration>
     </ng-container>
   </div>
 </div>
-

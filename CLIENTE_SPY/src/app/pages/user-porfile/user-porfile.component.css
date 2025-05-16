@@ -63,6 +63,8 @@
   position: relative;
   font-family: var(--font-lustria);
   font-size: 20px;
+  align-self: center;
+  align-items: self-end;
 }
 
 .form-group label {
@@ -86,6 +88,7 @@
   font-weight: 700;
   color: #242424;
   padding: 20px;
+  align-self: center;
 }
 
 /* Estilos para las tarjetas */

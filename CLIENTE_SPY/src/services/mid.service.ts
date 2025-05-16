@@ -19,6 +19,10 @@ export class MidService {
     return this.http.post(`${API_URLS.MID.Api_mid}/usuarios/login`, data);
   }
 
+  getVehiculosByUsuario(idUsuario: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/vehiculos?query=IdUsuariosFk.Id:${idUsuario}`);
+  }
+
   obtenerComentarios(): Observable<any> {
     return this.http.get(this.baseUrl + '/comentarios');
   }
