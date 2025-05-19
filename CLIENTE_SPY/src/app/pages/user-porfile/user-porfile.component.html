@@ -2,59 +2,85 @@
   <mat-card class="main-content">
     <!-- Información de Usuario -->
     <div class="form-row">
-      <div mat-card-avatar class="profile-image">
-        <img *ngIf="usuario?.Imagen" [src]="getBase64ImageSrc(usuario.Imagen)" alt="Imagen de perfil"
-          class="profile-image" />
-      </div>
-      <mat-card-title class="title">{{ usuario?.Nombres }} {{ usuario?.Apellidos }}</mat-card-title>
       <div class="form-group">
-        <mat-card-subtitle><strong>Rol:</strong> {{ usuario?.IdRolesFk?.Cargos }}</mat-card-subtitle>
-        <p><strong>Email:</strong> {{ usuario?.Email }}</p>
-        <p><strong>Teléfono:</strong> {{ usuario?.Telefono }}</p>
-      </div>
-    </div>
-
-    <!-- Botones -->
-    <div class="form-row">
-      <div class="btn-group">
-        <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar Perfil</button>
-        <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('registro')">Registro de Vehículos</button>
-      </div>
-    </div>
-
-    <!-- Vehículos del Usuario -->
-    <div class="card">
-      <mat-card class="card-content">
-        <mat-card-title class="title">Mis Vehículos</mat-card-title>
-        <!-- Lista de Vehículos -->
-        <div class="vehicle-grid" *ngIf="vehiculos.length > 0; else sinVehiculos">
-          <mat-card class="vehicle-information" *ngFor="let v of vehiculos">
-            <div class="vehicle-text">
-              {{ v.Tipo }} Marca: {{ v.Marca }} {{ v.Modelo || '' }}<br>
-              Placa: {{ v.Placa || 'N/A' }}
-            </div>
-            <img [src]="v.Imagen ? getBase64ImageSrc(v.Imagen) : '/assets/default-vehicle.jpg'" 
-                 [alt]="v.Marca || 'Vehículo'" 
-                 class="vehicles">
-          </mat-card>
+        <div mat-card-avatar class="profile-image">
+          <img *ngIf="usuario?.Imagen" [src]="getBase64ImageSrc(usuario.Imagen)" alt="Imagen de perfil"
+            class="profile-image" />
         </div>
-        <!-- Sin Vehículos -->
-        <ng-template #sinVehiculos>
-          <p style="margin: 1rem; color: gray;">No tienes vehículos registrados.</p>
-        </ng-template>
-      </mat-card>
-    </div>
-    
-  </mat-card>
-</div>
+        <mat-card-title class="title-name">{{ usuario?.Nombres }} {{ usuario?.Apellidos }}</mat-card-title>
+        <div class="form-group">
+          <mat-card-subtitle><strong>Rol:</strong> {{ usuario?.IdRolesFk?.Cargos }}</mat-card-subtitle>
+          <p><strong>Email:</strong> {{ usuario?.Email }}</p>
+          <p><strong>Teléfono:</strong> {{ usuario?.Telefono }}</p>
+        </div>
+        <!-- Botones -->
+        <div class="form-row">
+          <div class="btn-group">
+            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar
+              Perfil</button>
+            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('registro')">Registro de
+              Vehículos</button>
+          </div>
+        </div>
+      </div>
 
-<!-- Vista Dinámica como Overlay -->
-<div class="overlay" *ngIf="vistaSeleccionada">
-  <div class="overlay-content">
-    <button mat-icon-button class="close-btn" (click)="cerrarVista()">✖</button>
-    <ng-container [ngSwitch]="vistaSeleccionada">
-      <app-edit-profile *ngSwitchCase="'editar'"></app-edit-profile>
-      <app-vehicle-registration *ngSwitchCase="'registro'"></app-vehicle-registration>
-    </ng-container>
-  </div>
-</div>
+      <div class="card-row">
+        <!-- Vehículos del Usuario -->
+        <mat-card class="card-content">
+          <mat-card-title class="title">Mis Vehículos</mat-card-title>
+
+          <ng-container *ngIf="vehiculos.length > 0; else sinVehiculos">
+            <div class="scrollable-box">
+              <div class="vehicle-grid">
+                <mat-card class="vehicle-information" *ngFor="let v of vehiculos">
+                  <div class="vehicle-text">
+                    {{ v.Tipo }} Marca: {{ v.Marca }} {{ v.Modelo || '' }}<br>
+                    Placa: {{ v.Placa || 'N/A' }}
+                  </div>
+                  <img [src]="v.Imagen ? getBase64ImageSrc(v.Imagen) : '/assets/default-vehicle.jpg'"
+                    [alt]="v.Marca || 'Vehículo'" class="vehicles">
+                </mat-card>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #sinVehiculos>
+            <p style="margin: 1rem; color: gray;">No tienes vehículos registrados.</p>
+          </ng-template>
+        </mat-card>
+
+        <!-- Parqueaderos del Usuario -->
+        <mat-card class="card-content">
+          <mat-card-title class="title">Mis Parqueaderos</mat-card-title>
+
+          <ng-container *ngIf="parqueaderos.length > 0; else sinParqueaderos">
+            <div class="scrollable-box">
+              <div class="vehicle-grid">
+                <mat-card class="vehicle-information" *ngFor="let p of parqueaderos">
+                  <div class="vehicle-text">
+                    {{ p.Nombres }} - {{ p.Ubicacion }} <br>
+                    Capacidad: {{ p.Capacidad }}
+                  </div>
+                  <img [src]="p.Imagen ? getBase64ImageSrc(p.Imagen) : '/assets/default-parking.jpg'" [alt]="p.Nombres"
+                    class="vehicles" />
+                </mat-card>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #sinParqueaderos>
+            <p style="margin: 1rem; color: gray;">No tienes parqueaderos registrados.</p>
+          </ng-template>
+        </mat-card>
+      </div>
+    </div>
+    <!-- Vista Dinámica como Overlay -->
+    <div class="overlay" *ngIf="vistaSeleccionada">
+      <div class="overlay-content">
+        <button mat-icon-button class="close-btn" (click)="cerrarVista()">✖</button>
+        <ng-container [ngSwitch]="vistaSeleccionada">
+          <app-edit-profile *ngSwitchCase="'editar'"></app-edit-profile>
+          <app-vehicle-registration *ngSwitchCase="'registro'"></app-vehicle-registration>
+        </ng-container>
+      </div>
+    </div>

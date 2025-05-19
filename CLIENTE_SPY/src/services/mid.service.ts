@@ -20,7 +20,11 @@ export class MidService {
   }
 
   getVehiculosByUsuario(idUsuario: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/vehiculos?query=IdUsuariosFk.Id:${idUsuario}`);
+    return this.http.get(`${this.baseUrl}/vehiculos/usuario/${idUsuario}`);
+  }
+
+  getParqueaderosByUsuario(idUsuario: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/parqueaderos/usuario/${idUsuario}`);
   }
 
   obtenerComentarios(): Observable<any> {

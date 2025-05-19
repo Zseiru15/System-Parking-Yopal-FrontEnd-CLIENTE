@@ -26,6 +26,7 @@ export class UserPorfileComponent implements OnInit {
 
   usuario: any;
   vehiculos: any[] = [];
+  parqueaderos: any[] = [];
   vistaSeleccionada: 'editar' | 'registro' | '' = '';
 
   constructor(private authService: AuthService, private midService: MidService) { }
@@ -35,6 +36,7 @@ export class UserPorfileComponent implements OnInit {
     if (userData) {
       this.usuario = userData;
       this.obtenerVehiculosDelUsuario(userData.Id);
+      this.obtenerParqueaderosDelUsuario(userData.Id); // 🆕
     }
   }
 
@@ -48,21 +50,39 @@ export class UserPorfileComponent implements OnInit {
   }
 
   obtenerVehiculosDelUsuario(idUsuario: number) {
-  this.midService.getVehiculosByUsuario(idUsuario).subscribe({
-    next: (res) => {
-      if (res.Success && Array.isArray(res.Data)) {
-        this.vehiculos = res.Data;
-      } else {
-        console.warn('⚠️ Respuesta sin datos válidos:', res);
+    this.midService.getVehiculosByUsuario(idUsuario).subscribe({
+      next: (res) => {
+        if (res.Success && Array.isArray(res.Data)) {
+          this.vehiculos = res.Data;
+          console.log('🚗 Vehículos del usuario:', this.vehiculos);
+        } else {
+          console.warn('⚠️ No se obtuvieron vehículos del usuario:', res);
+          this.vehiculos = [];
+        }
+      },
+      error: (err) => {
+        console.error('❌ Error al obtener vehículos del usuario:', err);
         this.vehiculos = [];
       }
-    },
-    error: (err) => {
-      console.error('❌ Error al obtener vehículos del usuario', err);
-      this.vehiculos = [];
-    }
-  });
-}
+    });
+  }
+
+  obtenerParqueaderosDelUsuario(idUsuario: number) {
+    this.midService.getParqueaderosByUsuario(idUsuario).subscribe({
+      next: (res) => {
+        if (res.Success && Array.isArray(res.Data)) {
+          this.parqueaderos = res.Data;
+        } else {
+          this.parqueaderos = [];
+          console.warn('⚠️ No hay parqueaderos registrados', res);
+        }
+      },
+      error: (err) => {
+        this.parqueaderos = [];
+        console.error('❌ Error al obtener parqueaderos:', err);
+      }
+    });
+  }
 
   mostrarVista(vista: 'editar' | 'registro') {
     this.vistaSeleccionada = vista;
