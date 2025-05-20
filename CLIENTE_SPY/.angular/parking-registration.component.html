@@ -1,0 +1,75 @@
+<div class="parking-registration-container">
+  <mat-card class="register-card">
+    <mat-card class="register-form">
+      <h1 class="title">Registro de parquederos</h1>
+      <span class="text">Esta seccion permitira a los desarrolladores y administradores registrar el parqueadero</span>
+      <mat-card-content>
+        <form class="register-form" [formGroup]="registerForm">
+          <div class="form-group">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Nombre del parqueadero</mat-label>
+              <input matInput formControlName="parkingName" placeholder="Parqueader El Sena">
+            </mat-form-field>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Latitud del parqueadero</mat-label>
+                <input matInput formControlName="latitude" placeholder="5°19'29.2''N 72°23'22.1''W">
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Longitud del parqueadero</mat-label>
+                <input matInput formControlName="length" placeholder="5°19'29.2''N 72°23'22.1''W">
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Direccion del parqueadero</mat-label>
+              <input matInput formControlName="address" placeholder="Cra. 19 #36-92 Yopal, Casanare">
+            </mat-form-field>
+          </div>
+          <h1 class="title">Cupos</h1>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Carros</mat-label>
+              <input matInput formControlName="cars" placeholder="10">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Motos</mat-label>
+              <input matInput formControlName="motorcycles" placeholder="10">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Bicis</mat-label>
+              <input matInput formControlName="bicycles" placeholder="10">
+            </mat-form-field>
+          </div>
+          <h1 class="title">Caracteristicas</h1>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>altura</mat-label>
+              <input matInput formControlName="height" placeholder="10">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Tipo</mat-label>
+              <mat-select formControlName="type">
+                <mat-option value="Subterráneo">Subterraneo</mat-option>
+                <mat-option value="Aire Libre">Aire Libre</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Pisos</mat-label>
+              <input matInput formControlName="floor" placeholder="10">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Sombra</mat-label>
+              <mat-select formControlName="shade">
+                <mat-option value="Si">Si</mat-option>
+                <mat-option value="No">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" class="submit-btn" (click)="register()">Registrar parqueadero</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-card>
+</div>

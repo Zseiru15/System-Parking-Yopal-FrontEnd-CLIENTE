@@ -31,7 +31,6 @@ import { AuthService } from '../../../services/auth.service'; // Ajusta según e
 export class RegisterComponent {
 
   hidePassword = true;
-  hideConfirmPassword = true;
 
   registerForm: FormGroup;
 

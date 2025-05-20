@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../../../services/api.service';
+import { AuthService } from '../../../services/auth.service'; // Ajusta según estructura
 
 @Component({
   standalone: true,
@@ -19,16 +21,16 @@ import { HttpClient } from '@angular/common/http';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './vehicle-registration.component.html',
   styleUrl: './vehicle-registration.component.css'
 })
 export class VehicleRegistrationComponent {
-  hidePassword= true;
+  hidePassword = true;
   editFrom: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private http: HttpClient) {
+  constructor(private router: Router, private fb: FormBuilder, private http: HttpClient, private authService: AuthService, private apiService: ApiService) {
     this.editFrom = this.fb.group({
       vehicleType: ['', Validators.required],
       vehicleBrand: ['', Validators.required],
@@ -41,54 +43,50 @@ export class VehicleRegistrationComponent {
   editprofile(): void {
     if (this.editFrom.invalid) return;
 
-    const formData = new FormData();
-    formData.append('vehicleType', this.editFrom.value.vehicleType);
-    formData.append('vehicleBrand', this.editFrom.value.vehicleBrand);
-    formData.append('vehicleModel', this.editFrom.value.vehicleModel);
-    formData.append('vehicleYear', this.editFrom.value.vehicleYear);
-    formData.append('vehiclePlate', this.editFrom.value.vehiclePlate);
+    const userId = this.authService.getCurrentUserId(); // Este método lo defines en el AuthService
+    const vehicleData = {
+      Type: this.editFrom.value.vehicleType,
+      vehicleBrand: this.editFrom.value.vehicleBrand,
+      vehicleModel: this.editFrom.value.vehicleModel,
+      vehicleYear: this.editFrom.value.vehicleYear,
+      vehiclePlate: this.editFrom.value.vehiclePlate,
+      Imagen: this.previewUrl, // imagen en base64
+      IdUsuariosFk: { Id: userId }
+    };
 
-    if (this.selectedFile) {
-      formData.append('profileImage', this.selectedFile); // 'profileImage' debe coincidir con el backend
-    }
-
-    this.http.post('http://localhost:8082/v1/usuarios/actualizar', formData).subscribe({
-      next: (response) => {
-        console.log('Actualización exitosa', response);
-        // Redireccionar o mostrar éxito
-      },
-      error: (err) => {
-        console.error('Error al actualizar perfil', err);
-      }
+    this.apiService.post('vehiculos', vehicleData).subscribe({
+      next: (response) => console.log('Vehículo registrado', response),
+      error: (err) => console.error('Error', err)
     });
   }
 
+
   previewUrl: string | ArrayBuffer | null = null;
-selectedFile: File | null = null;
+  selectedFile: File | null = null;
 
-onFileSelected(event: Event): void {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) {
-    const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
-    const maxSizeInMB = 2; // Tamaño máximo permitido
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+      const maxSizeInMB = 2; // Tamaño máximo permitido
 
-    if (!validTypes.includes(file.type)) {
-      alert('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
-      return;
+      if (!validTypes.includes(file.type)) {
+        alert('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
+        return;
+      }
+
+      if (file.size > maxSizeInMB * 1024 * 1024) {
+        alert(`La imagen no debe superar los ${maxSizeInMB}MB.`);
+        return;
+      }
+
+      this.selectedFile = file;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
+      reader.readAsDataURL(file);
     }
-
-    if (file.size > maxSizeInMB * 1024 * 1024) {
-      alert(`La imagen no debe superar los ${maxSizeInMB}MB.`);
-      return;
-    }
-
-    this.selectedFile = file;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.previewUrl = reader.result;
-    };
-    reader.readAsDataURL(file);
   }
-}
 }

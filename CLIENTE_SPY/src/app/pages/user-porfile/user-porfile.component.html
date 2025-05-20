@@ -34,7 +34,8 @@
               <div class="vehicle-grid">
                 <mat-card class="vehicle-information" *ngFor="let v of vehiculos">
                   <div class="vehicle-text">
-                    {{ v.Tipo }} Marca: {{ v.Marca }} {{ v.Modelo || '' }}<br>
+                    Marca: {{ v.Marca }}<br> 
+                    Modelo: {{ v.Modelo || '' }}<br>
                     Placa: {{ v.Placa || 'N/A' }}
                   </div>
                   <img [src]="v.Imagen ? getBase64ImageSrc(v.Imagen) : '/assets/default-vehicle.jpg'"
@@ -74,13 +75,15 @@
         </mat-card>
       </div>
     </div>
-    <!-- Vista Dinámica como Overlay -->
-    <div class="overlay" *ngIf="vistaSeleccionada">
-      <div class="overlay-content">
-        <button mat-icon-button class="close-btn" (click)="cerrarVista()">✖</button>
-        <ng-container [ngSwitch]="vistaSeleccionada">
-          <app-edit-profile *ngSwitchCase="'editar'"></app-edit-profile>
-          <app-vehicle-registration *ngSwitchCase="'registro'"></app-vehicle-registration>
-        </ng-container>
-      </div>
+  </mat-card>
+  <!-- Vista Dinámica como Overlay -->
+  <div class="overlay" *ngIf="vistaSeleccionada">
+    <div class="overlay-content">
+      <button mat-icon-button class="close-btn" (click)="cerrarVista()">✖</button>
+      <ng-container [ngSwitch]="vistaSeleccionada">
+        <app-edit-profile *ngSwitchCase="'editar'"></app-edit-profile>
+        <app-vehicle-registration *ngSwitchCase="'registro'"></app-vehicle-registration>
+      </ng-container>
     </div>
+  </div>
+</div>

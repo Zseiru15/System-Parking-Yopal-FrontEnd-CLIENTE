@@ -28,5 +28,10 @@ export class AuthService {
     return data ? JSON.parse(data) : null;
   }
 
+  getCurrentUserId(): number {
+    const userData = JSON.parse(localStorage.getItem('user') || '{}');
+    return userData?.Id || 0;
+  }
+
 
 }

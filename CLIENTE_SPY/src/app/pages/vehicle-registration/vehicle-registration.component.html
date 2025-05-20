@@ -2,7 +2,7 @@
   <div class="main-content">
     <div class="title">Registro de Vehiculo</div>
     <mat-card-content>
-      <form [formGroup]="editFrom" (ngSubmit)="editprofile()">
+      <form [formGroup]="editFrom">
         <div class="form-row">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Tipo del Vehiculo</mat-label>
@@ -41,7 +41,8 @@
           </div>
         </div>
         <div class="form-group">
-          <button mat-raised-button color="primary" type="submit" class="submit-btn" (click)="editprofile()">Registrar vehiculo</button>
+          <button mat-raised-button color="primary" type="submit" class="submit-btn" (click)="editprofile()">Registrar
+            vehiculo</button>
         </div>
       </form>
     </mat-card-content>
