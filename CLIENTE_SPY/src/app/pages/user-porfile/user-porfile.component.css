@@ -176,17 +176,20 @@
 }
 
 .submit-btn {
-  min-width: 20%;
+  width: auto;
+  min-width: 150px;
   max-width: 100%;
-  padding: 1rem;
+  padding: 0.7rem 1rem;
   background: rgb(46, 48, 54);
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
-  margin: 1rem 0;
   font-family: var(--font-lustria);
+  word-break: break-word; /* Previene que el texto se desborde */
+  white-space: normal;     /* Permite saltos de línea */
+  text-align: center;
 }
 
 .submit-btn:hover {
@@ -197,8 +200,9 @@
 
 .btn-group {
   display: flex;
+  flex-wrap: wrap;     /* Permite que los botones bajen si no hay espacio */
+  justify-content: flex-start;
   gap: 1rem;
-  margin-bottom: 1rem;
 }
 
 .overlay {
@@ -244,5 +248,16 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .btn-group {
+    justify-content: center;
+  }
+
+  .submit-btn {
+    width: 100%;
+    text-align: center;
   }
 }

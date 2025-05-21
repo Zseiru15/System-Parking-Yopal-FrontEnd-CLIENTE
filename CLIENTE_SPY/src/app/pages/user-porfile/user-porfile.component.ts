@@ -7,6 +7,7 @@ import { MidService } from '../../../services/mid.service';
 import { AuthService } from '../../../services/auth.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { VehicleRegistrationComponent } from '../vehicle-registration/vehicle-registration.component';
+import { ParkingRegistrationComponent } from '../parking-registration/parking-registration.component';
 
 @Component({
   selector: 'app-user-porfile',
@@ -16,7 +17,8 @@ import { VehicleRegistrationComponent } from '../vehicle-registration/vehicle-re
     MatTableModule,
     MatButtonModule,
     EditProfileComponent,
-    VehicleRegistrationComponent
+    VehicleRegistrationComponent,
+    ParkingRegistrationComponent
   ],
   templateUrl: './user-porfile.component.html',
   styleUrl: './user-porfile.component.css'
@@ -27,7 +29,7 @@ export class UserPorfileComponent implements OnInit {
   usuario: any;
   vehiculos: any[] = [];
   parqueaderos: any[] = [];
-  vistaSeleccionada: 'editar' | 'registro' | '' = '';
+  vistaSeleccionada: 'editar' | 'vehiculos' | 'parqueaderos' | '' = '';
 
   constructor(private authService: AuthService, private midService: MidService) { }
 
@@ -84,7 +86,7 @@ export class UserPorfileComponent implements OnInit {
     });
   }
 
-  mostrarVista(vista: 'editar' | 'registro') {
+  mostrarVista(vista: 'editar' | 'vehiculos' | 'parqueaderos') {
     this.vistaSeleccionada = vista;
   }
 

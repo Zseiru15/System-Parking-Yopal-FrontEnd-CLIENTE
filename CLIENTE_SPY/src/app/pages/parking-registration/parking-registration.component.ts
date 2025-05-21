@@ -34,16 +34,21 @@ export class ParkingRegistrationComponent {
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private apiService: ApiService) {
     this.registerForm = this.fb.group({
       parkingName: ['', Validators.required],
+      number: ['', Validators.required],
       latitude: ['', Validators.required],
       length: ['', Validators.required],
+      email: ['', Validators.required],
       address: ['', Validators.required],
       cars: ['', Validators.required],
       motorcycles: ['', Validators.required],
       bicycles: ['', Validators.required],
+      long: ['', Validators.required],
+      broad: ['', Validators.required],
       height: ['', Validators.required],
       type: ['', Validators.required],
       floor: ['', Validators.required],
       shade: ['', Validators.required],
+      description: [''],
     })
   }
 
@@ -53,23 +58,18 @@ export class ParkingRegistrationComponent {
       return;
     }
 
-    const formData = this.registerForm.value;
+    const userId = this.authService.getCurrentUserId(); // Asegúrate de que este método existe
 
-    const extendedData = {
-      ...formData,
+    const formData = {
+      ...this.registerForm.value,
+      Imagen: this.parkingImage,
+      IdAdministradoresFk: { Id: userId }  // 👈 CAMBIO CLAVE AQUÍ
     };
 
-    const jsonData = JSON.stringify(extendedData);
-
-    console.log (jsonData)
-    
-    this.apiService.post(`http://localhost:8082/v1/parqueaderos`, jsonData).subscribe({
-
+    this.apiService.post('parqueaderos', formData).subscribe({
       next: (response) => {
         console.log('Registro exitoso', response);
         alert('Parqueadero creado con éxito');
-
-        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error('Error en el registro:', error);
@@ -77,4 +77,41 @@ export class ParkingRegistrationComponent {
       }
     });
   }
+
+  previewUrl: string | null = null;
+  selectedFile: File | null = null;
+
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+      const maxSizeInMB = 2;
+
+      if (!validTypes.includes(file.type)) {
+        alert('Formato inválido');
+        return;
+      }
+
+      if (file.size > maxSizeInMB * 1024 * 1024) {
+        alert('La imagen es muy grande');
+        return;
+      }
+
+      this.selectedFile = file;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        // Quitamos el encabezado
+        this.previewUrl = result;
+        const base64Index = result.indexOf('base64,') + 7;
+        this.parkingImage = result.substring(base64Index);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  parkingImage: string = '';
+
+
 }

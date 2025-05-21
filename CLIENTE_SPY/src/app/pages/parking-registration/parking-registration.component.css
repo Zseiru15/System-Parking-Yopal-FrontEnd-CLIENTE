@@ -90,26 +90,6 @@
   bottom: 0;
 }
 
-/*Estilo prueba*/
-.demo-stepper {
-  margin-top: 8px;
-}
-
-.demo-form-field {
-  margin-top: 16px;
-}
-
-.demo-radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
-}
-
-.demo-radio-button {
-  margin: 5px;
-}
-/*Estilo prueba*/
-
 .form-row {
   /* Filas para organizar elementos en la misma línea */
   display: flex;
@@ -152,6 +132,40 @@
 .action{
   display: flex;
   justify-content: space-between;
+}
+
+.text-image {
+  text-align: center;
+  color: #ffffff;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 5px 10px;
+  color: white;
+  background-color: #2E3036;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 10px;
+  font-family: var(--font-work-sans);
+  transition: background 0.3s ease;
+}
+
+.custom-file-upload:hover {
+  background-color: #1f2023;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+.preview-img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 10%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+  align-self: center;
 }
 
 /* Estilo del boton iniciar sesion*/

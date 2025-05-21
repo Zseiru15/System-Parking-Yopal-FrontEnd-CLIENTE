@@ -29,10 +29,9 @@
             <input matInput formControlName="vehiclePlate" placeholder="Usuario">
           </mat-form-field>
           <div class="form-group text-image">
-            <div for="profileImage" class="file-name">Foto de Perfil</div>
             <label class="custom-file-upload">
               <input type="file" id="profileImage" accept="image/*" (change)="onFileSelected($event)" />
-              Seleccionar archivo
+              Foto de Perfil
             </label>
             <div class="file-name">
               {{ selectedFile?.name || 'Sin archivo seleccionado' }}

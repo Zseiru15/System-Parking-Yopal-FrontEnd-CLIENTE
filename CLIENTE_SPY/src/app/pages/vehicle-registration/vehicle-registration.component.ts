@@ -50,7 +50,7 @@ export class VehicleRegistrationComponent {
       vehicleModel: this.editFrom.value.vehicleModel,
       vehicleYear: this.editFrom.value.vehicleYear,
       vehiclePlate: this.editFrom.value.vehiclePlate,
-      Imagen: this.previewUrl, // imagen en base64
+      Imagen: this.base64ImageData, //👈 solo el base64 limpio
       IdUsuariosFk: { Id: userId }
     };
 
@@ -63,12 +63,13 @@ export class VehicleRegistrationComponent {
 
   previewUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
+  base64ImageData: string = '';
 
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
-      const maxSizeInMB = 2; // Tamaño máximo permitido
+      const maxSizeInMB = 2;
 
       if (!validTypes.includes(file.type)) {
         alert('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
@@ -84,7 +85,9 @@ export class VehicleRegistrationComponent {
 
       const reader = new FileReader();
       reader.onload = () => {
-        this.previewUrl = reader.result;
+        const result = reader.result as string;
+        this.previewUrl = result; // con prefijo para mostrar vista previa
+        this.base64ImageData = result.split(',')[1]; // sin prefijo para enviar al backend
       };
       reader.readAsDataURL(file);
     }

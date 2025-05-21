@@ -14,12 +14,18 @@
           <p><strong>Teléfono:</strong> {{ usuario?.Telefono }}</p>
         </div>
         <!-- Botones -->
-        <div class="form-row">
-          <div class="btn-group">
-            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar
-              Perfil</button>
-            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('registro')">Registro de
-              Vehículos</button>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="btn-group">
+              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar
+                Perfil</button>
+              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('vehiculos')">Registro de vehículos</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="btn-group">
+              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('parqueaderos')">Registro de parqueaderos</button>
+            </div>
           </div>
         </div>
       </div>
@@ -34,7 +40,7 @@
               <div class="vehicle-grid">
                 <mat-card class="vehicle-information" *ngFor="let v of vehiculos">
                   <div class="vehicle-text">
-                    Marca: {{ v.Marca }}<br> 
+                    Marca: {{ v.Marca }}<br>
                     Modelo: {{ v.Modelo || '' }}<br>
                     Placa: {{ v.Placa || 'N/A' }}
                   </div>
@@ -82,7 +88,8 @@
       <button mat-icon-button class="close-btn" (click)="cerrarVista()">✖</button>
       <ng-container [ngSwitch]="vistaSeleccionada">
         <app-edit-profile *ngSwitchCase="'editar'"></app-edit-profile>
-        <app-vehicle-registration *ngSwitchCase="'registro'"></app-vehicle-registration>
+        <app-vehicle-registration *ngSwitchCase="'vehiculos'"></app-vehicle-registration>
+        <app-parking-registration *ngSwitchCase=" 'parqueaderos' "></app-parking-registration>
       </ng-container>
     </div>
   </div>
