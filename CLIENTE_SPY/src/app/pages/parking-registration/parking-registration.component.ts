@@ -58,11 +58,11 @@ export class ParkingRegistrationComponent {
       return;
     }
 
-    const userId = this.authService.getCurrentUserId(); // Asegúrate de que este método existe
+    const userId = this.authService.getCurrentUserId(); // ID del usuario logeado
 
     const formData = {
       ...this.registerForm.value,
-      Imagen: this.parkingImage,
+      Imagen: this.base64ImageData,
       IdAdministradoresFk: { Id: userId }  // 👈 CAMBIO CLAVE AQUÍ
     };
 
@@ -78,8 +78,9 @@ export class ParkingRegistrationComponent {
     });
   }
 
-  previewUrl: string | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
+  base64ImageData: string = '';
 
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -88,12 +89,12 @@ export class ParkingRegistrationComponent {
       const maxSizeInMB = 2;
 
       if (!validTypes.includes(file.type)) {
-        alert('Formato inválido');
+        alert('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
         return;
       }
 
       if (file.size > maxSizeInMB * 1024 * 1024) {
-        alert('La imagen es muy grande');
+        alert('La imagen no debe superar los ${maxSizeInMB}MB.');
         return;
       }
 
@@ -102,16 +103,11 @@ export class ParkingRegistrationComponent {
       const reader = new FileReader();
       reader.onload = () => {
         const result = reader.result as string;
-        // Quitamos el encabezado
-        this.previewUrl = result;
-        const base64Index = result.indexOf('base64,') + 7;
-        this.parkingImage = result.substring(base64Index);
+        this.previewUrl = result; // con prefijo para mostrar vista previa
+        this.base64ImageData = result.split(',')[1]; // sin prefijo para enviar al backend
       };
       reader.readAsDataURL(file);
     }
   }
-
-  parkingImage: string = '';
-
 
 }

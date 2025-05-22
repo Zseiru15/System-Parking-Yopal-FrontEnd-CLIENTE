@@ -15,11 +15,11 @@
         </div>
         <div class="form-row">
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Usuario</mat-label>
-            <input matInput formControlName="userName" placeholder="Usuario">
+            <mat-label>Numero de identidad</mat-label>
+            <input matInput formControlName="documentNumber" placeholder="Numero de identidad">
           </mat-form-field>
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Numero de identidad</mat-label>
+            <mat-label>Telefono</mat-label>
             <input matInput formControlName="documentNumber" placeholder="Numero de identidad">
           </mat-form-field>
         </div>
@@ -38,26 +38,9 @@
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
           </mat-form-field>
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Confirmar Contraseña</mat-label>
-            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="confirmPassword"
-              placeholder="Confirmar Contraseña">
-            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
-              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Fecha de Nacimiento</mat-label>
-            <input matInput type="date" formControlName="birthDate" placeholder="Fecha de Nacimiento">
-          </mat-form-field>
           <div class="form-group text-image">
-            <div for="profileImage" class="file-name">Foto de Perfil</div>
             <label class="custom-file-upload">
-              <input type="file" id="profileImage" accept="image/*" (change)="onFileSelected($event)" />
-              Seleccionar archivo
-            </label>
+              <input type="file" id="profileImage" accept="image/*" (change)="onFileSelected($event)" /> Foto de Perfil </label>
             <div class="file-name">
               {{ selectedFile?.name || 'Sin archivo seleccionado' }}
             </div>

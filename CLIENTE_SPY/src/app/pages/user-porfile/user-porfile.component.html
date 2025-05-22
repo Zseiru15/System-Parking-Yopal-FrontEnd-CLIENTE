@@ -17,14 +17,11 @@
         <div class="form-group">
           <div class="form-row">
             <div class="btn-group">
-              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar
-                Perfil</button>
+              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar Perfil</button>
               <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('vehiculos')">Registro de vehículos</button>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="btn-group">
+              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('vehiculos')">Actualizar vehículos</button>
               <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('parqueaderos')">Registro de parqueaderos</button>
+              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('parqueaderos')">Actualizar parqueaderos</button>
             </div>
           </div>
         </div>
@@ -40,12 +37,13 @@
               <div class="vehicle-grid">
                 <mat-card class="vehicle-information" *ngFor="let v of vehiculos">
                   <div class="vehicle-text">
+                    <h1>{{v.Tipo}}</h1>
                     Marca: {{ v.Marca }}<br>
                     Modelo: {{ v.Modelo || '' }}<br>
                     Placa: {{ v.Placa || 'N/A' }}
                   </div>
                   <img [src]="v.Imagen ? getBase64ImageSrc(v.Imagen) : '/assets/default-vehicle.jpg'"
-                    [alt]="v.Marca || 'Vehículo'" class="vehicles">
+                    [alt]="v.Marca || 'Vehículo'" class="vehicle-image">
                 </mat-card>
               </div>
             </div>
@@ -65,11 +63,14 @@
               <div class="vehicle-grid">
                 <mat-card class="vehicle-information" *ngFor="let p of parqueaderos">
                   <div class="vehicle-text">
-                    {{ p.Nombres }} - {{ p.Ubicacion }} <br>
-                    Capacidad: {{ p.Capacidad }}
+                    <h4>{{ p.Nombres }}</h4> 
+                    {{ p.Direccion }} <br>
+                    {{p.Email}} <br>
+                    Capacidad: {{ p.Carros + p.Motos + p. Bicicletas }} <br>
+                    {{p.Descripcion}}
                   </div>
                   <img [src]="p.Imagen ? getBase64ImageSrc(p.Imagen) : '/assets/default-parking.jpg'" [alt]="p.Nombres"
-                    class="vehicles" />
+                    class="vehicle-image" />
                 </mat-card>
               </div>
             </div>

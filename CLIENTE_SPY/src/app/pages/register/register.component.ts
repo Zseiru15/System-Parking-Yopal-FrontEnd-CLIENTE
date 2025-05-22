@@ -57,7 +57,6 @@ export class RegisterComponent {
     const extendedData = {
       ...formData,
       Fecha_Creacion: new Date().toISOString(),
-      role: 'user',
     };
 
     const jsonData = JSON.stringify(extendedData);

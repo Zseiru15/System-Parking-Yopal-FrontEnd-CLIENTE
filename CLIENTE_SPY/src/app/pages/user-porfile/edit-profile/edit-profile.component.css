@@ -23,7 +23,7 @@
 }
 
 .edit-profile-container {
-  min-height: auto;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   font-family: var(--font-work-sans);
@@ -37,11 +37,9 @@
 }
 
 .main-content {
-  margin-top: 140px;
-  /*Espaciosuperiorparaevitarqueelcontenidosesuperpongaalencabezadofijo*/margin-bottom: 30px;
   padding: 0rem 2rem 0rem 2rem;
-  /*Espaciointernodelcontenedorprincipal*/background: rgba(255, 255, 255, 0.50);
-  margin: 83px;
+  background: rgba(255, 255, 255, 0.50);
+  margin-top: 8%;
   border-radius: 10px;
   backdrop-filter: blur(10px);
 }
