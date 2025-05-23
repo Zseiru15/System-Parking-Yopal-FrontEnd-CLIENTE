@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,7 +25,7 @@ import { ApiService } from '../../../../services/api.service';
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.css'
 })
-export class EditProfileComponent {
+export class EditProfileComponent implements OnInit {
   editFrom: FormGroup;
   hidePassword = true;
   previewUrl: string | ArrayBuffer | null = null;
@@ -71,15 +71,36 @@ export class EditProfileComponent {
     }
 
     this.apiService.put(`usuarios/${this.userId}`, userData).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         console.log('Actualización exitosa:', res);
         alert('Perfil actualizado con éxito');
+
+        const data = res.Data;
+        if (data) {
+          localStorage.setItem('usuario', JSON.stringify(data));
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/user-porfile']);
+          });
+        }
       },
       error: (err) => {
         console.error('Error en la actualización:', err);
         alert('Hubo un error al actualizar los datos');
       }
     });
+
+  }
+
+  ngOnInit(): void {
+    const user = this.authService.getUsuarioActual();
+    if (user && user.Id) {
+      this.userId = user.Id;
+      console.log('ID del usuario:', this.userId);
+    } else {
+      console.error('No se pudo obtener el ID del usuario');
+      alert('No se pudo obtener el ID del usuario. Intenta iniciar sesión nuevamente.');
+      this.router.navigate(['/login']); // Opcional: redirigir
+    }
   }
 
   onFileSelected(event: Event): void {
