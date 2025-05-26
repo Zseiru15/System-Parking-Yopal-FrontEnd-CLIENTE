@@ -18,14 +18,33 @@ export const routes: Routes = [
         canActivate: [authGuard],
         canActivateChild: [authGuard],
         children: [
+
             {
                 path: 'user-porfile',
                 loadComponent: () => import('./pages/user-porfile/user-porfile.component').then(m => m.UserPorfileComponent),
-                canActivate: [authGuard]
+                canActivate: [authGuard],
+                canActivateChild: [authGuard],
+                children: [
+                    {
+                        path: 'edit-profile',
+                        loadComponent: () => import('./pages/user-porfile/edit-profile/edit-profile.component').then(m => m.EditProfileComponent),
+                        canActivate: [authGuard]
+                    },
+                    {
+                        path: 'vehicle-registration',
+                        loadComponent: () => import('./pages/vehicle-registration/vehicle-registration.component').then(m => m.VehicleRegistrationComponent),
+                        canActivate: [authGuard]
+                    },
+                    {
+                        path: 'parking-registration',
+                        loadComponent: () => import('./pages/parking-registration/parking-registration.component').then(m => m.ParkingRegistrationComponent),
+                        canActivate: [authGuard]
+                    },
+                ]
             },
             {
-                path: 'parking-registration',
-                loadComponent: () => import('./pages/parking-registration/parking-registration.component').then(m => m.ParkingRegistrationComponent),
+                path: 'parking-profile',
+                loadComponent: () => import('./pages/parking-profile/parking-profile.component').then(m => m.ParkingProfileComponent),
                 canActivate: [authGuard]
             },
             {
@@ -59,7 +78,7 @@ export const routes: Routes = [
                 canActivate: [authGuard]
             },
             {
-                path: 'pending-payment-history', 
+                path: 'pending-payment-history',
                 loadComponent: () => import('./pages/pending-payment-history/pending-payment-history.component').then(m => m.PendingPaymentHistoryComponent),
                 canActivate: [authGuard]
             },
@@ -71,24 +90,6 @@ export const routes: Routes = [
             {
                 path: 'comments',
                 loadComponent: () => import('./pages/comments/comments.component').then(m => m.CommentsComponent),
-                canActivate: [authGuard]
-            },
-        ]
-    },
-    {
-        path: 'user-porfile',
-        loadComponent: () => import('./pages/user-porfile/user-porfile.component').then(m => m.UserPorfileComponent),
-        canActivate: [authGuard],
-        canActivateChild: [authGuard],
-        children: [
-            {
-                path: 'edit-profile',
-                loadComponent: () => import('./pages/user-porfile/edit-profile/edit-profile.component').then(m => m.EditProfileComponent),
-                canActivate: [authGuard]
-            },
-            {
-                path: 'vehicle-registration',
-                loadComponent: () => import('./pages/vehicle-registration/vehicle-registration.component').then(m => m.VehicleRegistrationComponent),
                 canActivate: [authGuard]
             },
         ]

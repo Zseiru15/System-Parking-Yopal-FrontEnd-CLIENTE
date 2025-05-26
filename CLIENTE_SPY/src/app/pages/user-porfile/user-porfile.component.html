@@ -17,11 +17,16 @@
         <div class="form-group">
           <div class="form-row">
             <div class="btn-group">
-              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar Perfil</button>
-              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('vehiculos')">Registro de vehículos</button>
-              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('vehiculos')">Actualizar vehículos</button>
-              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('parqueaderos')">Registro de parqueaderos</button>
-              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('parqueaderos')">Actualizar parqueaderos</button>
+              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar
+                Perfil</button>
+              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('vehiculos')">Registro
+                de vehículos</button>
+              <button mat-raised-button color="primary" class="submit-btn"
+                (click)="mostrarVista('vehiculos')">Actualizar vehículos</button>
+              <button mat-raised-button color="primary" class="submit-btn"
+                (click)="mostrarVista('parqueaderos')">Registro de parqueaderos</button>
+              <button mat-raised-button color="primary" class="submit-btn"
+                (click)="mostrarVista('parqueaderos')">Actualizar parqueaderos</button>
             </div>
           </div>
         </div>
@@ -63,7 +68,7 @@
               <div class="vehicle-grid">
                 <mat-card class="vehicle-information" *ngFor="let p of parqueaderos">
                   <div class="vehicle-text">
-                    <h4>{{ p.Nombres }}</h4> 
+                    <h4>{{ p.Nombres }}</h4>
                     {{ p.Direccion }} <br>
                     {{p.Email}} <br>
                     Capacidad: {{ p.Carros + p.Motos + p. Bicicletas }} <br>
@@ -88,9 +93,9 @@
     <div class="overlay-content">
       <button mat-icon-button class="close-btn" (click)="cerrarVista()">✖</button>
       <ng-container [ngSwitch]="vistaSeleccionada">
-        <app-edit-profile *ngSwitchCase="'editar'"></app-edit-profile>
-        <app-vehicle-registration *ngSwitchCase="'vehiculos'"></app-vehicle-registration>
-        <app-parking-registration *ngSwitchCase=" 'parqueaderos' "></app-parking-registration>
+        <app-edit-profile *ngSwitchCase="'editar'"(refreshUsuario)="actualizarUsuarioDesdeLocalStorage(); cerrarVista()"></app-edit-profile>
+        <app-vehicle-registration *ngSwitchCase="'vehiculos'"(refreshVehiculos)="obtenerVehiculosDelUsuario(usuario.Id); cerrarVista()"></app-vehicle-registration>
+        <app-parking-registration *ngSwitchCase="'parqueaderos'"(refreshParqueaderos)="obtenerParqueaderosDelUsuario(usuario.Id); cerrarVista()"></app-parking-registration>
       </ng-container>
     </div>
   </div>

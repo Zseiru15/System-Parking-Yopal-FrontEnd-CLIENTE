@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,6 +27,7 @@ import { AuthService } from '../../../services/auth.service'; // Ajusta según e
   styleUrl: './vehicle-registration.component.css'
 })
 export class VehicleRegistrationComponent {
+  @Output() refreshVehiculos = new EventEmitter<void>(); // ✅ Este evento lo escucha el padre
   hidePassword = true;
   editFrom: FormGroup;
 
@@ -43,20 +44,27 @@ export class VehicleRegistrationComponent {
   editprofile(): void {
     if (this.editFrom.invalid) return;
 
-    const userId = this.authService.getCurrentUserId(); // Este método lo defines en el AuthService
+    const userId = this.authService.getCurrentUserId();
     const vehicleData = {
       Type: this.editFrom.value.vehicleType,
       vehicleBrand: this.editFrom.value.vehicleBrand,
       vehicleModel: this.editFrom.value.vehicleModel,
       vehicleYear: this.editFrom.value.vehicleYear,
       vehiclePlate: this.editFrom.value.vehiclePlate,
-      Imagen: this.base64ImageData, //👈 solo el base64 limpio
+      Imagen: this.base64ImageData,
       IdUsuariosFk: { Id: userId }
     };
 
     this.apiService.post('vehiculos', vehicleData).subscribe({
-      next: (response) => console.log('Vehículo registrado', response),
-      error: (err) => console.error('Error', err)
+      next: (response) => {
+        console.log('Vehículo registrado', response);
+        alert('Vehículo registrado exitosamente');
+        this.refreshVehiculos.emit(); // ✅ Notifica al padre
+      },
+      error: (err) => {
+        console.error('Error', err);
+        alert('Error al registrar el vehículo');
+      }
     });
   }
 

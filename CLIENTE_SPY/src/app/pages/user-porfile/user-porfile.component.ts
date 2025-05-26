@@ -51,6 +51,13 @@ export class UserPorfileComponent implements OnInit {
     return `data:${mime};base64,${base64}`;
   }
 
+  actualizarUsuarioDesdeLocalStorage() {
+    const updatedUser = this.authService.getUsuarioActual();
+    if (updatedUser) {
+      this.usuario = updatedUser;
+    }
+  }
+
   obtenerVehiculosDelUsuario(idUsuario: number) {
     this.midService.getVehiculosByUsuario(idUsuario).subscribe({
       next: (res) => {

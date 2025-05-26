@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,7 +28,7 @@ import { AuthService } from '../../../services/auth.service'; // Ajusta según e
   styleUrl: './parking-registration.component.css'
 })
 export class ParkingRegistrationComponent {
-
+  @Output() refreshParqueaderos = new EventEmitter<void>(); // ✅ Este evento lo escucha el padre
   registerForm: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private apiService: ApiService) {
@@ -70,6 +70,7 @@ export class ParkingRegistrationComponent {
       next: (response) => {
         console.log('Registro exitoso', response);
         alert('Parqueadero creado con éxito');
+        this.refreshParqueaderos.emit(); // ✅ Notifica al padre
       },
       error: (error) => {
         console.error('Error en el registro:', error);

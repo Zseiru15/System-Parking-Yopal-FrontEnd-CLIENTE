@@ -1,0 +1,268 @@
+/* CSS General */
+:root {
+  /* Variables de color y fuentes */
+  --primary-color: #2E3036;
+  /* Color principal (fondo de la cabecera y pie de página) */
+  --text-light: white;
+  /* Color claro para textos (blanco) */
+  --text-dark: black;
+  /* Color oscuro para textos (negro) */
+  --font-lustria: 'Lustria', serif;
+  /* Fuente Lustria para títulos */
+  --font-work-sans: 'Work Sans', sans-serif;
+  /* Fuente Work Sans para cuerpo de texto */
+  --font-marko: 'Marko One', serif;
+  /* Fuente Marko One para títulos específicos */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Asegura que el padding y borde no aumenten el tamaño total del elemento */
+}
+
+.user-profile-container {
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-work-sans);
+  background-image: url('/parking1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 1.97;
+}
+
+.main-content {
+  padding: 0rem 2rem 0rem 2rem;
+  /* Espacio interno del contenedor principal */
+  background: rgba(255, 255, 255, 0.50);
+  margin: 50px;
+  backdrop-filter: blur(10px);
+}
+
+.form-row {
+  /* Filas para organizar elementos en la misma línea */
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  /* Contenedor para cada grupo de entrada */
+  margin-bottom: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  font-family: var(--font-lustria);
+  font-size: 20px;
+  align-self: center;
+  align-items: self-start;
+}
+
+.form-group label {
+  /* Estilo de las etiquetas */
+  display: block;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+  font-size: 20px;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 15px;
+}
+
+
+/* Estilos del titulo */
+.title-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #242424;
+  padding: 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-self: self-start;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  padding: 20px;
+  align-self: center;
+}
+
+.card-row {
+  /* Filas para organizar elementos en la misma línea */
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.card-content {
+  font-size: 20px;
+  background: rgb(46, 48, 54);
+  padding: 10px;
+  width: 650px;
+  height: 500px;
+  max-width: 90%; /* Para que sea responsivo */
+  align-items: center;
+}
+
+.scrollable-box {
+  max-height: 390px; /* puedes ajustar */
+  overflow-y: auto;
+  padding-right: 5px;
+  margin-top: 10px;
+}
+
+/* Opcional para estilo de scroll más suave */
+.scrollable-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-box::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Siempre 2 columnas */
+  gap: 20px;
+  padding: 10px;
+}
+
+.vehicle-information {
+  height: auto;
+  min-height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+}
+
+.vehicle-information:hover {
+  transform: scale(1);
+  box-shadow: 0 2px 8px rgb(46, 48, 54);
+}
+
+.vehicle-text {
+  flex: 1;
+  font-size: 16px;
+  color: #242424;
+  padding-right: 10px;
+}
+
+.vehicle-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.vehicle-image:hover {
+  transform: scale(1.1);
+}
+
+.vehicle-information:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.submit-btn {
+  width: 100%;
+  min-width: 150px;
+  max-width: 100%;
+  padding: 0.7rem 1rem;
+  background: rgb(46, 48, 54);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: var(--font-lustria);
+  word-break: break-word; /* Previene que el texto se desborde */
+  white-space: normal;     /* Permite saltos de línea */
+  text-align: center;
+}
+
+.submit-btn:hover {
+  transform: scale(1.1);
+  background: rgb(55, 108, 219);
+  color: #ffffff;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;     /* Permite que los botones bajen si no hay espacio */
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* oscuro translúcido */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-content {
+  background-color: #fff;
+  padding: 0.3rem;
+  width: 90%;
+  height: 90%;
+  overflow-y: auto;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  animation: fadeInUp 0.3s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .btn-group {
+    justify-content: center;
+  }
+
+  .submit-btn {
+    width: auto;
+    text-align: center;
+  }
+}

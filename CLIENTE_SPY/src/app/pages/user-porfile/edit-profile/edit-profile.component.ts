@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { ApiService } from '../../../../services/api.service';
@@ -26,6 +26,7 @@ import { ApiService } from '../../../../services/api.service';
   styleUrl: './edit-profile.component.css'
 })
 export class EditProfileComponent implements OnInit {
+  @Output() refreshUsuario = new EventEmitter<void>(); // ✅ Este evento lo escucha el padre
   editFrom: FormGroup;
   hidePassword = true;
   previewUrl: string | ArrayBuffer | null = null;
@@ -51,7 +52,6 @@ export class EditProfileComponent implements OnInit {
     }
 
     const userData: any = {};
-
     Object.keys(this.editFrom.controls).forEach(key => {
       const value = this.editFrom.get(key)?.value;
       if (value !== null && value !== '') {
@@ -72,15 +72,11 @@ export class EditProfileComponent implements OnInit {
 
     this.apiService.put(`usuarios/${this.userId}`, userData).subscribe({
       next: (res: any) => {
-        console.log('Actualización exitosa:', res);
-        alert('Perfil actualizado con éxito');
-
         const data = res.Data;
         if (data) {
           localStorage.setItem('usuario', JSON.stringify(data));
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/user-porfile']);
-          });
+          alert('Perfil actualizado con éxito');
+          this.refreshUsuario.emit();  // 🚀 Emitir para el padre
         }
       },
       error: (err) => {
@@ -88,7 +84,6 @@ export class EditProfileComponent implements OnInit {
         alert('Hubo un error al actualizar los datos');
       }
     });
-
   }
 
   ngOnInit(): void {
