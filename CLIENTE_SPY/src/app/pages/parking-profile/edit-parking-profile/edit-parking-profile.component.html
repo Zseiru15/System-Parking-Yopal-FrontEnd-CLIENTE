@@ -1,1 +1,116 @@
-<p>edit-parking-profile works!</p>
+<div class="parking-registration-container">
+  <mat-card class="register-card">
+    <mat-card class="register-form">
+      <h1 class="title">Editar parquederos</h1>
+      <span class="text">Esta seccion permitira registrar nuevos parqueaderos</span>
+      <mat-card-content>
+        <form class="register-form" [formGroup]="registerForm">
+          <div class="form-group">
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="parkingName" placeholder="Parqueader El Sena">
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Telefono</mat-label>
+                <input matInput formControlName="number" placeholder="Parqueader El Sena">
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Latitud</mat-label>
+                <input matInput formControlName="latitude" placeholder="5°19'29.2''N 72°23'22.1''W">
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Longitud</mat-label>
+                <input matInput formControlName="length" placeholder="5°19'29.2''N 72°23'22.1''W">
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="Cra. 19 #36-92 Yopal, Casanare">
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Direccion</mat-label>
+                <input matInput formControlName="address" placeholder="Cra. 19 #36-92 Yopal, Casanare">
+              </mat-form-field>
+            </div>
+            <div class="form-group text-image">
+              <label class="custom-file-upload">
+                <input type="file" id="profileImage" accept="image/*" (change)="onFileSelected($event)" />
+                Foto de Perfil
+              </label>
+              <div class="file-name">
+                {{ selectedFile?.name || 'Sin archivo seleccionado' }}
+              </div>
+              <img *ngIf="previewUrl" [src]="previewUrl" alt="Vista previa" class="preview-img" />
+            </div>
+          </div>
+
+          <h1 class="title">Cupos</h1>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Carros</mat-label>
+              <input matInput formControlName="cars" placeholder="10">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Motos</mat-label>
+              <input matInput formControlName="motorcycles" placeholder="10">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Bicis</mat-label>
+              <input matInput formControlName="bicycles" placeholder="10">
+            </mat-form-field>
+          </div>
+
+          <h1 class="title">Caracteristicas</h1>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>largo</mat-label>
+              <input matInput formControlName="long" placeholder="10">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>ancho</mat-label>
+              <input matInput formControlName="broad" placeholder="10">
+            </mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>altura</mat-label>
+              <input matInput formControlName="height" placeholder="10">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Tipo</mat-label>
+              <mat-select formControlName="type">
+                <mat-option value="Subterráneo">Subterraneo</mat-option>
+                <mat-option value="Aire Libre">Aire Libre</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Pisos</mat-label>
+              <input matInput formControlName="floor" placeholder="10">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Sombra</mat-label>
+              <mat-select formControlName="shade">
+                <mat-option value="Si">Si</mat-option>
+                <mat-option value="No">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Descripcion</mat-label>
+              <input matInput formControlName="description" placeholder="ofrecesmos buenas promociones">
+            </mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" class="submit-btn" (click)="register()">Registrar
+            parqueadero</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-card>
+</div>

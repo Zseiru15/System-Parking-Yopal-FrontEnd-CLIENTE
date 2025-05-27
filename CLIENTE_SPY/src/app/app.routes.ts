@@ -1,8 +1,12 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { EditVehicleComponent } from './pages/vehicle-registration/edit-vehicle/edit-vehicle.component';
+import { EditParkingProfileComponent } from './pages/parking-profile/edit-parking-profile/edit-parking-profile.component';
 
 export const routes: Routes = [
+    {path: 'edit-vehicle', component: EditVehicleComponent},
+    {path: 'edit-parking-profile', component: EditParkingProfileComponent},
     { path: 'welcome', component: WelcomeComponent },
     {
         path: 'login',
@@ -36,8 +40,18 @@ export const routes: Routes = [
                         canActivate: [authGuard]
                     },
                     {
+                        path: 'edit-vehicle',
+                        loadComponent: () => import('./pages/vehicle-registration/vehicle-registration.component').then(m => m.VehicleRegistrationComponent),
+                        canActivate: [authGuard]
+                    },
+                    {
                         path: 'parking-registration',
-                        loadComponent: () => import('./pages/parking-registration/parking-registration.component').then(m => m.ParkingRegistrationComponent),
+                        loadComponent: () => import('./pages/parking-profile/parking-registration/parking-registration.component').then(m => m.ParkingRegistrationComponent),
+                        canActivate: [authGuard]
+                    },
+                    {
+                        path: 'edit-parking-profile',
+                        loadComponent: () => import('./pages/parking-profile/edit-parking-profile/edit-parking-profile.component').then(m => m.EditParkingProfileComponent),
                         canActivate: [authGuard]
                     },
                 ]

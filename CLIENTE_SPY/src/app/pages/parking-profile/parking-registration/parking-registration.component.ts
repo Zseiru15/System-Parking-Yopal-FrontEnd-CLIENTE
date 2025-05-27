@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,9 +8,9 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
+import { ApiService } from '../../../../services/api.service';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../../../services/auth.service'; // Ajusta según estructura
+import { AuthService } from '../../../../services/auth.service'; // Ajusta según estructura
 @Component({
   selector: 'app-parking-registration',
   imports: [
@@ -29,6 +29,7 @@ import { AuthService } from '../../../services/auth.service'; // Ajusta según e
 })
 export class ParkingRegistrationComponent {
   @Output() refreshParqueaderos = new EventEmitter<void>(); // ✅ Este evento lo escucha el padre
+  @Input() parqueadero: any = null;
   registerForm: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private apiService: ApiService) {

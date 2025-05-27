@@ -38,4 +38,14 @@ export class MidService {
   getParqueaderos(): Observable<any> {
     return this.http.get(`${this.baseUrl}/parqueaderos`);
   }
+
+  updateVehiculo(vehiculo: any) {
+    return this.http.put(`URL_DE_TU_API/vehiculos/${vehiculo.Id}`, vehiculo);
+  }
+
+  updateParqueadero(parqueadero: any) {
+    return this.http.put(`URL_DE_TU_API/parqueaderos/${parqueadero.Id}`, parqueadero);
+  }
+
+
 }

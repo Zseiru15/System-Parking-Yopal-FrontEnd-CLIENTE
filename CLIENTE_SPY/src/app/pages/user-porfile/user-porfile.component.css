@@ -180,6 +180,42 @@
   transition: all 0.3s ease;
 }
 
+.button-actions {
+  display: flex;
+  justify-content: center; /* ⬅️ centra horizontalmente */
+  align-items: center;     /* ⬆️ centra verticalmente si hay altura */
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.button-edit{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgb(46, 48, 54);
+  color: rgb(255, 255, 255);
+  padding-top: 0.1rem;
+  padding-left: 0.1rem;
+}
+
+.button-delete{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgb(46, 48, 54);
+  color: rgb(255, 255, 255);
+  padding-top: 0.1rem;
+  padding-left: 0.1rem;
+}
+
+.button-edit:hover {
+  background: rgb(55, 108, 219);
+}
+
+.button-delete:hover {
+  background: rgb(255, 10, 10);
+}
+
 .submit-btn {
   width: 100%;
   min-width: 150px;

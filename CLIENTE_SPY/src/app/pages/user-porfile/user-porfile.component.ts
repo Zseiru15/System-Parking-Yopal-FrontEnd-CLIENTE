@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MidService } from '../../../services/mid.service';
 import { AuthService } from '../../../services/auth.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { VehicleRegistrationComponent } from '../vehicle-registration/vehicle-registration.component';
-import { ParkingRegistrationComponent } from '../parking-registration/parking-registration.component';
+import { EditVehicleComponent } from '../vehicle-registration/edit-vehicle/edit-vehicle.component';
+import { ParkingRegistrationComponent } from '../parking-profile/parking-registration/parking-registration.component';
+import { EditParkingProfileComponent } from '../parking-profile/edit-parking-profile/edit-parking-profile.component';
 
 @Component({
   selector: 'app-user-porfile',
@@ -16,9 +19,10 @@ import { ParkingRegistrationComponent } from '../parking-registration/parking-re
     MatCardModule,
     MatTableModule,
     MatButtonModule,
+    MatIconModule,
     EditProfileComponent,
     VehicleRegistrationComponent,
-    ParkingRegistrationComponent
+    ParkingRegistrationComponent,
   ],
   templateUrl: './user-porfile.component.html',
   styleUrl: './user-porfile.component.css'
@@ -28,8 +32,10 @@ export class UserPorfileComponent implements OnInit {
 
   usuario: any;
   vehiculos: any[] = [];
+  vehiculoEditando: any = null;
   parqueaderos: any[] = [];
-  vistaSeleccionada: 'editar' | 'vehiculos' | 'parqueaderos' | '' = '';
+  parqueaderoEditando: any = null;
+  vistaSeleccionada: 'editar' | 'vehiculos' | 'parqueaderos' | 'vehiculoEditando' | 'parqueaderoEditando' | '' = '';
 
   constructor(private authService: AuthService, private midService: MidService) { }
 
@@ -93,7 +99,15 @@ export class UserPorfileComponent implements OnInit {
     });
   }
 
-  mostrarVista(vista: 'editar' | 'vehiculos' | 'parqueaderos') {
+  editarVehiculo(vehiculo: any) {
+    this.mostrarVista('vehiculos', vehiculo); // pasa datos al overlay
+  }
+
+  editarParqueadero(parqueadero: any) {
+    this.mostrarVista('parqueaderos', parqueadero); // pasa datos al overlay
+  }
+
+  mostrarVista(vista: 'editar' | 'vehiculos' | 'parqueaderos' | 'vehiculoEditando' | 'parqueaderoEditando' , datos?: any) {
     this.vistaSeleccionada = vista;
   }
 

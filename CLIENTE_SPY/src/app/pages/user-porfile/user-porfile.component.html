@@ -15,19 +15,13 @@
         </div>
         <!-- Botones -->
         <div class="form-group">
-          <div class="form-row">
-            <div class="btn-group">
-              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar
-                Perfil</button>
-              <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('vehiculos')">Registro
-                de vehículos</button>
-              <button mat-raised-button color="primary" class="submit-btn"
-                (click)="mostrarVista('vehiculos')">Actualizar vehículos</button>
-              <button mat-raised-button color="primary" class="submit-btn"
-                (click)="mostrarVista('parqueaderos')">Registro de parqueaderos</button>
-              <button mat-raised-button color="primary" class="submit-btn"
-                (click)="mostrarVista('parqueaderos')">Actualizar parqueaderos</button>
-            </div>
+          <div class="btn-group">
+            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('editar')">Editar
+              Perfil</button>
+            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('vehiculos')">Registro
+              de vehículos</button>
+            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('parqueaderos')">Registro
+              de parqueaderos</button>
           </div>
         </div>
       </div>
@@ -47,8 +41,18 @@
                     Modelo: {{ v.Modelo || '' }}<br>
                     Placa: {{ v.Placa || 'N/A' }}
                   </div>
-                  <img [src]="v.Imagen ? getBase64ImageSrc(v.Imagen) : '/assets/default-vehicle.jpg'"
-                    [alt]="v.Marca || 'Vehículo'" class="vehicle-image">
+                  <div>
+                    <img [src]="v.Imagen ? getBase64ImageSrc(v.Imagen) : '/assets/default-vehicle.jpg'"
+                      [alt]="v.Marca || 'Vehículo'" class="vehicle-image">
+                    <div class="button-actions">
+                      <button mat-icon-button color="primary" (click)="mostrarVista('vehiculoEditando', v)">
+                        <mat-icon class="button-edit">edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" (click)="mostrarVista('vehiculoEditando', v)">
+                        <mat-icon class="button-delete">delete</mat-icon> <!-- caneca de basura -->
+                      </button>
+                    </div>
+                  </div>
                 </mat-card>
               </div>
             </div>
@@ -74,8 +78,18 @@
                     Capacidad: {{ p.Carros + p.Motos + p. Bicicletas }} <br>
                     {{p.Descripcion}}
                   </div>
-                  <img [src]="p.Imagen ? getBase64ImageSrc(p.Imagen) : '/assets/default-parking.jpg'" [alt]="p.Nombres"
-                    class="vehicle-image" />
+                  <div>
+                    <img [src]="p.Imagen ? getBase64ImageSrc(p.Imagen) : '/assets/default-parking.jpg'"
+                      [alt]="p.Nombres" class="vehicle-image" />
+                    <div class="button-actions">
+                      <button mat-icon-button color="primary" (click)="editarParqueadero(p)">
+                        <mat-icon class="button-edit">edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn">
+                        <mat-icon class="button-delete">delete</mat-icon> <!-- caneca de basura -->
+                      </button>
+                    </div>
+                  </div>
                 </mat-card>
               </div>
             </div>
@@ -93,9 +107,15 @@
     <div class="overlay-content">
       <button mat-icon-button class="close-btn" (click)="cerrarVista()">✖</button>
       <ng-container [ngSwitch]="vistaSeleccionada">
-        <app-edit-profile *ngSwitchCase="'editar'"(refreshUsuario)="actualizarUsuarioDesdeLocalStorage(); cerrarVista()"></app-edit-profile>
-        <app-vehicle-registration *ngSwitchCase="'vehiculos'"(refreshVehiculos)="obtenerVehiculosDelUsuario(usuario.Id); cerrarVista()"></app-vehicle-registration>
-        <app-parking-registration *ngSwitchCase="'parqueaderos'"(refreshParqueaderos)="obtenerParqueaderosDelUsuario(usuario.Id); cerrarVista()"></app-parking-registration>
+        <app-edit-profile *ngSwitchCase="'editar'"
+          (refreshUsuario)="actualizarUsuarioDesdeLocalStorage(); cerrarVista()"></app-edit-profile>
+        <app-vehicle-registration *ngSwitchCase="'vehiculos'" (click)="vehiculos"
+          (refreshVehiculos)="obtenerVehiculosDelUsuario(usuario.Id); cerrarVista()">
+        </app-vehicle-registration>
+        <app-parking-registration *ngSwitchCase="'parqueaderos'" (click)="parqueaderos"
+          (refreshParqueaderos)="obtenerParqueaderosDelUsuario(usuario.Id); cerrarVista()">
+        </app-parking-registration>
+
       </ng-container>
     </div>
   </div>
