@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_URLS } from '../config/api-config';
+import { ApiService } from './api.service'; // ajusta la ruta si es necesario
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { API_URLS } from '../config/api-config';
 export class MidService {
   private baseUrl = `${API_URLS.MID.Api_mid}`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apiService: ApiService) { }
 
   registerUser(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/usuarios`, data);
@@ -43,9 +44,8 @@ export class MidService {
     return this.http.put(`URL_DE_TU_API/vehiculos/${vehiculo.Id}`, vehiculo);
   }
 
-  updateParqueadero(parqueadero: any) {
-    return this.http.put(`URL_DE_TU_API/parqueaderos/${parqueadero.Id}`, parqueadero);
+  updateParqueadero(id: number, body: any): Observable<any> {
+    return this.apiService.put(`parqueaderos/${id}`, body);
   }
-
 
 }

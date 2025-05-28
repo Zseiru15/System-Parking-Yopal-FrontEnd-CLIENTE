@@ -115,7 +115,9 @@
         <app-parking-registration *ngSwitchCase="'parqueaderos'" (click)="parqueaderos"
           (refreshParqueaderos)="obtenerParqueaderosDelUsuario(usuario.Id); cerrarVista()">
         </app-parking-registration>
-
+        <app-edit-parking-profile *ngSwitchCase="'parqueaderoEditando'" [parqueadero]="parqueaderoEditando"
+          (refreshParqueaderos)="obtenerParqueaderosDelUsuario(usuario.Id); cerrarVista()">
+        </app-edit-parking-profile>
       </ng-container>
     </div>
   </div>

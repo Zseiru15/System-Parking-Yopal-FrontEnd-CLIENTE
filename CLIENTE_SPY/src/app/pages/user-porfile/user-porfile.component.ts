@@ -23,7 +23,8 @@ import { EditParkingProfileComponent } from '../parking-profile/edit-parking-pro
     EditProfileComponent,
     VehicleRegistrationComponent,
     ParkingRegistrationComponent,
-  ],
+    EditParkingProfileComponent
+],
   templateUrl: './user-porfile.component.html',
   styleUrl: './user-porfile.component.css'
 })

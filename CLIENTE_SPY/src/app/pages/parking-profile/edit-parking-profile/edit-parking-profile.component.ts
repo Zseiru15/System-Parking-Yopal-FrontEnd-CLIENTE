@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../../../services/api.service';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../../services/auth.service'; // Ajusta según estructura
+import { MidService } from '../../../../services/mid.service';
 
 @Component({
   selector: 'app-edit-parking-profile',
@@ -28,61 +29,69 @@ import { AuthService } from '../../../../services/auth.service'; // Ajusta segú
   templateUrl: './edit-parking-profile.component.html',
   styleUrl: './edit-parking-profile.component.css'
 })
-export class EditParkingProfileComponent {
-  @Output() refreshParqueaderos = new EventEmitter<void>(); // ✅ Este evento lo escucha el padre
+export class EditParkingProfileComponent implements OnInit {
+  @Output() refreshParqueaderos = new EventEmitter<void>();
+  @Input() parqueadero: any = null;
+
   registerForm: FormGroup;
-
-  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private apiService: ApiService) {
-    this.registerForm = this.fb.group({
-      parkingName: ['', Validators.required],
-      number: ['', Validators.required],
-      latitude: ['', Validators.required],
-      length: ['', Validators.required],
-      email: ['', Validators.required],
-      address: ['', Validators.required],
-      cars: ['', Validators.required],
-      motorcycles: ['', Validators.required],
-      bicycles: ['', Validators.required],
-      long: ['', Validators.required],
-      broad: ['', Validators.required],
-      height: ['', Validators.required],
-      type: ['', Validators.required],
-      floor: ['', Validators.required],
-      shade: ['', Validators.required],
-      description: [''],
-    })
-  }
-
-  register() {
-    if (!this.registerForm.valid) {
-      alert('Por favor complete todos los campos');
-      return;
-    }
-
-    const userId = this.authService.getCurrentUserId(); // ID del usuario logeado
-
-    const formData = {
-      ...this.registerForm.value,
-      Imagen: this.base64ImageData,
-      IdAdministradoresFk: { Id: userId }  // 👈 CAMBIO CLAVE AQUÍ
-    };
-
-    this.apiService.post('parqueaderos', formData).subscribe({
-      next: (response) => {
-        console.log('Registro exitoso', response);
-        alert('Parqueadero creado con éxito');
-        this.refreshParqueaderos.emit(); // ✅ Notifica al padre
-      },
-      error: (error) => {
-        console.error('Error en el registro:', error);
-        alert('Error al guardar el parqueadero o ya existe');
-      }
-    });
-  }
-
   previewUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
   base64ImageData: string = '';
+
+  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private apiService: ApiService, private midService: MidService) {
+    this.registerForm = this.fb.group({
+      parkingName: [''],
+      number: [''],
+      latitude: [''],
+      length: [''],
+      email: [''],
+      address: [''],
+      cars: [''],
+      motorcycles: [''],
+      bicycles: [''],
+      long: [''],
+      broad: [''],
+      height: [''],
+      type: [''],
+      floor: [''],
+      shade: [''],
+      description: [''],
+    });
+  }
+
+  ngOnInit(): void {
+    if (this.parqueadero) {
+      this.registerForm.patchValue({
+        parkingName: this.parqueadero.Nombres,
+        number: this.parqueadero.Telefono,
+        latitude: this.parqueadero.Latitud,
+        length: this.parqueadero.Longitud,
+        email: this.parqueadero.Email,
+        address: this.parqueadero.Direccion,
+        cars: this.parqueadero.Carros,
+        motorcycles: this.parqueadero.Motos,
+        bicycles: this.parqueadero.Bicicletas,
+        long: this.parqueadero.Largo,
+        broad: this.parqueadero.Ancho,
+        height: this.parqueadero.Altura,
+        type: this.parqueadero.Tipo,
+        floor: this.parqueadero.Pisos,
+        shade: this.parqueadero.Sombra,
+        description: this.parqueadero.Descripcion
+      });
+
+      if (this.parqueadero.Imagen) {
+        this.previewUrl = this.getBase64ImageSrc(this.parqueadero.Imagen);
+        this.base64ImageData = this.parqueadero.Imagen;
+      }
+    }
+  }
+
+  getBase64ImageSrc(base64: string): string {
+    const mime = base64.startsWith('/9j/') ? 'image/jpeg' :
+      base64.startsWith('iVBOR') ? 'image/png' : 'image/jpeg';
+    return `data:${mime};base64,${base64}`;
+  }
 
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -91,25 +100,72 @@ export class EditParkingProfileComponent {
       const maxSizeInMB = 2;
 
       if (!validTypes.includes(file.type)) {
-        alert('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
+        alert('Formato de imagen no permitido.');
         return;
       }
 
       if (file.size > maxSizeInMB * 1024 * 1024) {
-        alert('La imagen no debe superar los ${maxSizeInMB}MB.');
+        alert(`Imagen muy pesada, máximo ${maxSizeInMB}MB.`);
         return;
       }
-
-      this.selectedFile = file;
 
       const reader = new FileReader();
       reader.onload = () => {
         const result = reader.result as string;
-        this.previewUrl = result; // con prefijo para mostrar vista previa
-        this.base64ImageData = result.split(',')[1]; // sin prefijo para enviar al backend
+        this.previewUrl = result;
+        this.base64ImageData = result.split(',')[1];
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  update(): void {
+    if (!this.parqueadero?.Id) {
+      alert('Error: No se proporcionó un ID válido');
+      return;
+    }
+
+    const formValue = this.registerForm.value;
+    const dataToSend: any = {};
+
+    for (const key in formValue) {
+      if (formValue[key] !== null && formValue[key] !== '') {
+        switch (key) {
+          case 'parkingName': dataToSend['Nombres'] = formValue[key]; break;
+          case 'number': dataToSend['Telefono'] = formValue[key]; break;
+          case 'latitude': dataToSend['Latitud'] = formValue[key]; break;
+          case 'length': dataToSend['Longitud'] = formValue[key]; break;
+          case 'email': dataToSend['Email'] = formValue[key]; break;
+          case 'address': dataToSend['Direccion'] = formValue[key]; break;
+          case 'cars': dataToSend['Carros'] = formValue[key]; break;
+          case 'motorcycles': dataToSend['Motos'] = formValue[key]; break;
+          case 'bicycles': dataToSend['Bicicletas'] = formValue[key]; break;
+          case 'long': dataToSend['Largo'] = formValue[key]; break;
+          case 'broad': dataToSend['Ancho'] = formValue[key]; break;
+          case 'height': dataToSend['Altura'] = formValue[key]; break;
+          case 'type': dataToSend['Tipo'] = formValue[key]; break;
+          case 'floor': dataToSend['Pisos'] = formValue[key]; break;
+          case 'shade': dataToSend['Sombra'] = formValue[key]; break;
+          case 'description': dataToSend['Descripcion'] = formValue[key]; break;
+        }
+      }
+    }
+
+    if (this.base64ImageData) {
+      dataToSend['Imagen'] = this.base64ImageData;
+    }
+
+    this.midService.updateParqueadero(this.parqueadero.Id, dataToSend).subscribe({
+      next: (res) => {
+        console.log('✅ Parqueadero actualizado', res);
+        alert('Parqueadero actualizado correctamente');
+        this.refreshParqueaderos.emit();
+      },
+      error: (err) => {
+        console.error('❌ Error al actualizar parqueadero:', err);
+        alert('Error al actualizar el parqueadero');
+      }
+    });
   }
 
 }
