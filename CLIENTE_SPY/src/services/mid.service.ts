@@ -40,8 +40,8 @@ export class MidService {
     return this.http.get(`${this.baseUrl}/parqueaderos`);
   }
 
-  updateVehiculo(vehiculo: any) {
-    return this.http.put(`URL_DE_TU_API/vehiculos/${vehiculo.Id}`, vehiculo);
+  updateVehiculo(id: number, data: any): Observable<any> {
+    return this.apiService.put(`vehiculos/${id}`, data);
   }
 
   updateParqueadero(id: number, body: any): Observable<any> {

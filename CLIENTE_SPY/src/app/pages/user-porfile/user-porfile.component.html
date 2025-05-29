@@ -45,10 +45,10 @@
                     <img [src]="v.Imagen ? getBase64ImageSrc(v.Imagen) : '/assets/default-vehicle.jpg'"
                       [alt]="v.Marca || 'Vehículo'" class="vehicle-image">
                     <div class="button-actions">
-                      <button mat-icon-button color="primary" (click)="mostrarVista('vehiculoEditando', v)">
+                      <button mat-icon-button color="primary" (click)="editarVehiculo(v)">
                         <mat-icon class="button-edit">edit</mat-icon>
                       </button>
-                      <button mat-icon-button color="warn" (click)="mostrarVista('vehiculoEditando', v)">
+                      <button mat-icon-button color="warn" (click)="mostrarVista('editvehiculo', v)">
                         <mat-icon class="button-delete">delete</mat-icon> <!-- caneca de basura -->
                       </button>
                     </div>
@@ -89,6 +89,10 @@
                         <mat-icon class="button-delete">delete</mat-icon> <!-- caneca de basura -->
                       </button>
                     </div>
+                    <button mat-raised-button color="accent" class="submit-btn" (click)="parqueaderoSeleccionado(p)">
+                      Ver Perfil
+                    </button>
+
                   </div>
                 </mat-card>
               </div>
@@ -108,14 +112,21 @@
       <button mat-icon-button class="close-btn" (click)="cerrarVista()">✖</button>
       <ng-container [ngSwitch]="vistaSeleccionada">
         <app-edit-profile *ngSwitchCase="'editar'"
-          (refreshUsuario)="actualizarUsuarioDesdeLocalStorage(); cerrarVista()"></app-edit-profile>
+          (refreshUsuario)="actualizarUsuarioDesdeLocalStorage(); cerrarVista()">
+        </app-edit-profile>
+        <app-parking-profile *ngSwitchCase="'profileparqueadero'" [parqueadero]="profileparqueadero"
+          (cerrar)="cerrarVista()">
+        </app-parking-profile>
         <app-vehicle-registration *ngSwitchCase="'vehiculos'" (click)="vehiculos"
           (refreshVehiculos)="obtenerVehiculosDelUsuario(usuario.Id); cerrarVista()">
         </app-vehicle-registration>
+        <app-edit-vehicle *ngSwitchCase="'editvehiculo'" [vehiculo]="editvehiculo"
+          (refreshVehiculos)="obtenerVehiculosDelUsuario(usuario.Id); cerrarVista()">
+        </app-edit-vehicle>
         <app-parking-registration *ngSwitchCase="'parqueaderos'" (click)="parqueaderos"
           (refreshParqueaderos)="obtenerParqueaderosDelUsuario(usuario.Id); cerrarVista()">
         </app-parking-registration>
-        <app-edit-parking-profile *ngSwitchCase="'parqueaderoEditando'" [parqueadero]="parqueaderoEditando"
+        <app-edit-parking-profile *ngSwitchCase="'editparqueadero'" [parqueadero]="editparqueadero"
           (refreshParqueaderos)="obtenerParqueaderosDelUsuario(usuario.Id); cerrarVista()">
         </app-edit-parking-profile>
       </ng-container>

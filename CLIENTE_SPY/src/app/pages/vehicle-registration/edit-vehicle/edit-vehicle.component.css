@@ -1,0 +1,133 @@
+/* CSS General */
+:root {
+  /* Variables de color y fuentes */
+  --primary-color: #2E3036;
+  /* Color principal (fondo de la cabecera y pie de página) */
+  --text-light: white;
+  /* Color claro para textos (blanco) */
+  --text-dark: black;
+  /* Color oscuro para textos (negro) */
+  --font-lustria: 'Lustria', serif;
+  /* Fuente Lustria para títulos */
+  --font-work-sans: 'Work Sans', sans-serif;
+  /* Fuente Work Sans para cuerpo de texto */
+  --font-marko: 'Marko One', serif;
+  /* Fuente Marko One para títulos específicos */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Asegura que el padding y borde no aumenten el tamaño total del elemento */
+}
+
+.edit-profile-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-work-sans);
+  background-image: url('/fondo-sesion.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 1.6;
+  align-items: center;
+  padding: 3rem;
+}
+
+.main-content {
+  margin: 140px;
+  padding: 2rem 2rem 2rem 2rem;
+  /*Espaciointernodelcontenedorprincipal*/background: rgba(255, 255, 255, 0.50);
+  margin: 83px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.full-width{
+  color: #ffffff;
+  width: auto;
+  height: 75px;
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid transparent;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #242424;
+  padding: 10px;
+  text-align: center;
+}
+
+.form-row {
+  /* Filas para organizar elementos en la misma línea */
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap; /* para responsividad en pantallas pequeñas */
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.form-group {
+  /* Contenedor para cada grupo de entrada */
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  font-family: var(--font-lustria);
+  font-size: 20px;
+}
+
+.form-group label {
+  /* Estilo de las etiquetas */
+  display: block;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+  font-size: 20px;
+}
+
+.file-name {
+  font-size: 16px;
+  color: #000000;
+  font-style: italic;
+}
+.text-image {
+  text-align: center;
+  color: #ffffff;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 5px 10px;
+  color: white;
+  background-color: #2E3036;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 10px;
+  font-family: var(--font-work-sans);
+  transition: background 0.3s ease;
+}
+
+.custom-file-upload:hover {
+  background-color: #1f2023;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+.preview-img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}

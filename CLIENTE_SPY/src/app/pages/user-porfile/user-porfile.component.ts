@@ -11,7 +11,7 @@ import { VehicleRegistrationComponent } from '../vehicle-registration/vehicle-re
 import { EditVehicleComponent } from '../vehicle-registration/edit-vehicle/edit-vehicle.component';
 import { ParkingRegistrationComponent } from '../parking-profile/parking-registration/parking-registration.component';
 import { EditParkingProfileComponent } from '../parking-profile/edit-parking-profile/edit-parking-profile.component';
-
+import { ParkingProfileComponent } from '../parking-profile/parking-profile.component';
 @Component({
   selector: 'app-user-porfile',
   imports: [
@@ -21,10 +21,12 @@ import { EditParkingProfileComponent } from '../parking-profile/edit-parking-pro
     MatButtonModule,
     MatIconModule,
     EditProfileComponent,
+    ParkingProfileComponent,
     VehicleRegistrationComponent,
+    EditVehicleComponent,
     ParkingRegistrationComponent,
     EditParkingProfileComponent
-],
+  ],
   templateUrl: './user-porfile.component.html',
   styleUrl: './user-porfile.component.css'
 })
@@ -33,10 +35,11 @@ export class UserPorfileComponent implements OnInit {
 
   usuario: any;
   vehiculos: any[] = [];
-  vehiculoEditando: any = null;
+  editvehiculo: any = null;
   parqueaderos: any[] = [];
-  parqueaderoEditando: any = null;
-  vistaSeleccionada: 'editar' | 'vehiculos' | 'parqueaderos' | 'vehiculoEditando' | 'parqueaderoEditando' | '' = '';
+  editparqueadero: any = null;
+  profileparqueadero: any = null; // 🆕
+  vistaSeleccionada: 'editar' | 'vehiculos' | 'parqueaderos' | 'editvehiculo' | 'editparqueadero' | 'profileparqueadero' | '' = '';
 
   constructor(private authService: AuthService, private midService: MidService) { }
 
@@ -101,15 +104,34 @@ export class UserPorfileComponent implements OnInit {
   }
 
   editarVehiculo(vehiculo: any) {
-    this.mostrarVista('vehiculos', vehiculo); // pasa datos al overlay
+    this.mostrarVista('editvehiculo', vehiculo); // pasa datos al overlay
   }
 
   editarParqueadero(parqueadero: any) {
-    this.mostrarVista('parqueaderos', parqueadero); // pasa datos al overlay
+    this.mostrarVista('editparqueadero', parqueadero);
   }
 
-  mostrarVista(vista: 'editar' | 'vehiculos' | 'parqueaderos' | 'vehiculoEditando' | 'parqueaderoEditando' , datos?: any) {
+  parqueaderoSeleccionado(parqueaderos: any) {
+    this.mostrarVista('profileparqueadero', parqueaderos);
+  }
+
+  mostrarVista(
+    vista: 'editar' | 'vehiculos' | 'parqueaderos' | 'editvehiculo' | 'editparqueadero' | 'profileparqueadero' | '',
+    datos?: any
+  ) {
     this.vistaSeleccionada = vista;
+
+    if (vista === 'editvehiculo' && datos) {
+      this.editvehiculo = datos;
+    }
+
+    if (vista === 'editparqueadero' && datos) {
+      this.editparqueadero = datos;
+    }
+
+    if (vista === 'profileparqueadero' && datos) {
+      this.profileparqueadero = datos;
+    }
   }
 
   cerrarVista() {

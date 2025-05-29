@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule,} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../services/api.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -100,12 +100,12 @@ export class EditParkingProfileComponent implements OnInit {
       const maxSizeInMB = 2;
 
       if (!validTypes.includes(file.type)) {
-        alert('Formato de imagen no permitido.');
+        alert('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
         return;
       }
 
       if (file.size > maxSizeInMB * 1024 * 1024) {
-        alert(`Imagen muy pesada, máximo ${maxSizeInMB}MB.`);
+        alert(`La imagen no debe superar los ${maxSizeInMB}MB.`);
         return;
       }
 
