@@ -48,4 +48,8 @@ export class MidService {
     return this.apiService.put(`parqueaderos/${id}`, body);
   }
 
+  getTrabajadoresPorParqueadero(idParqueadero: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/usuarios/trabajador/${idParqueadero}`);
+  }
+
 }

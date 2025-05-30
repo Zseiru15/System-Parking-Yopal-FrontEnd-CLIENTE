@@ -9,7 +9,8 @@
                 </div>
                 <mat-card-title class="title-name">{{ parqueadero?.Nombres }}</mat-card-title>
                 <div class="form-group">
-                    <p><strong>Administrador:</strong> {{ parqueadero.IdAdministradoresFk?.Nombres }} {{ parqueadero.IdAdministradoresFk?.Apellidos }} </p>
+                    <p><strong>Administrador:</strong> {{ parqueadero.IdAdministradoresFk?.Nombres }} {{
+                        parqueadero.IdAdministradoresFk?.Apellidos }} </p>
                     <p><strong>Dirección:</strong> {{ parqueadero.Direccion }}</p>
                     <p><strong>Email:</strong> {{ parqueadero.Email }}</p>
                     <p><strong>Teléfono:</strong> {{ parqueadero.Telefono }}</p>
@@ -22,10 +23,7 @@
                 <!-- Botones -->
                 <div class="form-group">
                     <div class="btn-group">
-                        <button mat-raised-button color="primary" class="submit-btn">Editar
-                            Perfil</button>
-                        <button mat-raised-button color="primary" class="submit-btn">Registro de vehículos</button>
-                        <button mat-raised-button color="primary" class="submit-btn">Registro de parqueaderos</button>
+                        <button mat-raised-button color="primary" class="submit-btn">Cotratar</button>
                     </div>
                 </div>
             </div>
@@ -35,12 +33,35 @@
                 <mat-card class="card-content">
                     <mat-card-title class="title">Trabajadores</mat-card-title>
 
+                    <ng-container *ngIf="trabajadores.length > 0; else sinTrabajadores">
+                        <div class="scrollable-box">
+                            <div class="vehicle-grid">
+                                <mat-card class="vehicle-information" *ngFor="let t of trabajadores">
+                                    <div class="vehicle-text">
+                                        <h3>{{ t.Nombres }} {{ t.Apellidos }}</h3>
+                                        <p><strong>Email:</strong> {{ t.Email }}</p>
+                                        <p><strong>Teléfono:</strong> {{ t.Telefono }}</p>
+                                        <!-- Si quieres mostrar el nombre del rol, necesitarías expandir el objeto -->
+                                    </div>
+                                    <div>
+                                        <img [src]="t.Imagen ? getBase64ImageSrc(t.Imagen) : '/assets/default-profile.jpg'"
+                                            [alt]="t.Nombres" class="vehicle-image" />
+                                    </div>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-template #sinTrabajadores>
+                        <p style="margin: 1rem; color: gray;">No hay trabajadores asociados a este parqueadero.</p>
+                    </ng-template>
                 </mat-card>
+
 
                 <!-- Comentarios del parqueadero -->
                 <mat-card class="card-content">
                     <mat-card-title class="title">Comentarios</mat-card-title>
-                    
+
                 </mat-card>
             </div>
         </div>
