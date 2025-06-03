@@ -30,23 +30,27 @@ export class ParkingProfileComponent {
 
   ngOnInit(): void {
     if (this.parqueadero?.Id) {
-      this.obtenerTrabajadores(this.parqueadero.Id); // usa el ID del parqueadero actual
+      this.obtenerTrabajadores(this.parqueadero.Id); // Usa ID del parqueadero actual
     }
   }
+
+
 
   obtenerTrabajadores(idParqueadero: number) {
     this.midService.getTrabajadoresPorParqueadero(idParqueadero).subscribe({
       next: (res) => {
-        if (res.Success && Array.isArray(res.Data)) {
-          this.trabajadores = res.Data;
+        const trabajadoresData = res?.Data || res?.data || [];
+        if (Array.isArray(trabajadoresData)) {
+          this.trabajadores = trabajadoresData;
+          console.log('👷‍♂️ Trabajadores:', this.trabajadores);
         } else {
+          console.warn('⚠️ La respuesta no tiene un array válido:', res);
           this.trabajadores = [];
-          console.warn('⚠️ No hay trabajadores vinculados:', res);
         }
       },
       error: (err) => {
-        this.trabajadores = [];
         console.error('❌ Error al obtener trabajadores:', err);
+        this.trabajadores = [];
       }
     });
   }
@@ -55,7 +59,8 @@ export class ParkingProfileComponent {
     if (!base64 || base64.trim() === '') return '';
     const mime = base64.startsWith('/9j/') ? 'image/jpeg' :
       base64.startsWith('iVBOR') ? 'image/png' :
-        'image/jpeg';
+        base64.startsWith('R0lGOD') ? 'image/gif' :
+          'image/png';
     return `data:${mime};base64,${base64}`;
   }
 }

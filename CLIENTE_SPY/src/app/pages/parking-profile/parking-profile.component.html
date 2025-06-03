@@ -16,9 +16,9 @@
                     <p><strong>Teléfono:</strong> {{ parqueadero.Telefono }}</p>
                     <p><strong>Descripción:</strong> {{ parqueadero.Descripcion }}</p>
                     <p><strong>Cupos: {{ parqueadero.Carros+parqueadero.Motos+parqueadero.Bicicletas}}</strong><br>
-                        Carros: {{ parqueadero.Carros }} | Motos: {{ parqueadero.Motos }} |
-                        Bicis: {{
-                        parqueadero.Bicicletas }}</p>
+                        🚗 Carros: {{ parqueadero.Carros }}<br>
+                        🏍️ Motos: {{ parqueadero.Motos }}<br>
+                        🚲 Bicis: {{parqueadero.Bicicletas }}</p>
                 </div>
                 <!-- Botones -->
                 <div class="form-group">
@@ -55,13 +55,6 @@
                     <ng-template #sinTrabajadores>
                         <p style="margin: 1rem; color: gray;">No hay trabajadores asociados a este parqueadero.</p>
                     </ng-template>
-                </mat-card>
-
-
-                <!-- Comentarios del parqueadero -->
-                <mat-card class="card-content">
-                    <mat-card-title class="title">Comentarios</mat-card-title>
-
                 </mat-card>
             </div>
         </div>
