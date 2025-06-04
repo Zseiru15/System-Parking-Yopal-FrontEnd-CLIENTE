@@ -12,6 +12,13 @@
     (closedStart)="closeAllPanels()">
     <mat-nav-list>
       <mat-accordion [multi]="false">
+        <!-- Inicio -->
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Inicio </mat-panel-title>
+          </mat-expansion-panel-header>
+          <a mat-list-item routerLink="/dashboard" (click)="toggleSidenav()">Inicio</a>
+        </mat-expansion-panel>
         <!-- Usuario -->
         <mat-expansion-panel>
           <mat-expansion-panel-header>
@@ -26,7 +33,6 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Parqueaderos </mat-panel-title>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/dashboard/parking-registration" (click)="toggleSidenav()">Registro</a>
           <a mat-list-item routerLink="/dashboard/parking-history" (click)="toggleSidenav()">Historial</a>
           <a mat-list-item routerLink="/dashboard/search-for-parking-space" (click)="toggleSidenav()">Búsqueda</a>
         </mat-expansion-panel>

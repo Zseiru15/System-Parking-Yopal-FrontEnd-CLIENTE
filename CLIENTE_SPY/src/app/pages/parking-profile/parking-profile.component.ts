@@ -2,7 +2,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MidService } from '../../../services/mid.service';
 import { AuthService } from '../../../services/auth.service';
@@ -16,6 +19,9 @@ import { AuthService } from '../../../services/auth.service';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './parking-profile.component.html',
   styleUrl: './parking-profile.component.css'
@@ -65,6 +71,88 @@ export class ParkingProfileComponent {
     return `data:${mime};base64,${base64}`;
   }
 
-  mostrarFormularioContratar: boolean = false;
+  mostrarContratar: boolean = false;
+  usuarioDisponible: boolean = false;
 
+  buscarUsuario() {
+    if (!this.numeroIdentificacion) {
+      alert('⚠️ Ingrese un número de identificación');
+      return;
+    }
+
+    this.midService.getUsuarioPorIdentificacion(this.numeroIdentificacion).subscribe({
+      next: (res) => {
+        if (res?.Success && res?.Data) {
+          this.usuarioEncontrado = res.Data;
+
+          // Verificar disponibilidad: si NO tiene un estacionamiento asignado
+          this.usuarioDisponible = !this.usuarioEncontrado.IdEstacionamientoTrabajoFk;
+
+        } else {
+          this.usuarioEncontrado = null;
+          this.usuarioDisponible = false;
+          alert('❌ Usuario no encontrado');
+        }
+      },
+      error: (err) => {
+        console.error('❌ Error al buscar el usuario:', err);
+        this.usuarioEncontrado = null;
+        this.usuarioDisponible = false;
+        alert('❌ Error al buscar el usuario');
+      }
+    });
+  }
+
+  asignarParqueaderoAlUsuario() {
+    if (!this.usuarioEncontrado || !this.parqueadero?.Id) {
+      alert('❌ Faltan datos para asignar el parqueadero.');
+      return;
+    }
+
+    const usuarioActualizado = {
+      ...this.usuarioEncontrado,
+      IdEstacionamientoTrabajoFk: { Id: this.parqueadero.Id },
+      IdRolesFk: { Id: 2 }  // 🔁 Rol de trabajador
+    };
+
+    this.midService.actualizarUsuario(usuarioActualizado.Id, usuarioActualizado).subscribe({
+      next: (res) => {
+        alert('✅ Usuario contratado con éxito.');
+        this.usuarioEncontrado = null;
+        this.numeroIdentificacion = '';
+        this.usuarioDisponible = false;
+        this.mostrarContratar = false;
+        this.obtenerTrabajadores(this.parqueadero.Id); // Recargar lista de trabajadores
+      },
+      error: (err) => {
+        console.error('❌ Error al contratar usuario:', err);
+        alert('❌ No se pudo contratar al usuario.');
+      },
+    });
+  }
+
+  despedirTrabajador(usuario: any) {
+  if (!usuario || !usuario.Id) {
+    alert('❌ Datos inválidos del usuario.');
+    return;
+  }
+
+  const usuarioActualizado = {
+    ...usuario,
+    IdRolesFk: { Id: 1 }, // ✅ Usuario común
+    IdEstacionamientoTrabajoFk: null // ✅ Sin parqueadero asignado
+  };
+
+  this.midService.actualizarUsuario(usuario.Id, usuarioActualizado).subscribe({
+    next: () => {
+      alert('✅ Trabajador despedido correctamente.');
+      this.obtenerTrabajadores(this.parqueadero.Id); // 🔄 Actualiza lista
+    },
+    error: (err) => {
+      console.error('❌ Error al despedir trabajador:', err);
+      alert('❌ No se pudo despedir al trabajador.');
+    }
+  });
+}
+  
 }

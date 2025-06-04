@@ -8,32 +8,37 @@ import { ApiService } from './api.service'; // ajusta la ruta si es necesario
   providedIn: 'root'
 })
 export class MidService {
-  private baseUrl = `${API_URLS.MID.Api_mid}`;
 
+  private baseCrud = `${API_URLS.MID.Api_mid}`;
+  private baseMid = `${API_URLS.MID.Api_mid}`;
   constructor(private http: HttpClient, private apiService: ApiService) { }
 
   registerUser(data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/usuarios`, data);
+    return this.http.post<any>(`${this.baseMid}/usuarios`, data);
   }
 
   loginUser(data: any): Observable<any> {
     return this.http.post(`${API_URLS.MID.Api_mid}/usuarios/login`, data);
   }
 
-  buscarUsuarioPorIdentificacion(identificacion: string): Observable<any> {
-  return this.http.get(`${this.baseUrl}/usuarios/identificacion/${identificacion}`);
-}
+  getUsuarioPorIdentificacion(identificacion: string) {
+    return this.http.get<any>(`${this.baseMid}/usuarios/identificacion/${identificacion}`);
+  }
+
+  actualizarUsuario(id: number, data: any) {
+    return this.http.put<any>(`${this.baseCrud}/usuarios/${id}`, data);
+  }
 
   obtenerComentarios(): Observable<any> {
-    return this.http.get(this.baseUrl + '/comentarios');
+    return this.http.get(this.baseMid + '/comentarios');
   }
 
   postComentario(data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/comentarios`, data);
+    return this.http.post<any>(`${this.baseMid}/comentarios`, data);
   }
 
   getVehiculosByUsuario(idUsuario: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/vehiculos/usuario/${idUsuario}`);
+    return this.http.get(`${this.baseMid}/vehiculos/usuario/${idUsuario}`);
   }
 
   updateVehiculo(id: number, data: any): Observable<any> {
@@ -41,15 +46,15 @@ export class MidService {
   }
 
   eliminarVehiculo(id: number): Observable<any> {
-    return this.http.put(`${this.baseUrl}/vehiculos/desactivar/${id}`, {});
+    return this.http.put(`${this.baseMid}/vehiculos/desactivar/${id}`, {});
   }
 
   getParqueaderos(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/parqueaderos`);
+    return this.http.get(`${this.baseMid}/parqueaderos`);
   }
 
   getParqueaderosByUsuario(idUsuario: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/parqueaderos/usuario/${idUsuario}`);
+    return this.http.get(`${this.baseMid}/parqueaderos/usuario/${idUsuario}`);
   }
 
   updateParqueadero(id: number, body: any): Observable<any> {
@@ -57,11 +62,11 @@ export class MidService {
   }
 
   eliminarParqueadero(id: number): Observable<any> {
-    return this.http.put(`${this.baseUrl}/parqueaderos/desactivar/${id}`, {});
+    return this.http.put(`${this.baseMid}/parqueaderos/desactivar/${id}`, {});
   }
 
   getTrabajadoresPorParqueadero(idParqueadero: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/usuarios/trabajador/${idParqueadero}`);
+    return this.http.get(`${this.baseMid}/usuarios/trabajador/${idParqueadero}`);
   }
 
 }
