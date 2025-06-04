@@ -48,7 +48,7 @@
                       <button mat-icon-button color="primary" (click)="editarVehiculo(v)">
                         <mat-icon class="button-edit">edit</mat-icon>
                       </button>
-                      <button mat-icon-button color="warn" (click)="mostrarVista('editvehiculo', v)">
+                      <button mat-icon-button color="warn" (click)="eliminarVehiculo(v)">
                         <mat-icon class="button-delete">delete</mat-icon> <!-- caneca de basura -->
                       </button>
                     </div>
@@ -85,7 +85,7 @@
                       <button mat-icon-button color="primary" (click)="editarParqueadero(p)">
                         <mat-icon class="button-edit">edit</mat-icon>
                       </button>
-                      <button mat-icon-button color="warn">
+                      <button mat-icon-button color="warn" (click)="eliminarParqueadero(p)">
                         <mat-icon class="button-delete">delete</mat-icon> <!-- caneca de basura -->
                       </button>
                     </div>

@@ -25,6 +25,9 @@ export class ParkingProfileComponent {
   @Output() cerrar = new EventEmitter<void>();
 
   trabajadores: any[] = [];
+  numeroIdentificacion: string = '';
+  usuarioEncontrado: any = null;
+
 
   constructor(private authService: AuthService, private midService: MidService) { }
 
@@ -33,8 +36,6 @@ export class ParkingProfileComponent {
       this.obtenerTrabajadores(this.parqueadero.Id); // Usa ID del parqueadero actual
     }
   }
-
-
 
   obtenerTrabajadores(idParqueadero: number) {
     this.midService.getTrabajadoresPorParqueadero(idParqueadero).subscribe({
@@ -63,4 +64,7 @@ export class ParkingProfileComponent {
           'image/png';
     return `data:${mime};base64,${base64}`;
   }
+
+  mostrarFormularioContratar: boolean = false;
+
 }
