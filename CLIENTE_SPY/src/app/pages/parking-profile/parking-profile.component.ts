@@ -132,27 +132,37 @@ export class ParkingProfileComponent {
   }
 
   despedirTrabajador(usuario: any) {
-  if (!usuario || !usuario.Id) {
-    alert('❌ Datos inválidos del usuario.');
-    return;
+    if (!usuario || !usuario.Id) {
+      alert('❌ Datos inválidos del usuario.');
+      return;
+    }
+
+    const cambios = {
+      IdEstacionamientoTrabajoFk: null,
+      IdRolesFk: { Id: 1 } // Usuario común
+    };
+
+    this.midService.actualizarUsuario(usuario.Id, cambios).subscribe({
+      next: () => {
+        alert('✅ Trabajador despedido correctamente.');
+        this.obtenerTrabajadores(this.parqueadero.Id); // Recarga la lista
+      },
+      error: (err) => {
+        console.error('❌ Error al despedir trabajador:', err);
+        alert('❌ No se pudo despedir al trabajador.');
+      }
+    });
   }
 
-  const usuarioActualizado = {
-    ...usuario,
-    IdRolesFk: { Id: 1 }, // ✅ Usuario común
-    IdEstacionamientoTrabajoFk: null // ✅ Sin parqueadero asignado
-  };
-
-  this.midService.actualizarUsuario(usuario.Id, usuarioActualizado).subscribe({
-    next: () => {
-      alert('✅ Trabajador despedido correctamente.');
-      this.obtenerTrabajadores(this.parqueadero.Id); // 🔄 Actualiza lista
+  promociones = [
+    {
+      titulo: 'Promo 2x1 fin de semana',
+      descripcion: 'Parquea dos días, paga uno',
+      fechaInicio: '2025-06-10',
+      fechaFin: '2025-06-12',
+      imagen: null, // o base64
     },
-    error: (err) => {
-      console.error('❌ Error al despedir trabajador:', err);
-      alert('❌ No se pudo despedir al trabajador.');
-    }
-  });
-}
-  
+    // ...
+  ];
+
 }

@@ -35,7 +35,8 @@
                 </div>
 
             </div>
-            <div class="card-row">
+            <div class="form-group">
+                <div class="form-row">
                 <!-- Formulario de identificación -->
                 <div *ngIf="mostrarContratar" style="margin-top: 1rem;">
                     <mat-form-field appearance="fill" style="width: 100%;">
@@ -72,6 +73,9 @@
                     </mat-card-actions>
 
                 </mat-card>
+                </div>
+                <div class="form-row">
+                    
                 <!-- Trabajadores del parqueadero -->
                 <mat-card class="card-content">
                     <mat-card-title class="title">Trabajadores</mat-card-title>
@@ -87,16 +91,15 @@
                                     <div>
                                         <img [src]="t.Imagen ? getBase64ImageSrc(t.Imagen) : '/assets/default-profile.jpg'"
                                             [alt]="t.Nombres" class="vehicle-image" />
-                                    </div>
-
+                                    
                                     <!-- 🔽 Botón de despido -->
-                                    <mat-card-actions style="margin-top: 1rem;">
-                                        <button mat-raised-button color="warn" (click)="despedirTrabajador(t)">
+                                    <div class="button-actions">
+                                        <button mat-raised-button color="warn" (click)="despedirTrabajador(t)" class="submit-btn">
                                             Despedir
                                         </button>
-                                    </mat-card-actions>
+                                    </div>
+                                    </div>
                                 </mat-card>
-
                             </div>
                         </div>
                     </ng-container>
@@ -104,6 +107,40 @@
                         <p style="margin: 1rem; color: gray;">No hay trabajadores asociados a este parqueadero.</p>
                     </ng-template>
                 </mat-card>
+
+                <!-- Trabajadores del parqueadero -->
+                <mat-card class="card-content">
+                    <mat-card-title class="title">Promociones</mat-card-title>
+                    <ng-container *ngIf="trabajadores.length > 0; else sinTrabajadores">
+                        <div class="scrollable-box">
+                            <div class="vehicle-grid">
+                                <mat-card class="vehicle-information" *ngFor="let t of trabajadores">
+                                    <div class="vehicle-text">
+                                        <h3>{{ t.Nombres }} {{ t.Apellidos }}</h3>
+                                        <p><strong>Email:</strong> {{ t.Email }}</p>
+                                        <p><strong>Teléfono:</strong> {{ t.Telefono }}</p>
+                                    </div>
+                                    <div>
+                                        <img [src]="t.Imagen ? getBase64ImageSrc(t.Imagen) : '/assets/default-profile.jpg'"
+                                            [alt]="t.Nombres" class="vehicle-image" />
+                                    
+                                    <!-- 🔽 Botón de despido -->
+                                    <div class="button-actions">
+                                        <button mat-raised-button color="warn" (click)="despedirTrabajador(t)" class="submit-btn">
+                                            Despedir
+                                        </button>
+                                    </div>
+                                    </div>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-template #sinTrabajadores>
+                        <p style="margin: 1rem; color: gray;">No hay trabajadores asociados a este parqueadero.</p>
+                    </ng-template>
+                </mat-card>
+
+                </div>
             </div>
         </div>
     </mat-card>

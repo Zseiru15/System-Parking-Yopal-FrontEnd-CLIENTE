@@ -111,11 +111,6 @@
   gap: 1rem;
 }
 
-.usuario-card {
-  margin-top: 1rem;
-}
-
-
 .card-row {
   /* Filas para organizar elementos en la misma línea */
   display: flex;

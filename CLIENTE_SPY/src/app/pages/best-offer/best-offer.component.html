@@ -14,12 +14,8 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Coordenadas del parqueadero</mat-label>
-                            <input matInput formControlName="coordinates" placeholder="5°19'29.2''N 72°23'22.1''W">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Direccion del parqueadero</mat-label>
-                            <input matInput formControlName="address" placeholder="Cra. 19 #36-92 Yopal, Casanare">
+                            <mat-label>Tiempo de la oferta</mat-label>
+                            <input matInput formControlName="schedule" placeholder="08:00 - 20:00">
                         </mat-form-field>
                     </div>
                     <h1 class="title">Cupos</h1>
@@ -29,23 +25,40 @@
                             <input matInput formControlName="cars" placeholder="10">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Valor</mat-label>
+                            <input matInput formControlName="price" placeholder="10">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Descuento</mat-label>
+                            <input matInput formControlName="cars" placeholder="10">
+                        </mat-form-field>
+                    </div>
+                    <div class="form-row">
+                        <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Motos</mat-label>
                             <input matInput formControlName="motorcycles" placeholder="10">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Bisis</mat-label>
-                            <input matInput formControlName="bicycles" placeholder="10">
+                            <mat-label>Valor</mat-label>
+                            <input matInput formControlName="price" placeholder="10">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Descuento</mat-label>
+                            <input matInput formControlName="motorcycles" placeholder="10">
                         </mat-form-field>
                     </div>
-                    <h1 class="title">Caracteristicas</h1>
                     <div class="form-row">
                         <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Precio por hora</mat-label>
-                            <input matInput formControlName="price" placeholder="1.000">
+                            <mat-label>Bicicletas</mat-label>
+                            <input matInput formControlName="bicycles" placeholder="10">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Horario</mat-label>
-                            <input matInput formControlName="schedule" placeholder="08:00 - 20:00">
+                            <mat-label>Valor</mat-label>
+                            <input matInput formControlName="price" placeholder="10">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Descuento</mat-label>
+                            <input matInput formControlName="bicycles" placeholder="10">
                         </mat-form-field>
                     </div>
                     <button mat-raised-button color="primary" class="submit-btn" (click)="bestoffer()">Crear Oferta</button>
