@@ -106,6 +106,16 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/comments/comments.component').then(m => m.CommentsComponent),
                 canActivate: [authGuard]
             },
+            {
+                path: 'privacy-policies',
+                loadComponent: () => import('./pages/privacy-policies/privacy-policies.component').then(m => m.PrivacyPoliciesComponent),
+                canActivate: [authGuard]
+            },
+            {
+                path: 'terms-and-conditions',
+                loadComponent: () => import('./pages/terms-and-conditions/terms-and-conditions.component').then(m => m.TermsAndConditionsComponent),
+                canActivate: [authGuard]
+            },
         ]
     },
     {
