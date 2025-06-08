@@ -69,4 +69,12 @@ export class MidService {
     return this.http.get(`${this.baseMid}/usuarios/trabajador/${idParqueadero}`);
   }
 
+  getPromocionesPorParqueadero(idParqueadero: number): Observable<any> {
+    return this.http.get(`${this.baseMid}/parqueaderos/promociones/${idParqueadero}`);
+  }
+
+  registrarPromocion(parqueaderoId: number, data: any) {
+    return this.http.post(`${this.baseMid}/parqueaderos/registrarPromocion/${parqueaderoId}`, data);
+  }
+
 }

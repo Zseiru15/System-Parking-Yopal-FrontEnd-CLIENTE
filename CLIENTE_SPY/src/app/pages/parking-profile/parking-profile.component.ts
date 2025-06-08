@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MidService } from '../../../services/mid.service';
 import { AuthService } from '../../../services/auth.service';
+import { BestOfferComponent } from '../best-offer/best-offer.component';
 
 @Component({
   selector: 'app-parking-profile',
@@ -22,6 +23,7 @@ import { AuthService } from '../../../services/auth.service';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    BestOfferComponent
   ],
   templateUrl: './parking-profile.component.html',
   styleUrl: './parking-profile.component.css'
@@ -33,13 +35,16 @@ export class ParkingProfileComponent {
   trabajadores: any[] = [];
   numeroIdentificacion: string = '';
   usuarioEncontrado: any = null;
-
+  promociones: any[] = [];
+  registrarPromocion: any = null;
+  vistaSeleccionada: 'registrarPromocion' | '' = '';
 
   constructor(private authService: AuthService, private midService: MidService) { }
 
   ngOnInit(): void {
     if (this.parqueadero?.Id) {
       this.obtenerTrabajadores(this.parqueadero.Id); // Usa ID del parqueadero actual
+      this.obtenerPromociones(this.parqueadero.Id); // ← nuevo
     }
   }
 
@@ -154,15 +159,32 @@ export class ParkingProfileComponent {
     });
   }
 
-  promociones = [
-    {
-      titulo: 'Promo 2x1 fin de semana',
-      descripcion: 'Parquea dos días, paga uno',
-      fechaInicio: '2025-06-10',
-      fechaFin: '2025-06-12',
-      imagen: null, // o base64
-    },
-    // ...
-  ];
+  obtenerPromociones(idParqueadero: number) {
+    this.midService.getPromocionesPorParqueadero(idParqueadero).subscribe({
+      next: (res) => {
+        const data = res?.Data || res?.data || [];
+        this.promociones = Array.isArray(data) ? data : [];
+      },
+      error: (err) => {
+        console.error('❌ Error al obtener promociones:', err);
+        this.promociones = [];
+      }
+    });
+  }
+
+  mostrarVista(
+    vista: 'registrarPromocion' | '',
+    datos?: any
+  ) {
+    this.vistaSeleccionada = vista;
+  }
+
+  cerrarVista() {
+  this.vistaSeleccionada = '';
+  if (this.parqueadero?.Id) {
+    this.obtenerPromociones(this.parqueadero.Id); // 🔄 Recarga la lista
+  }
+}
+
 
 }

@@ -1,147 +1,161 @@
 <div class="user-profile-container">
-    <mat-card class="main-content">
-        <!-- Información del parqueadero -->
-        <div class="form-row">
-            <div class="form-group">
-                <div mat-card-avatar class="profile-image">
-                    <img *ngIf="parqueadero?.Imagen" [src]="getBase64ImageSrc(parqueadero.Imagen)"
-                        alt="Imagen de perfil" class="profile-image" />
-                </div>
-                <mat-card-title class="title-name">{{ parqueadero?.Nombres }}</mat-card-title>
-                <div class="form-group">
-                    <p><strong>Administrador:</strong> {{ parqueadero.IdAdministradoresFk?.Nombres }} {{
-                        parqueadero.IdAdministradoresFk?.Apellidos }} </p>
-                    <p><strong>Dirección:</strong> {{ parqueadero.Direccion }}</p>
-                    <p><strong>Email:</strong> {{ parqueadero.Email }}</p>
-                    <p><strong>Teléfono:</strong> {{ parqueadero.Telefono }}</p>
-                    <p><strong>Descripción:</strong> {{ parqueadero.Descripcion }}</p>
-                    <p><strong>Cupos: {{ parqueadero.Carros+parqueadero.Motos+parqueadero.Bicicletas}}</strong><br>
-                        🚗 Carros: {{ parqueadero.Carros }}<br>
-                        🏍️ Motos: {{ parqueadero.Motos }}<br>
-                        🚲 Bicis: {{parqueadero.Bicicletas }}</p>
-                </div>
-
-                <!-- Botón de contratación -->
-                <div class="form-group">
-                    <div class="btn-group">
-                        <button mat-raised-button color="primary" class="submit-btn">Crear Oferta</button>
-                        <button mat-raised-button color="primary" class="submit-btn"
-                            (click)="mostrarContratar = !mostrarContratar">
-                            {{ mostrarContratar ? 'Cerrar' : 'Contratar' }}
-                        </button>
-                    </div>
-
-
-                </div>
-
-            </div>
-            <div class="form-group">
-                <div class="form-row">
-                <!-- Formulario de identificación -->
-                <div *ngIf="mostrarContratar" style="margin-top: 1rem;">
-                    <mat-form-field appearance="fill" style="width: 100%;">
-                        <mat-label>Ingrese identificación del usuario</mat-label>
-                        <input matInput [(ngModel)]="numeroIdentificacion" (keyup.enter)="buscarUsuario()"
-                            placeholder="Número de identificación" />
-                    </mat-form-field>
-                    <button mat-raised-button color="accent" (click)="buscarUsuario()">Buscar</button>
-                </div>
-
-                <!-- Resultado del usuario -->
-                <mat-card *ngIf="usuarioEncontrado" class="vehicle-information" style="margin-top: 1rem;">
-
-                    <mat-card-content>
-                        <div>
-                            <img [src]="usuarioEncontrado.Imagen ? getBase64ImageSrc(usuarioEncontrado.Imagen) : '/assets/default-profile.jpg'"
-                                [alt]="usuarioEncontrado.Nombres" class="vehicle-image" />
-                        </div>
-                        {{ usuarioEncontrado.Nombres }} {{ usuarioEncontrado.Apellidos }}
-                        <p><strong>Email:</strong> {{ usuarioEncontrado.Email }}</p>
-                        <p><strong>Teléfono:</strong> {{ usuarioEncontrado.Telefono }}</p>
-                        <p>
-                            <strong>Estado:</strong>
-                            <span [ngStyle]="{ color: usuarioDisponible ? 'green' : 'red', 'font-weight': 'bold' }">
-                                {{ usuarioDisponible ? '✅ Disponible para contratar' : '❌ No disponible para contratar'
-                                }}
-                            </span>
-                        </p>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button *ngIf="usuarioDisponible" mat-raised-button color="primary"
-                            (click)="asignarParqueaderoAlUsuario()">Aceptar</button>
-                        <button mat-raised-button color="warn" (click)="usuarioEncontrado = null">Cancelar</button>
-                    </mat-card-actions>
-
-                </mat-card>
-                </div>
-                <div class="form-row">
-                    
-                <!-- Trabajadores del parqueadero -->
-                <mat-card class="card-content">
-                    <mat-card-title class="title">Trabajadores</mat-card-title>
-                    <ng-container *ngIf="trabajadores.length > 0; else sinTrabajadores">
-                        <div class="scrollable-box">
-                            <div class="vehicle-grid">
-                                <mat-card class="vehicle-information" *ngFor="let t of trabajadores">
-                                    <div class="vehicle-text">
-                                        <h3>{{ t.Nombres }} {{ t.Apellidos }}</h3>
-                                        <p><strong>Email:</strong> {{ t.Email }}</p>
-                                        <p><strong>Teléfono:</strong> {{ t.Telefono }}</p>
-                                    </div>
-                                    <div>
-                                        <img [src]="t.Imagen ? getBase64ImageSrc(t.Imagen) : '/assets/default-profile.jpg'"
-                                            [alt]="t.Nombres" class="vehicle-image" />
-                                    
-                                    <!-- 🔽 Botón de despido -->
-                                    <div class="button-actions">
-                                        <button mat-raised-button color="warn" (click)="despedirTrabajador(t)" class="submit-btn">
-                                            Despedir
-                                        </button>
-                                    </div>
-                                    </div>
-                                </mat-card>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-template #sinTrabajadores>
-                        <p style="margin: 1rem; color: gray;">No hay trabajadores asociados a este parqueadero.</p>
-                    </ng-template>
-                </mat-card>
-
-                <!-- Trabajadores del parqueadero -->
-                <mat-card class="card-content">
-                    <mat-card-title class="title">Promociones</mat-card-title>
-                    <ng-container *ngIf="trabajadores.length > 0; else sinTrabajadores">
-                        <div class="scrollable-box">
-                            <div class="vehicle-grid">
-                                <mat-card class="vehicle-information" *ngFor="let t of trabajadores">
-                                    <div class="vehicle-text">
-                                        <h3>{{ t.Nombres }} {{ t.Apellidos }}</h3>
-                                        <p><strong>Email:</strong> {{ t.Email }}</p>
-                                        <p><strong>Teléfono:</strong> {{ t.Telefono }}</p>
-                                    </div>
-                                    <div>
-                                        <img [src]="t.Imagen ? getBase64ImageSrc(t.Imagen) : '/assets/default-profile.jpg'"
-                                            [alt]="t.Nombres" class="vehicle-image" />
-                                    
-                                    <!-- 🔽 Botón de despido -->
-                                    <div class="button-actions">
-                                        <button mat-raised-button color="warn" (click)="despedirTrabajador(t)" class="submit-btn">
-                                            Despedir
-                                        </button>
-                                    </div>
-                                    </div>
-                                </mat-card>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-template #sinTrabajadores>
-                        <p style="margin: 1rem; color: gray;">No hay trabajadores asociados a este parqueadero.</p>
-                    </ng-template>
-                </mat-card>
-
-                </div>
-            </div>
+  <mat-card class="main-content">
+    <!-- Información del parqueadero -->
+    <div class="form-row">
+      <div class="form-group">
+        <div mat-card-avatar class="profile-image">
+          <img *ngIf="parqueadero?.Imagen" [src]="getBase64ImageSrc(parqueadero.Imagen)" alt="Imagen de perfil"
+            class="profile-image" />
         </div>
-    </mat-card>
+        <mat-card-title class="title-name">{{ parqueadero?.Nombres }}</mat-card-title>
+        <div class="form-group">
+          <p><strong>Administrador:</strong> {{ parqueadero.IdAdministradoresFk?.Nombres }} {{
+            parqueadero.IdAdministradoresFk?.Apellidos }} </p>
+          <p><strong>Dirección:</strong> {{ parqueadero.Direccion }}</p>
+          <p><strong>Email:</strong> {{ parqueadero.Email }}</p>
+          <p><strong>Teléfono:</strong> {{ parqueadero.Telefono }}</p>
+          <p><strong>Descripción:</strong> {{ parqueadero.Descripcion }}</p>
+          <p><strong>Cupos: {{ parqueadero.Carros+parqueadero.Motos+parqueadero.Bicicletas}}</strong><br>
+            🚗 Carros: {{ parqueadero.Carros }}<br>
+            🏍️ Motos: {{ parqueadero.Motos }}<br>
+            🚲 Bicis: {{parqueadero.Bicicletas }}</p>
+        </div>
+
+        <!-- Botón de contratación -->
+        <div class="form-group">
+          <div class="btn-group">
+            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('registrarPromocion')">
+              Crear Ofertas
+            </button>
+            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarContratar = !mostrarContratar">
+              {{ mostrarContratar ? 'Cerrar' : 'Contratar' }}
+            </button>
+          </div>
+
+
+        </div>
+
+      </div>
+      <div class="form-group">
+        <div class="form-row">
+          <!-- Formulario de identificación -->
+          <div *ngIf="mostrarContratar" style="margin-top: 1rem;">
+            <mat-form-field appearance="fill" style="width: 100%;">
+              <mat-label>Ingrese identificación del usuario</mat-label>
+              <input matInput [(ngModel)]="numeroIdentificacion" (keyup.enter)="buscarUsuario()"
+                placeholder="Número de identificación" />
+            </mat-form-field>
+            <button mat-raised-button color="accent" (click)="buscarUsuario()">Buscar</button>
+          </div>
+
+          <!-- Resultado del usuario -->
+          <mat-card *ngIf="usuarioEncontrado" class="vehicle-information" style="margin-top: 1rem;">
+
+            <mat-card-content>
+              <div>
+                <img
+                  [src]="usuarioEncontrado.Imagen ? getBase64ImageSrc(usuarioEncontrado.Imagen) : '/assets/default-profile.jpg'"
+                  [alt]="usuarioEncontrado.Nombres" class="vehicle-image" />
+              </div>
+              {{ usuarioEncontrado.Nombres }} {{ usuarioEncontrado.Apellidos }}
+              <p><strong>Email:</strong> {{ usuarioEncontrado.Email }}</p>
+              <p><strong>Teléfono:</strong> {{ usuarioEncontrado.Telefono }}</p>
+              <p>
+                <strong>Estado:</strong>
+                <span [ngStyle]="{ color: usuarioDisponible ? 'green' : 'red', 'font-weight': 'bold' }">
+                  {{ usuarioDisponible ? '✅ Disponible para contratar' : '❌ No disponible para contratar'
+                  }}
+                </span>
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button *ngIf="usuarioDisponible" mat-raised-button color="primary"
+                (click)="asignarParqueaderoAlUsuario()">Aceptar</button>
+              <button mat-raised-button color="warn" (click)="usuarioEncontrado = null">Cancelar</button>
+            </mat-card-actions>
+
+          </mat-card>
+        </div>
+        <div class="form-row">
+
+          <!-- Trabajadores del parqueadero -->
+          <mat-card class="card-content">
+            <mat-card-title class="title">Trabajadores</mat-card-title>
+            <ng-container *ngIf="trabajadores.length > 0; else sinTrabajadores">
+              <div class="scrollable-box">
+                <div class="vehicle-grid">
+                  <mat-card class="vehicle-information" *ngFor="let t of trabajadores">
+                    <div class="vehicle-text">
+                      <h3>{{ t.Nombres }} {{ t.Apellidos }}</h3>
+                      <p><strong>Email:</strong> {{ t.Email }}</p>
+                      <p><strong>Teléfono:</strong> {{ t.Telefono }}</p>
+                    </div>
+                    <div>
+                      <img [src]="t.Imagen ? getBase64ImageSrc(t.Imagen) : '/assets/default-profile.jpg'"
+                        [alt]="t.Nombres" class="vehicle-image" />
+
+                      <!-- 🔽 Botón de despido -->
+                      <div class="button-actions">
+                        <button mat-raised-button color="warn" (click)="despedirTrabajador(t)" class="submit-btn">
+                          Despedir
+                        </button>
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #sinTrabajadores>
+              <p style="margin: 1rem; color: gray;">No hay trabajadores asociados a este parqueadero.</p>
+            </ng-template>
+          </mat-card>
+
+          <!-- Ofertas del parqueadero -->
+          <mat-card class="card-content">
+            <mat-card-title class="title">Ofertas</mat-card-title>
+            <ng-container *ngIf="promociones.length > 0; else sinPromociones">
+              <div class="scrollable-box">
+                <div class="vehicle-grid">
+                  <mat-card class="vehicle-information" *ngFor="let p of promociones">
+                    <div class="vehicle-text">
+                      <h3>{{ p.Descripcion }}</h3>
+                      <p><strong>Inicio:</strong> {{ p.FechaInicio | date }}</p>
+                      <p><strong>Fin:</strong> {{ p.FechaFinal | date }}</p>
+                      <p>
+                        <strong>Carros:</strong> {{ p.Carros }} cupo(s) - ${{ p.ValorCarros }} ({{ p.DescuentoCarros }}%
+                        dto)
+                      </p>
+                      <p>
+                        <strong>Motos:</strong> {{ p.Motos }} cupo(s) - ${{ p.ValorMotos }} ({{ p.DescuentoMotos }}%
+                        dto)
+                      </p>
+                      <p>
+                        <strong>Bicicletas:</strong> {{ p.Bicicletas }} cupo(s) - ${{ p.ValorBicicletas }} ({{
+                        p.DescuentoBicicletas }}% dto)
+                      </p>
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #sinPromociones>
+              <p style="margin: 1rem; color: gray;">No hay promociones activas en este parqueadero.</p>
+            </ng-template>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <!-- ✅ Overlay para registrar promoción -->
+  <div *ngIf="vistaSeleccionada === 'registrarPromocion'" class="overlay">
+    <div class="overlay-content">
+      <button mat-icon-button class="close-btn" (click)="cerrarVista()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <app-best-offer [parqueaderoId]="parqueadero.Id" (cerrar)="cerrarVista()">
+      </app-best-offer>
+    </div>
+  </div>
+
 </div>

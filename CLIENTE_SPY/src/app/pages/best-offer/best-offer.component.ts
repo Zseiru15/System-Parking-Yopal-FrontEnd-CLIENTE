@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,9 +8,11 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MidService } from '../../../services/mid.service';
 
 @Component({
   selector: 'app-best-offer',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
@@ -25,25 +27,63 @@ import { Router } from '@angular/router';
   styleUrl: './best-offer.component.css'
 })
 export class BestOfferComponent {
-
+  @Input() parqueaderoId!: number;
+  @Output() cerrar = new EventEmitter<void>();
   bestofferForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
-
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private midService: MidService
+  ) {
     this.bestofferForm = this.fb.group({
-      parkingName: ['', Validators.required],
-      coordinates: ['', Validators.required],
-      address: ['', Validators.required],
-      cars: ['', Validators.required],
-      motorcycles: ['', Validators.required],
-      bicycles: ['', Validators.required],
-      price: ['', Validators.required],
+      description: ['', Validators.required],
       schedule: ['', Validators.required],
-    })
+      cars: [''],
+      valorCars: [''],
+      discountCars: [''],
+      motorcycles: [''],
+      valorMotorcycles: [''],
+      discountMotorcycles: [''],
+      bicycles: [''],
+      valorBicycles: [''],
+      discountBicycles: [''],
+    });
   }
 
-  bestoffer(){
+  bestoffer() {
+    if (this.bestofferForm.invalid || !this.parqueaderoId) {
+      alert('⚠️ Debes completar todos los campos.');
+      return;
+    }
 
+    const form = this.bestofferForm.value;
+
+    const body = {
+      Estado: true,
+      Descripcion: form.description,
+      Carros: +form.cars,
+      ValorCarros: +form.valorCars,
+      DescuentoCarros: +form.discountCars,
+      Motos: +form.motorcycles,
+      ValorMotos: +form.valorMotorcycles,
+      DescuentoMotos: +form.discountMotorcycles,
+      Bicicletas: +form.bicycles,
+      ValorBicicletas: +form.valorBicycles,
+      DescuentoBicicletas: +form.discountBicycles,
+      FechaFinal: new Date()
+    };
+
+    this.midService.registrarPromocion(this.parqueaderoId, body).subscribe({
+      next: (res) => {
+        alert('✅ Oferta registrada exitosamente.');
+        console.log('✅ Oferta registrada exitosamente.', this.parqueaderoId)
+        this.cerrar.emit(); // Cierra el overlay
+      },
+      error: (err) => {
+        console.error('❌ Error al registrar oferta:', err);
+        alert('❌ No se pudo registrar la oferta.');
+      }
+    });
   }
-
 }

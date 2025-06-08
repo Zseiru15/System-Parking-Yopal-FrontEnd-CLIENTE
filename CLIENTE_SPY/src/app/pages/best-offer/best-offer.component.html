@@ -7,11 +7,8 @@
                 <form [formGroup]="bestofferForm" (ngSubmit)="bestoffer()">
                     <div class="form-group">
                         <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Nombre del Estacionamiento</mat-label>
-                            <mat-select formControlName="parkingName" placeholder="Nombre del estacionamiento">
-                                <mat-option value="parqueadero1">Parqueadero 1</mat-option>
-                                <mat-option value="parqueadero2">Parqueadero 1</mat-option>
-                            </mat-select>
+                            <mat-label>Descrpción</mat-label>
+                            <input matInput formControlName="description" placeholder="Descrpción">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Tiempo de la oferta</mat-label>
@@ -26,13 +23,14 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Valor</mat-label>
-                            <input matInput formControlName="price" placeholder="10">
+                            <input matInput formControlName="valorCars" placeholder="10">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Descuento</mat-label>
-                            <input matInput formControlName="cars" placeholder="10">
+                            <input matInput formControlName="discountCars" placeholder="10">
                         </mat-form-field>
                     </div>
+
                     <div class="form-row">
                         <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Motos</mat-label>
@@ -40,13 +38,14 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Valor</mat-label>
-                            <input matInput formControlName="price" placeholder="10">
+                            <input matInput formControlName="valorMotorcycles" placeholder="10">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Descuento</mat-label>
-                            <input matInput formControlName="motorcycles" placeholder="10">
+                            <input matInput formControlName="discountMotorcycles" placeholder="10">
                         </mat-form-field>
                     </div>
+
                     <div class="form-row">
                         <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Bicicletas</mat-label>
@@ -54,11 +53,11 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Valor</mat-label>
-                            <input matInput formControlName="price" placeholder="10">
+                            <input matInput formControlName="valorBicycles" placeholder="10">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Descuento</mat-label>
-                            <input matInput formControlName="bicycles" placeholder="10">
+                            <input matInput formControlName="discountBicycles" placeholder="10">
                         </mat-form-field>
                     </div>
                     <button mat-raised-button color="primary" class="submit-btn" (click)="bestoffer()">Crear Oferta</button>
