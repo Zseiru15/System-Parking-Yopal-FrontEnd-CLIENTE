@@ -21,8 +21,8 @@
             🚲 Bicis: {{parqueadero.Bicicletas }}</p>
         </div>
 
-        <!-- Botón de contratación -->
-        <div class="form-group">
+        <!-- Botón de contratación y creación de ofertas -->
+        <div class="form-group" *ngIf="idUsuarioSesion !== 1">
           <div class="btn-group">
             <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('registrarPromocion')">
               Crear Ofertas
@@ -31,13 +31,12 @@
               {{ mostrarContratar ? 'Cerrar' : 'Contratar' }}
             </button>
           </div>
-
-
         </div>
 
       </div>
       <div class="form-group">
         <div class="form-row">
+
           <!-- Formulario de identificación -->
           <div *ngIf="mostrarContratar" style="margin-top: 1rem;">
             <mat-form-field appearance="fill" style="width: 100%;">
@@ -79,7 +78,7 @@
         <div class="form-row">
 
           <!-- Trabajadores del parqueadero -->
-          <mat-card class="card-content">
+          <mat-card class="card-content" *ngIf="idUsuarioSesion !== 1">
             <mat-card-title class="title">Trabajadores</mat-card-title>
             <ng-container *ngIf="trabajadores.length > 0; else sinTrabajadores">
               <div class="scrollable-box">
@@ -116,11 +115,11 @@
             <ng-container *ngIf="promociones.length > 0; else sinPromociones">
               <div class="scrollable-box">
                 <div class="vehicle-grid">
-                  <mat-card class="vehicle-information" *ngFor="let p of promociones">
+                  <mat-card class="vehicle-information1" *ngFor="let p of promociones">
                     <div class="vehicle-text">
                       <h3>{{ p.Descripcion }}</h3>
                       <p><strong>Inicio:</strong> {{ p.FechaInicio | date }}</p>
-                      <p><strong>Fin:</strong> {{ p.FechaFinal | date }}</p>
+                      <p><strong>Fin:</strong> {{ p.FechaFinal | date:'yyyy-MM-dd HH:mm' }}</p>
                       <p>
                         <strong>Carros:</strong> {{ p.Carros }} cupo(s) - ${{ p.ValorCarros }} ({{ p.DescuentoCarros }}%
                         dto)

@@ -31,6 +31,7 @@ import { BestOfferComponent } from '../best-offer/best-offer.component';
 export class ParkingProfileComponent {
   @Input() parqueadero: any = null;
   @Output() cerrar = new EventEmitter<void>();
+  idUsuarioSesion: number = 0;
 
   trabajadores: any[] = [];
   numeroIdentificacion: string = '';
@@ -42,9 +43,17 @@ export class ParkingProfileComponent {
   constructor(private authService: AuthService, private midService: MidService) { }
 
   ngOnInit(): void {
+    const usuario = this.authService.getUsuarioActual(); // ✅
+    this.idUsuarioSesion = usuario?.Id || 0;
+
     if (this.parqueadero?.Id) {
-      this.obtenerTrabajadores(this.parqueadero.Id); // Usa ID del parqueadero actual
-      this.obtenerPromociones(this.parqueadero.Id); // ← nuevo
+      this.obtenerTrabajadores(this.parqueadero.Id);
+      this.obtenerPromociones(this.parqueadero.Id);
+
+      // 🔁 Verifica cada 30s si alguna promoción venció
+      setInterval(() => {
+        this.obtenerPromociones(this.parqueadero.Id);
+      }, 60000); // 30.000 ms = 30 segundos
     }
   }
 
@@ -163,7 +172,32 @@ export class ParkingProfileComponent {
     this.midService.getPromocionesPorParqueadero(idParqueadero).subscribe({
       next: (res) => {
         const data = res?.Data || res?.data || [];
-        this.promociones = Array.isArray(data) ? data : [];
+        if (!Array.isArray(data)) {
+          this.promociones = [];
+          return;
+        }
+
+        const now = new Date();
+
+        // Desactivación automática si vencen
+        data.forEach((promo: any) => {
+          const fechaFin = new Date(promo.FechaFinal);
+          if (promo.Estado && fechaFin < now) {
+            const cambios = { Estado: false };
+            this.midService.actualizarPromocion(promo.Id, cambios).subscribe({
+              next: () => {
+                console.log(`✅ Promoción ID ${promo.Id} desactivada automáticamente.`);
+                promo.Estado = false;
+              },
+              error: (err) => {
+                console.warn(`⚠️ No se pudo desactivar la promoción ID ${promo.Id}:`, err);
+              }
+            });
+          }
+        });
+
+        // Solo promociones activas
+        this.promociones = data.filter((promo: any) => promo.Estado === true);
       },
       error: (err) => {
         console.error('❌ Error al obtener promociones:', err);
@@ -180,11 +214,9 @@ export class ParkingProfileComponent {
   }
 
   cerrarVista() {
-  this.vistaSeleccionada = '';
-  if (this.parqueadero?.Id) {
-    this.obtenerPromociones(this.parqueadero.Id); // 🔄 Recarga la lista
+    this.vistaSeleccionada = '';
+    if (this.parqueadero?.Id) {
+      this.obtenerPromociones(this.parqueadero.Id); // 🔄 Recarga la lista
+    }
   }
-}
-
-
 }

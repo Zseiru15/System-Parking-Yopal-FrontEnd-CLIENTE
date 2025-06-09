@@ -9,6 +9,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MidService } from '../../../services/mid.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core'; // O MatMomentDateModule si usas moment
+
 
 @Component({
   selector: 'app-best-offer',
@@ -22,6 +25,8 @@ import { MidService } from '../../../services/mid.service';
     ReactiveFormsModule,
     MatOptionModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   templateUrl: './best-offer.component.html',
   styleUrl: './best-offer.component.css'
@@ -37,8 +42,9 @@ export class BestOfferComponent {
     private midService: MidService
   ) {
     this.bestofferForm = this.fb.group({
-      description: ['', Validators.required],
-      schedule: ['', Validators.required],
+      description: [''],
+      fechaFinal: ['', Validators.required],
+      horaFinal: ['', Validators.required],
       cars: [''],
       valorCars: [''],
       discountCars: [''],
@@ -59,6 +65,11 @@ export class BestOfferComponent {
 
     const form = this.bestofferForm.value;
 
+    // Combinar fecha y hora en un solo objeto Date
+    const fecha = new Date(form.fechaFinal);
+    const [hora, minutos] = form.horaFinal.split(':').map(Number);
+    fecha.setHours(hora, minutos, 0);
+
     const body = {
       Estado: true,
       Descripcion: form.description,
@@ -71,13 +82,13 @@ export class BestOfferComponent {
       Bicicletas: +form.bicycles,
       ValorBicicletas: +form.valorBicycles,
       DescuentoBicicletas: +form.discountBicycles,
-      FechaFinal: new Date()
+      FechaFinal: fecha.toISOString()  // Enviar en formato compatible
     };
 
     this.midService.registrarPromocion(this.parqueaderoId, body).subscribe({
       next: (res) => {
         alert('✅ Oferta registrada exitosamente.');
-        console.log('✅ Oferta registrada exitosamente.', this.parqueaderoId)
+        console.log('✅ Oferta registrada exitosamente.', this.parqueaderoId, body)
         this.cerrar.emit(); // Cierra el overlay
       },
       error: (err) => {

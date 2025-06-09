@@ -163,8 +163,29 @@
 }
 
 .vehicle-information:hover {
-  transform: scale(1);
-  box-shadow: 0 2px 8px rgb(46, 48, 54);
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.vehicle-information1 {
+  min-height: 80px;
+  height: auto;
+  min-width: 250px;
+  width: auto;
+  max-width: 330px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+}
+
+.vehicle-information1:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
 }
 
 .vehicle-text {
@@ -183,12 +204,6 @@
 
 .vehicle-image:hover {
   transform: scale(1.1);
-}
-
-.vehicle-information:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
 }
 
 .button-actions {

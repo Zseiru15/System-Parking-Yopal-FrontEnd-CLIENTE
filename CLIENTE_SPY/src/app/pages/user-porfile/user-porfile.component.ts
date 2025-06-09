@@ -117,6 +117,27 @@ export class UserPorfileComponent implements OnInit {
         if (res.Success && Array.isArray(res.Data)) {
           this.parqueaderos = res.Data.filter((v: any) => v.Estado === true || v.Estado === 1);
           console.log('🏢 Parqueaderos activos del usuario:', this.parqueaderos);
+
+          // 🔁 Verificar si el usuario debe ser administrador o no
+          const nuevoRolId = this.parqueaderos.length > 0 ? 3 : 1;
+
+          if (this.usuario.IdRolesFk?.Id !== nuevoRolId) {
+            const actualizacion = {
+              IdRolesFk: { Id: nuevoRolId }
+            };
+
+            this.midService.actualizarUsuario(this.usuario.Id, actualizacion).subscribe({
+              next: () => {
+                console.log(`🎯 Rol actualizado automáticamente a ${nuevoRolId === 3 ? 'administrador' : 'usuario'}`);
+                this.usuario.IdRolesFk = { Id: nuevoRolId, Roles: nuevoRolId === 3 ? 'Administrador' : 'Usuario' };
+                localStorage.setItem('usuario', JSON.stringify(this.usuario)); // Refresca localStorage
+              },
+              error: (err) => {
+                console.warn('⚠️ No se pudo actualizar el rol del usuario automáticamente:', err);
+              }
+            });
+          }
+
         } else {
           this.parqueaderos = [];
           console.warn('⚠️ No hay parqueaderos registrados', res);

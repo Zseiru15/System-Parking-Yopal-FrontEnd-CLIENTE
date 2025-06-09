@@ -77,4 +77,8 @@ export class MidService {
     return this.http.post(`${this.baseMid}/parqueaderos/registrarPromocion/${parqueaderoId}`, data);
   }
 
+  actualizarPromocion(id: number, body: any) {
+    return this.http.put(`${this.baseMid}/promociones/${id}`, body);
+  }
+
 }
