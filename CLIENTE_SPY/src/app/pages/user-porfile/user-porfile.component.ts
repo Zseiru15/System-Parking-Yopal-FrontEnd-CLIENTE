@@ -12,8 +12,10 @@ import { EditVehicleComponent } from '../vehicle-registration/edit-vehicle/edit-
 import { ParkingRegistrationComponent } from '../parking-profile/parking-registration/parking-registration.component';
 import { EditParkingProfileComponent } from '../parking-profile/edit-parking-profile/edit-parking-profile.component';
 import { ParkingProfileComponent } from '../parking-profile/parking-profile.component';
+
 @Component({
   selector: 'app-user-porfile',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
@@ -30,7 +32,6 @@ import { ParkingProfileComponent } from '../parking-profile/parking-profile.comp
   templateUrl: './user-porfile.component.html',
   styleUrl: './user-porfile.component.css'
 })
-
 export class UserPorfileComponent implements OnInit {
 
   usuario: any;
@@ -38,8 +39,12 @@ export class UserPorfileComponent implements OnInit {
   editvehiculo: any = null;
   parqueaderos: any[] = [];
   editparqueadero: any = null;
-  profileparqueadero: any = null; // 🆕
-  vistaSeleccionada: 'editar' | 'vehiculos' | 'parqueaderos' | 'editvehiculo' | 'editparqueadero' | 'profileparqueadero' | '' = '';
+  profileparqueadero: any = null;
+  parqueaderoEmpleado: any = null;
+
+  vistaSeleccionada:
+    'editar' | 'vehiculos' | 'parqueaderos' |
+    'editvehiculo' | 'editparqueadero' | 'profileparqueadero' | '' = '';
 
   constructor(private authService: AuthService, private midService: MidService) { }
 
@@ -48,7 +53,11 @@ export class UserPorfileComponent implements OnInit {
     if (userData) {
       this.usuario = userData;
       this.obtenerVehiculosDelUsuario(userData.Id);
-      this.obtenerParqueaderosDelUsuario(userData.Id); // 🆕
+      this.obtenerParqueaderosDelUsuario(userData.Id);
+
+      if (userData?.IdRolesFk?.Id === 2) {
+        this.obtenerParqueaderoDelEmpleado(userData.Id); // ✅ Correcto
+      }
     }
   }
 
@@ -71,42 +80,17 @@ export class UserPorfileComponent implements OnInit {
   obtenerVehiculosDelUsuario(idUsuario: number) {
     this.midService.getVehiculosByUsuario(idUsuario).subscribe({
       next: (res) => {
-        if (res.Success && Array.isArray(res.Data)) {
-          // ⬇️ Solo vehículos activos
+        if (res.Success && res.Data && Array.isArray(res.Data)) {
           this.vehiculos = res.Data.filter((v: any) => v.Estado === true || v.Estado === 1);
-          console.log('🚗 Vehículos activos del usuario:', this.vehiculos);
+          console.log('🚗 Vehículos activos:', this.vehiculos);
         } else {
           console.warn('⚠️ No se obtuvieron vehículos del usuario:', res);
           this.vehiculos = [];
         }
       },
       error: (err) => {
-        console.error('❌ Error al obtener vehículos del usuario:', err);
+        console.error('❌ Error al obtener vehículos:', err);
         this.vehiculos = [];
-      }
-    });
-  }
-
-  editarVehiculo(vehiculo: any) {
-    this.mostrarVista('editvehiculo', vehiculo); // pasa datos al overlay
-  }
-
-  eliminarVehiculo(vehiculo: any) {
-    const confirmacion = confirm(`¿Estás seguro de eliminar el vehículo con placa ${vehiculo.Placa}?`);
-    if (!confirmacion) return;
-
-    this.midService.eliminarVehiculo(vehiculo.Id).subscribe({
-      next: (res) => {
-        if (res.Success) {
-          alert("Vehículo eliminado exitosamente.");
-          this.obtenerVehiculosDelUsuario(this.usuario.Id); // refresca la lista
-        } else {
-          alert("No se pudo eliminar el vehículo.");
-        }
-      },
-      error: (err) => {
-        console.error('❌ Error al eliminar el vehículo:', err);
-        alert("Error al intentar eliminar el vehículo.");
       }
     });
   }
@@ -114,38 +98,77 @@ export class UserPorfileComponent implements OnInit {
   obtenerParqueaderosDelUsuario(idUsuario: number) {
     this.midService.getParqueaderosByUsuario(idUsuario).subscribe({
       next: (res) => {
-        if (res.Success && Array.isArray(res.Data)) {
-          this.parqueaderos = res.Data.filter((v: any) => v.Estado === true || v.Estado === 1);
-          console.log('🏢 Parqueaderos activos del usuario:', this.parqueaderos);
+        if (res.Success && res.Data && Array.isArray(res.Data)) {
+          this.parqueaderos = res.Data.filter((p: any) => p.Estado === true || p.Estado === 1);
+          console.log('🏢 Parqueaderos activos:', this.parqueaderos);
 
-          // 🔁 Verificar si el usuario debe ser administrador o no
-          const nuevoRolId = this.parqueaderos.length > 0 ? 3 : 1;
+          let nuevoRolId = 1;
+          if (this.parqueaderos.length > 0) {
+            nuevoRolId = 3;
+          } else if (this.usuario?.IdEstacionamientoTrabajoFk) {
+            nuevoRolId = 2;
+          }
 
           if (this.usuario.IdRolesFk?.Id !== nuevoRolId) {
-            const actualizacion = {
-              IdRolesFk: { Id: nuevoRolId }
-            };
-
+            const actualizacion = { IdRolesFk: { Id: nuevoRolId } };
             this.midService.actualizarUsuario(this.usuario.Id, actualizacion).subscribe({
               next: () => {
-                console.log(`🎯 Rol actualizado automáticamente a ${nuevoRolId === 3 ? 'administrador' : 'usuario'}`);
-                this.usuario.IdRolesFk = { Id: nuevoRolId, Roles: nuevoRolId === 3 ? 'Administrador' : 'Usuario' };
-                localStorage.setItem('usuario', JSON.stringify(this.usuario)); // Refresca localStorage
+                console.log(`🎯 Rol actualizado automáticamente a: ${nuevoRolId}`);
+                this.usuario.IdRolesFk = {
+                  Id: nuevoRolId,
+                  Roles: nuevoRolId === 3 ? 'Administrador' : nuevoRolId === 2 ? 'Empleado' : 'Usuario'
+                };
+                localStorage.setItem('usuario', JSON.stringify(this.usuario));
               },
               error: (err) => {
-                console.warn('⚠️ No se pudo actualizar el rol del usuario automáticamente:', err);
+                console.warn('⚠️ Error actualizando el rol del usuario:', err);
               }
             });
           }
-
         } else {
           this.parqueaderos = [];
-          console.warn('⚠️ No hay parqueaderos registrados', res);
+          console.warn('⚠️ No hay parqueaderos registrados:', res);
         }
       },
       error: (err) => {
         this.parqueaderos = [];
         console.error('❌ Error al obtener parqueaderos:', err);
+      }
+    });
+  }
+
+  obtenerParqueaderoDelEmpleado(idUsuario: number) {
+    this.midService.getParqueaderoDeEmpleado(idUsuario).subscribe({
+      next: (res) => {
+        if (res?.Success && res?.Data) {
+          this.parqueaderoEmpleado = res.Data;
+          console.log('📌 Parqueadero del empleado:', this.parqueaderoEmpleado);
+        }
+      },
+      error: (err) => {
+        console.warn('⚠️ No se pudo obtener parqueadero del empleado:', err);
+      }
+    });
+  }
+
+  editarVehiculo(vehiculo: any) {
+    this.mostrarVista('editvehiculo', vehiculo);
+  }
+
+  eliminarVehiculo(vehiculo: any) {
+    if (!confirm(`¿Eliminar vehículo con placa ${vehiculo.Placa}?`)) return;
+    this.midService.eliminarVehiculo(vehiculo.Id).subscribe({
+      next: (res) => {
+        if (res.Success) {
+          alert("Vehículo eliminado.");
+          this.obtenerVehiculosDelUsuario(this.usuario.Id);
+        } else {
+          alert("No se pudo eliminar.");
+        }
+      },
+      error: (err) => {
+        console.error('❌ Error al eliminar vehículo:', err);
+        alert("Error eliminando vehículo.");
       }
     });
   }
@@ -159,42 +182,32 @@ export class UserPorfileComponent implements OnInit {
   }
 
   eliminarParqueadero(parqueadero: any) {
-    const confirmacion = confirm(`¿Estás seguro de eliminar el parqueadero ${parqueadero.Nombres}?`);
-    if (!confirmacion) return;
-
+    if (!confirm(`¿Eliminar parqueadero ${parqueadero.Nombres}?`)) return;
     this.midService.eliminarParqueadero(parqueadero.Id).subscribe({
       next: (res) => {
         if (res.Success) {
-          alert("Parqueadero eliminado exitosamente.");
-          this.obtenerParqueaderosDelUsuario(this.usuario.Id); // refresca la lista
+          alert("Parqueadero eliminado.");
+          this.obtenerParqueaderosDelUsuario(this.usuario.Id);
         } else {
-          alert("No se pudo eliminar el parqueadero.");
+          alert("No se pudo eliminar.");
         }
       },
       error: (err) => {
-        console.error('❌ Error al eliminar el parqueadero:', err);
-        alert("Error al intentar eliminar el parqueadero.");
+        console.error('❌ Error al eliminar parqueadero:', err);
+        alert("Error eliminando parqueadero.");
       }
     });
   }
 
   mostrarVista(
-    vista: 'editar' | 'vehiculos' | 'parqueaderos' | 'editvehiculo' | 'editparqueadero' | 'profileparqueadero' | '',
+    vista: 'editar' | 'vehiculos' | 'parqueaderos' |
+      'editvehiculo' | 'editparqueadero' | 'profileparqueadero' | '',
     datos?: any
   ) {
     this.vistaSeleccionada = vista;
-
-    if (vista === 'editvehiculo' && datos) {
-      this.editvehiculo = datos;
-    }
-
-    if (vista === 'editparqueadero' && datos) {
-      this.editparqueadero = datos;
-    }
-
-    if (vista === 'profileparqueadero' && datos) {
-      this.profileparqueadero = datos;
-    }
+    if (vista === 'editvehiculo') this.editvehiculo = datos;
+    if (vista === 'editparqueadero') this.editparqueadero = datos;
+    if (vista === 'profileparqueadero') this.profileparqueadero = datos;
   }
 
   cerrarVista() {

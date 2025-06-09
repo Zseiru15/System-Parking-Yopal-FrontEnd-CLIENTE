@@ -32,7 +32,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  line-height: 1.97;
+  min-line-height: auto;
+  line-height: 3.17;
 }
 
 .main-content {
@@ -141,8 +142,8 @@
 }
 
 .vehicle-information {
-  height: auto;
   min-height: 80px;
+  height: 270px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
