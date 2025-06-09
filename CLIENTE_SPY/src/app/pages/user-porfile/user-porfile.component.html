@@ -20,8 +20,6 @@
               Perfil</button>
             <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('vehiculos')">Registro
               de vehículos</button>
-
-            <!-- Mostrar solo si el rol no es 1 ni 2 -->
             <button *ngIf="usuario?.IdRolesFk?.Id !== 2" mat-raised-button color="primary" class="submit-btn"
               (click)="mostrarVista('parqueaderos')">Registro de
               parqueaderos</button>
@@ -65,34 +63,45 @@
           </ng-template>
         </mat-card>
 
-        <!-- Solo si el rol es EMPLEADO y tiene parqueadero asignado -->
-        <mat-card class="card-content" *ngIf="usuario?.IdRolesFk?.Id === 2">
-          <mat-card-title class="title">Parqueadero Asignado</mat-card-title>
-          <ng-container *ngIf="parqueaderoEmpleado; else sinParqueaderoEmpleado">
-            <div class="vehicle-grid">
-              <mat-card class="vehicle-information">
-                <div class="vehicle-text">
-                  <h4>{{ parqueaderoEmpleado.Nombres }}</h4>
-                  {{ parqueaderoEmpleado.Direccion }} <br>
-                  {{ parqueaderoEmpleado.Email }} <br>
-                  Capacidad: {{ parqueaderoEmpleado.Carros + parqueaderoEmpleado.Motos + parqueaderoEmpleado.Bicicletas
-                  }} <br>
-                  {{ parqueaderoEmpleado.Descripcion }}
-                </div>
-                <div>
-                  <img [src]="getBase64ImageSrc(parqueaderoEmpleado.Imagen)" class="vehicle-image" />
-                  <button mat-raised-button color="accent" class="submit-btn"
-                    (click)="parqueaderoSeleccionado(parqueaderoEmpleado)">Ver Perfil</button>
-                </div>
-              </mat-card>
+        <!-- Parqueaderos del Usuario -->
+        <mat-card *ngIf="usuario?.IdRolesFk?.Id !== 2 && usuario?.IdRolesFk?.Id !== 1" class="card-content">
+          <mat-card-title class="title">Mis Parqueaderos</mat-card-title>
+          <ng-container *ngIf="parqueaderos.length > 0; else sinParqueaderos">
+            <div class="scrollable-box">
+              <div class="vehicle-grid">
+                <mat-card class="vehicle-information" *ngFor="let p of parqueaderos">
+                  <div class="vehicle-text">
+                    <h4>{{ p.Nombres }}</h4>
+                    {{ p.Direccion }} <br>
+                    {{p.Email}} <br>
+                    Capacidad: {{ p.Carros + p.Motos + p. Bicicletas }} <br>
+                    {{p.Descripcion}}
+                  </div>
+                  <div>
+                    <img [src]="p.Imagen ? getBase64ImageSrc(p.Imagen) : '/assets/default-parking.jpg'"
+                      [alt]="p.Nombres" class="vehicle-image" />
+                    <div class="button-actions">
+                      <button mat-icon-button color="primary" (click)="editarParqueadero(p)">
+                        <mat-icon class="button-edit">edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" (click)="eliminarParqueadero(p)">
+                        <mat-icon class="button-delete">delete</mat-icon> <!-- caneca de basura -->
+                      </button>
+                    </div>
+                    <button mat-raised-button color="accent" class="submit-btn" (click)="parqueaderoSeleccionado(p)">
+                      Ver Perfil
+                    </button>
+
+                  </div>
+                </mat-card>
+              </div>
             </div>
           </ng-container>
 
-          <ng-template #sinParqueaderoEmpleado>
-            <p style="margin: 1rem; color: gray;">No tienes un parqueadero asignado actualmente.</p>
+          <ng-template #sinParqueaderos>
+            <p style="margin: 1rem; color: gray;">No tienes parqueaderos registrados.</p>
           </ng-template>
         </mat-card>
-
       </div>
     </div>
   </mat-card>

@@ -62,11 +62,6 @@ export const routes: Routes = [
                 ]
             },
             {
-                path: 'parking-history',
-                loadComponent: () => import('./pages/parking-history/parking-history.component').then(m => m.ParkingHistoryComponent),
-                canActivate: [authGuard]
-            },
-            {
                 path: 'search-for-parking-spaces',
                 loadComponent: () => import('./pages/search-for-parking-spaces/search-for-parking-spaces.component').then(m => m.SearchForParkingSpacesComponent),
                 canActivate: [authGuard]

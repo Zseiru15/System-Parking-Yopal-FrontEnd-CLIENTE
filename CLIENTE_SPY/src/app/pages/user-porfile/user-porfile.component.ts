@@ -54,7 +54,6 @@ export class UserPorfileComponent implements OnInit {
       this.usuario = userData;
       this.obtenerVehiculosDelUsuario(userData.Id);
       this.obtenerParqueaderosDelUsuario(userData.Id);
-
       if (userData?.IdRolesFk?.Id === 2) {
         this.obtenerParqueaderoDelEmpleado(userData.Id); // ✅ Correcto
       }

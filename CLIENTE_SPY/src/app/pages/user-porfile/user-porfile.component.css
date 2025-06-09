@@ -219,7 +219,7 @@
 
 .submit-btn {
   width: 100%;
-  max-width: 100%;
+  max-width: 300px;
   padding: 0.7rem 1rem;
   background: rgb(46, 48, 54);
   color: #ffffff;
