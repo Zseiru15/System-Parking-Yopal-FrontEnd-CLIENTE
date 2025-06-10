@@ -29,7 +29,7 @@
 
       <div class="card-row">
         <!-- Vehículos del Usuario -->
-        <mat-card class="card-content">
+        <mat-card *ngIf="usuario?.IdRolesFk?.Id !== 2" class="card-content">
           <mat-card-title class="title">Mis Vehículos</mat-card-title>
           <ng-container *ngIf="vehiculos.length > 0; else sinVehiculos">
             <div class="scrollable-box">

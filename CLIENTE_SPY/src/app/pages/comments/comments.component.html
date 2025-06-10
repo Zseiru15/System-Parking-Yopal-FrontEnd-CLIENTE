@@ -8,16 +8,15 @@
       <div class="formulario-cajon">
         <mat-card class="comment-content">
           <mat-card-content>
-            <i class="fa-solid fa-circle-user" style="font-size: 100px;
-          Color: #ffffff;
-          margin: 0px 0px 20px 62px;
-          display: block;"></i>
             <form [formGroup]="commentForm" (ngSubmit)="comment()">
               <div class="form-group">
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Nombre de usuario</mat-label>
-                  <input matInput formControlName="userName" placeholder="Ingrese su nombre de usuario">
-                </mat-form-field>
+                <div class="form-group" style="text-align: center;">
+                  <img *ngIf="usuario?.Imagen" [src]="getBase64ImageSrc(usuario.Imagen)" class="profile-image"
+                    alt="Foto de perfil">
+                  <p style="color: white; font-weight: bold;">
+                    {{ usuario?.Nombres }} {{ usuario?.Apellidos }}
+                  </p>
+                </div>
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Estacionamiento</mat-label>
                   <mat-select formControlName="parkingId">
@@ -38,10 +37,7 @@
             </form>
           </mat-card-content>
           <div class="actions">
-            <button mat-raised-button color="primary" class="submit-btn" (click)="comment()">Enviar</button>
-            <button mat-raised-button color="primary" class="submit-btn" (click)="goToregister()">Registrarse</button>
-            <button mat-raised-button color="primary" class="submit-btn" (click)="goToLogin()">Iniciar
-              Sesion</button>
+            <button mat-raised-button color="primary" class="submit-btn" (click)="comment()">Comentar</button>
           </div>
         </mat-card>
       </div>
@@ -59,10 +55,10 @@
 
           <mat-form-field appearance="fill">
             <mat-label>Estacionamiento</mat-label>
-            <mat-select [(ngModel)]="filtros.estacionamiento" (selectionChange)="aplicarFiltros()">
-              <mat-option value="">Todos</mat-option>
-              <mat-option *ngFor="let estacionamiento of obtenerEstacionamientos()" [value]="estacionamiento">
-                {{ estacionamiento }}
+            <mat-select [(ngModel)]="filtros.parkingId" (selectionChange)="aplicarFiltros()">
+              <mat-option [value]="null">Todos</mat-option>
+              <mat-option *ngFor="let parking of parkingList" [value]="parking.Id">
+                {{ parking.Nombres }}
               </mat-option>
             </mat-select>
           </mat-form-field>

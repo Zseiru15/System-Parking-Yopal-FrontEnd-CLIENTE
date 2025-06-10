@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ApiService } from '../../../services/api.service';
+import { AuthService } from '../../../services/auth.service'; 
 
 @Component({
   selector: 'app-comments',
@@ -40,24 +41,24 @@ export class CommentsComponent implements OnInit {
   comentariosFiltrados: any[] = [];
   parkingList: any[] = []; // <== Aquí almacenamos los parqueaderos
   commentForm: FormGroup;
+  usuario: any = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private midService: MidService, private apiService: ApiService) {
+  constructor(private fb: FormBuilder, private router: Router, private midService: MidService, private apiService: ApiService, private authService: AuthService) {
     this.commentForm = this.fb.group({
-      userName: ['', Validators.required],
-      parkingId: ['', Validators.required], // Asegúrate de usar "parkingId"
+      parkingId: ['', Validators.required],
       comment: ['', Validators.required],
       classification: ['', Validators.required],
     });
   }
 
   filtros = {
-    estrellas: null,          // número o null (ej. 4, 5)
-    estacionamiento: '',      // string o ''
-    fecha: null               // puede ser un rango o una sola fecha
+    estrellas: null,
+    parkingId: null,
+    fecha: null
   };
 
-
   ngOnInit(): void {
+    this.usuario = this.authService.getUsuarioActual();
     this.obtenerComentarios();
     this.obtenerParqueaderos(); // <== Cargar parqueaderos al iniciar
   }
@@ -94,22 +95,22 @@ export class CommentsComponent implements OnInit {
         ? Math.floor(comentario.Calificacion) === this.filtros.estrellas
         : true;
 
-      const coincideEstacionamiento = this.filtros.estacionamiento
-        ? comentario.Estacionamiento === this.filtros.estacionamiento
+      const coincideParqueadero = this.filtros.parkingId != null
+        ? comentario.IdParqueadero === this.filtros.parkingId
         : true;
 
       const coincideFecha = this.filtros.fecha
         ? new Date(comentario.Fecha).toDateString() === new Date(this.filtros.fecha).toDateString()
         : true;
 
-      return coincideEstrellas && coincideEstacionamiento && coincideFecha;
+      return coincideEstrellas && coincideParqueadero && coincideFecha;
     });
   }
 
   resetFiltros() {
     this.filtros = {
       estrellas: null,
-      estacionamiento: '',
+      parkingId: null,
       fecha: null
     };
     this.comentariosFiltrados = [...this.comentariosOriginal];
@@ -175,8 +176,12 @@ export class CommentsComponent implements OnInit {
 
     const extendedData = {
       ...formData,
+      UsuarioId: this.usuario?.Id,
+      Nombres: this.usuario?.Nombres,
+      Apellidos: this.usuario?.Apellidos,
+      Foto: this.usuario?.Imagen,
+      IdParqueadero: formData.parkingId,
       Fecha_Creacion: new Date().toISOString(),
-      role: 'user', // si lo necesitas para backend
     };
 
     this.apiService.post(`http://localhost:8082/v1/comentarios`, extendedData).subscribe({
@@ -193,13 +198,5 @@ export class CommentsComponent implements OnInit {
         alert('Error al enviar el comentario');
       }
     });
-  }
-
-  goToLogin() {
-    this.router.navigate(['/login']);
-  }
-
-  goToregister() {
-    this.router.navigate(['/register']);
   }
 }
