@@ -22,7 +22,7 @@
         </div>
 
         <!-- Botón de contratación y creación de ofertas -->
-        <div class="form-group" *ngIf="idUsuarioSesion !== 1">
+        <div class="form-group" *ngIf="rolUsuarioSesion === 3">
           <div class="btn-group">
             <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('registrarPromocion')">
               Crear Ofertas
@@ -94,7 +94,7 @@
                         [alt]="t.Nombres" class="vehicle-image" />
 
                       <!-- 🔽 Botón de despido -->
-                      <div class="button-actions">
+                      <div class="button-actions" *ngIf="rolUsuarioSesion === 3"> <!-- solo si es ADMIN -->
                         <button mat-raised-button color="warn" (click)="despedirTrabajador(t)" class="submit-btn">
                           Despedir
                         </button>

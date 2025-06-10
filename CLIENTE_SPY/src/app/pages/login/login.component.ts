@@ -50,7 +50,7 @@ export class LoginComponent {
         if (res.Success) {
           console.log('Respuesta login:', res.Data);
           localStorage.setItem('usuario', JSON.stringify(res.Data));
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard/start']);
         } else {
           alert(res.Message || 'Login fallido');
         }

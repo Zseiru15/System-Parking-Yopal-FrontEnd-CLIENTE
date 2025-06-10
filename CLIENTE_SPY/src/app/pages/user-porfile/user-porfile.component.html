@@ -102,6 +102,35 @@
             <p style="margin: 1rem; color: gray;">No tienes parqueaderos registrados.</p>
           </ng-template>
         </mat-card>
+
+        <!-- Parqueadero donde trabaja el usuario -->
+        <mat-card *ngIf="usuario?.IdRolesFk?.Id === 2 && parqueaderoEmpleado" class="card-content">
+          <mat-card-title class="title">Parqueadero donde trabajo</mat-card-title>
+          <div class="vehicle-grid">
+            <mat-card class="vehicle-information">
+              <div class="vehicle-text">
+                <h4>{{ parqueaderoEmpleado.Nombres }}</h4>
+                {{ parqueaderoEmpleado.Direccion }} <br>
+                {{ parqueaderoEmpleado.Email }} <br>
+                Capacidad: {{ parqueaderoEmpleado.Carros + parqueaderoEmpleado.Motos + parqueaderoEmpleado.Bicicletas }}
+                <br>
+                {{ parqueaderoEmpleado.Descripcion }}
+              </div>
+              <div>
+                <img
+                  [src]="parqueaderoEmpleado.Imagen ? getBase64ImageSrc(parqueaderoEmpleado.Imagen) : '/assets/default-parking.jpg'"
+                  [alt]="parqueaderoEmpleado.Nombres" class="vehicle-image" />
+                <div class="button-actions">
+                  <button mat-raised-button color="accent" class="submit-btn"
+                    (click)="parqueaderoSeleccionado(parqueaderoEmpleado)">
+                    Ver Perfil
+                  </button>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </mat-card>
+
       </div>
     </div>
   </mat-card>

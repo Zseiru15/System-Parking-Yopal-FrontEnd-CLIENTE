@@ -3,7 +3,8 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span class="spacer"></span>
-  <span class="usuario" *ngIf="!currentRoute.includes('/dashboard/user-porfile')" (click)="Profile()">{{ usuario?.Nombres }} {{ usuario?.Apellidos }}</span>
+  <span class="usuario" *ngIf="!currentRoute.includes('/dashboard/user-porfile')" (click)="Profile()">{{
+    usuario?.Nombres }} {{ usuario?.Apellidos }}</span>
   <img src="/logo.png" alt="SPY" class="logo">
 </mat-toolbar>
 
@@ -17,7 +18,7 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Inicio </mat-panel-title>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/dashboard" (click)="toggleSidenav()">Inicio</a>
+          <a mat-list-item routerLink="/dashboard/start" (click)="toggleSidenav()">Inicio</a>
         </mat-expansion-panel>
         <!-- Usuario -->
         <mat-expansion-panel>
@@ -28,30 +29,12 @@
           <a mat-list-item routerLink="/dashboard/comments" (click)="toggleSidenav()">Comentarios</a>
         </mat-expansion-panel>
 
-        <!-- Parqueaderos -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> Parqueaderos </mat-panel-title>
-          </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/dashboard/search-for-parking-spaces" (click)="toggleSidenav()">Búsqueda</a>
-        </mat-expansion-panel>
-
-        <!-- Ofertas -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> Ofertas </mat-panel-title>
-          </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/dashboard/best-offer" (click)="toggleSidenav()">Ver Ofertas</a>
-          <a mat-list-item routerLink="/dashboard/best-offer-history" (click)="toggleSidenav()">Historial</a>
-        </mat-expansion-panel>
-
         <!-- Pagos -->
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title> Pagos </mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/dashboard/payment-gateway" (click)="toggleSidenav()">Métodos de Pago</a>
-          <a mat-list-item routerLink="/dashboard/buy-membership" (click)="toggleSidenav()">Membresía</a>
           <a mat-list-item routerLink="/dashboard/pending-payment-history" (click)="toggleSidenav()">Pagos
             Pendientes</a>
           <a mat-list-item routerLink="/dashboard/late-payments" (click)="toggleSidenav()">Pagos Atrasados</a>
@@ -90,13 +73,14 @@
   <span class="social-media">
     <h2 class="social-media">Síguenos</h2>
     <div class="social-icons">
-      <i class="fab fa-facebook fa-2x"></i>
-      <i class="fab fa-twitter fa-2x"></i>
-      <i class="fab fa-instagram fa-2x"></i>
-      <i class="fab fa-linkedin fa-2x"></i>
-      <i class="fab fa-github fa-2x"></i>
+      <a href="https://www.facebook.com/share/16GgMQzg1D/" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
+      <a href="https://x.com/OrdonezCamilo15" target="_blank"><i class="fab fa-x-twitter fa-2x"></i></a>
+      <a href="https://www.instagram.com/camilo_ordonez_u?igsh=azRsN3h0NHExcTR1" target="_blank"><i
+          class="fab fa-instagram fa-2x"></i></a>
+      <a href="https://www.linkedin.com/in/sneyder-camilo-ordoñez-uscategui-0008111b8" target="_blank"><i
+          class="fab fa-linkedin fa-2x"></i></a>
+      <a href="https://github.com/Zseiru15" target="_blank"><i class="fab fa-github fa-2x"></i></a>
     </div>
     <p>&#64;SystemParkingYopal</p>
   </span>
-
 </mat-toolbar>

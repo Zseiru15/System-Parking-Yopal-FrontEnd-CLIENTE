@@ -38,13 +38,15 @@ export class ParkingProfileComponent {
   usuarioEncontrado: any = null;
   promociones: any[] = [];
   registrarPromocion: any = null;
+  rolUsuarioSesion: number = 0;
   vistaSeleccionada: 'registrarPromocion' | '' = '';
 
   constructor(private authService: AuthService, private midService: MidService) { }
 
   ngOnInit(): void {
-    const usuario = this.authService.getUsuarioActual(); // ✅
+    const usuario = this.authService.getUsuarioActual();
     this.idUsuarioSesion = usuario?.Id || 0;
+    this.rolUsuarioSesion = usuario?.IdRolesFk?.Id || 0;
 
     if (this.parqueadero?.Id) {
       this.obtenerTrabajadores(this.parqueadero.Id);

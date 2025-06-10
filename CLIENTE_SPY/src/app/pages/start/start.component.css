@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+
+.start-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-work-sans);
+  background-image: url('/fondo-inicio.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 3.17;
+}
+
+
+.division {
+  width: 100%;
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.555);
+}

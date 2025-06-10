@@ -1,4 +1,4 @@
-.buy-container {
+/* .buy-container {
   min-height: 100vh;
   display: flex;
   font-family: var(--font-work-sans);
@@ -8,21 +8,22 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   line-height: 1.6;
-}
+} */
 
 .main-content {
-  background: rgba(239, 246, 255, 0.85);
+  background: rgba(217, 217, 217, 0.60);
+  width: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 20px;
-  border-radius: 15px;
+  border-radius: 0px;
+  padding: 2px;
+  backdrop-filter: blur(10px);
   flex: 1;
-  margin: 80px;
   padding: 0 2rem;
 }
+
 
 .title {
   font-size: 24px;

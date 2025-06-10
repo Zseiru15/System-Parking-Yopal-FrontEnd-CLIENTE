@@ -140,6 +140,7 @@ mat-list-item:hover {
   border-left: 3px solid #3b82f6; /* azul Tailwind blue-500 */
   cursor: pointer;
 }
+
 .mat-accordion {
   margin-top: 8px;
 }

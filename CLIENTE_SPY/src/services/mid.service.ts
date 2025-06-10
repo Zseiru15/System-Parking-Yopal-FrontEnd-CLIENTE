@@ -70,9 +70,8 @@ export class MidService {
   }
 
   getParqueaderoDeEmpleado(idUsuario: number): Observable<any> {
-    return this.http.get(`${this.baseMid}/parqueadero-empleado/${idUsuario}`);
+    return this.http.get(`${this.baseMid}/parqueaderos/empleo/${idUsuario}`);
   }
-
 
   getPromocionesPorParqueadero(idParqueadero: number): Observable<any> {
     return this.http.get(`${this.baseMid}/parqueaderos/promociones/${idParqueadero}`);

@@ -101,6 +101,7 @@ export class UserPorfileComponent implements OnInit {
           this.parqueaderos = res.Data.filter((p: any) => p.Estado === true || p.Estado === 1);
           console.log('🏢 Parqueaderos activos:', this.parqueaderos);
 
+          // Asignación automática de rol
           let nuevoRolId = 1;
           if (this.parqueaderos.length > 0) {
             nuevoRolId = 3;
@@ -124,14 +125,15 @@ export class UserPorfileComponent implements OnInit {
               }
             });
           }
+
         } else {
-          this.parqueaderos = [];
           console.warn('⚠️ No hay parqueaderos registrados:', res);
+          this.parqueaderos = [];
         }
       },
       error: (err) => {
-        this.parqueaderos = [];
         console.error('❌ Error al obtener parqueaderos:', err);
+        this.parqueaderos = [];
       }
     });
   }
