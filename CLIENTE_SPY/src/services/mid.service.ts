@@ -85,4 +85,8 @@ export class MidService {
     return this.http.put(`${this.baseMid}/promociones/${id}`, body);
   }
 
+  obtenerPagos(): Observable<any[]> {
+    return this.http.get<any>(`${this.baseMid}/pagos`);
+  }
+
 }
