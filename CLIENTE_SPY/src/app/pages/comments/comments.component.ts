@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MidService } from '../../../services/mid.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ApiService } from '../../../services/api.service';
-import { AuthService } from '../../../services/auth.service'; 
+import { AuthService } from '../../../services/auth.service';
+import { Observable, startWith, map } from 'rxjs';
+
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-comments',
@@ -32,6 +35,7 @@ import { AuthService } from '../../../services/auth.service';
     FormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule
   ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
@@ -39,11 +43,23 @@ import { AuthService } from '../../../services/auth.service';
 export class CommentsComponent implements OnInit {
   comentariosOriginal: any[] = [];
   comentariosFiltrados: any[] = [];
-  parkingList: any[] = []; // <== Aquí almacenamos los parqueaderos
+  parkingList: any[] = [];
   commentForm: FormGroup;
   usuario: any = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private midService: MidService, private apiService: ApiService, private authService: AuthService) {
+  // 🔍 Autocompletado
+  searchParkingControl = new FormControl('');
+  filteredParkingList$: Observable<any[]> = new Observable<any[]>();
+  searchParkingFormControl = new FormControl('');
+  filteredParkingForm$: Observable<any[]> = new Observable<any[]>();
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private midService: MidService,
+    private apiService: ApiService,
+    private authService: AuthService
+  ) {
     this.commentForm = this.fb.group({
       parkingId: ['', Validators.required],
       comment: ['', Validators.required],
@@ -51,23 +67,29 @@ export class CommentsComponent implements OnInit {
     });
   }
 
-  filtros = {
-    estrellas: null,
-    parkingId: null,
-    fecha: null
-  };
+  filtros: {
+    estrellas: number | null;
+    parkingId: number | null;
+    fecha: Date | null;
+  } = {
+      estrellas: null,
+      parkingId: null,
+      fecha: null
+    };
 
   ngOnInit(): void {
     this.usuario = this.authService.getUsuarioActual();
     this.obtenerComentarios();
-    this.obtenerParqueaderos(); // <== Cargar parqueaderos al iniciar
+    this.obtenerParqueaderos();
   }
 
   obtenerComentarios(): void {
     this.midService.obtenerComentarios().subscribe({
       next: (resp) => {
         if (resp.Success) {
-          this.comentariosOriginal = (resp.Data as any[]).sort((a, b) => new Date(b.Fecha).getTime() - new Date(a.Fecha).getTime());
+          this.comentariosOriginal = (resp.Data as any[]).sort((a, b) =>
+            new Date(b.Fecha).getTime() - new Date(a.Fecha).getTime()
+          );
           this.comentariosFiltrados = [...this.comentariosOriginal];
         }
       }
@@ -79,6 +101,15 @@ export class CommentsComponent implements OnInit {
       next: (res: any) => {
         if (res.Success) {
           this.parkingList = res.Data;
+          this.filteredParkingList$ = this.searchParkingControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this.filtrarParqueaderos(value || ''))
+          );
+          this.filteredParkingForm$ = this.searchParkingFormControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this.filtrarParqueaderos(value || ''))
+          );
+
         }
       },
       error: (err: any) => {
@@ -86,7 +117,38 @@ export class CommentsComponent implements OnInit {
         alert('No se pudieron cargar los parqueaderos');
       }
     });
+  }
 
+  filtrarParqueaderos(valor: string): any[] {
+    const filtro = valor.toLowerCase();
+    return this.parkingList.filter(p =>
+      p.Nombres.toLowerCase().includes(filtro)
+    );
+  }
+
+  seleccionarParqueadero(event: MatAutocompleteSelectedEvent) {
+    const nombreSeleccionado = event.option.value;
+    this.filtros.parkingId = this.obtenerIdParqueaderoPorNombre(nombreSeleccionado);
+    this.aplicarFiltros();
+  }
+
+  seleccionarParqueaderoFormulario(event: MatAutocompleteSelectedEvent) {
+    const nombreSeleccionado = event.option.value;
+    const parqueadero = this.parkingList.find(p => p.Nombres === nombreSeleccionado);
+    if (parqueadero) {
+      this.commentForm.get('parkingId')?.setValue(parqueadero.Id);
+    }
+  }
+
+  obtenerIdParqueaderoPorNombre(nombre: string): number | null {
+    if (!nombre || nombre.trim() === '') return null;
+    const encontrado = this.parkingList.find(p => p.Nombres === nombre);
+    return encontrado ? encontrado.Id : null;
+  }
+
+  obtenerNombreParqueaderoPorId(id: number): string | null {
+    const encontrado = this.parkingList.find(p => p.Id === id);
+    return encontrado ? encontrado.Nombres : null;
   }
 
   aplicarFiltros(): void {
@@ -96,8 +158,9 @@ export class CommentsComponent implements OnInit {
         : true;
 
       const coincideParqueadero = this.filtros.parkingId != null
-        ? comentario.IdParqueadero === this.filtros.parkingId
+        ? comentario.Estacionamiento?.toLowerCase() === this.obtenerNombreParqueaderoPorId(this.filtros.parkingId)?.toLowerCase()
         : true;
+
 
       const coincideFecha = this.filtros.fecha
         ? new Date(comentario.Fecha).toDateString() === new Date(this.filtros.fecha).toDateString()
@@ -113,16 +176,13 @@ export class CommentsComponent implements OnInit {
       parkingId: null,
       fecha: null
     };
+    this.searchParkingControl.setValue('');
     this.comentariosFiltrados = [...this.comentariosOriginal];
-  }
-
-  obtenerEstacionamientos(): string[] {
-    return [...new Set(this.comentariosOriginal.map(c => c.Estacionamiento))];
   }
 
   getBase64ImageSrc(base64: string | null): string {
     if (!base64 || base64.trim() === '') {
-      return ''; // No se muestra ninguna imagen
+      return '';
     }
 
     const mime = base64.startsWith('/9j/') ? 'image/jpeg' :
@@ -133,28 +193,15 @@ export class CommentsComponent implements OnInit {
     return `data:${mime};base64,${base64}`;
   }
 
-
   getEstrellas(calificacion: number): string[] {
     const estrellas: string[] = [];
     const enteras = Math.floor(calificacion);
     const decimal = calificacion - enteras;
 
-    // Estrellas llenas
-    for (let i = 0; i < enteras; i++) {
-      estrellas.push('full');
-    }
-
-    // Media estrella si aplica
-    if (decimal >= 0.25 && decimal <= 0.75) {
-      estrellas.push('half');
-    } else if (decimal > 0.75) {
-      estrellas.push('full');
-    }
-
-    // Rellenar con vacías hasta llegar a 5
-    while (estrellas.length < 5) {
-      estrellas.push('empty');
-    }
+    for (let i = 0; i < enteras; i++) estrellas.push('full');
+    if (decimal >= 0.25 && decimal <= 0.75) estrellas.push('half');
+    else if (decimal > 0.75) estrellas.push('full');
+    while (estrellas.length < 5) estrellas.push('empty');
 
     return estrellas;
   }
@@ -166,9 +213,8 @@ export class CommentsComponent implements OnInit {
     }
 
     const formData = this.commentForm.value;
-
-    // ✅ Validación personalizada para clasificación
     const calificacion = Number(formData.classification);
+
     if (isNaN(calificacion) || calificacion < 1 || calificacion > 5) {
       alert('La calificación debe ser un número entre 1 y 5');
       return;
@@ -184,17 +230,15 @@ export class CommentsComponent implements OnInit {
       Fecha_Creacion: new Date().toISOString(),
     };
 
-    this.apiService.post(`http://localhost:8082/v1/comentarios`, extendedData).subscribe({
-      next: (response) => {
-        console.log('✅ Comentario registrado', response);
+    this.apiService.post(`comentarios`, extendedData).subscribe({
+      next: (rep) => {
         alert('Comentario enviado con éxito');
         this.commentForm.reset();
-
-        // 🔄 Recargar comentarios (visualizador en el siguiente paso)
         this.obtenerComentarios();
+        console.log('✅ Comentario enviado exitosamente', rep);
       },
       error: (error) => {
-        console.error('❌ Error en el envío del comentario:', error);
+        console.error('❌ Error al enviar comentario:', error);
         alert('Error al enviar el comentario');
       }
     });

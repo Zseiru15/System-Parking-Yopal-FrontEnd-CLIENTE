@@ -10,7 +10,6 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { AuthService } from '../../../services/auth.service'; // Ajusta según estructura
 import { MidService } from '../../../services/mid.service';
 
-
 @Component({
   selector: 'app-login',
   imports: [
@@ -34,7 +33,19 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+  }
 
+  ngOnInit(): void {
+    const savedEmail = localStorage.getItem('rememberEmail');
+    const savedPassword = localStorage.getItem('rememberPassword');
+
+    if (savedEmail && savedPassword) {
+      this.loginForm.patchValue({
+        email: savedEmail,
+        password: savedPassword,
+        rememberMe: true
+      });
+    }
   }
 
   login() {
@@ -43,13 +54,22 @@ export class LoginComponent {
       return;
     }
 
-    const data = this.loginForm.value;
+    const { email, password, rememberMe } = this.loginForm.value;
 
-    this.midService.loginUser(data).subscribe({
+    this.midService.loginUser({ email, password }).subscribe({
       next: (res: any) => {
         if (res.Success) {
-          console.log('Respuesta login:', res.Data);
           localStorage.setItem('usuario', JSON.stringify(res.Data));
+
+          // ✅ Guardar credenciales si el usuario activó "Recuérdame"
+          if (rememberMe) {
+            localStorage.setItem('rememberEmail', email);
+            localStorage.setItem('rememberPassword', password);
+          } else {
+            localStorage.removeItem('rememberEmail');
+            localStorage.removeItem('rememberPassword');
+          }
+
           this.router.navigate(['/dashboard/start']);
         } else {
           alert(res.Message || 'Login fallido');
@@ -60,7 +80,6 @@ export class LoginComponent {
         alert('Error al iniciar sesión');
       }
     });
-
   }
 
   goToRegister() {

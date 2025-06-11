@@ -19,11 +19,14 @@
                 </div>
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Estacionamiento</mat-label>
-                  <mat-select formControlName="parkingId">
-                    <mat-option *ngFor="let parking of parkingList" [value]="parking.Id">
+                  <input type="text" matInput [formControl]="searchParkingFormControl" [matAutocomplete]="autoForm"
+                    placeholder="Buscar estacionamiento...">
+                  <mat-autocomplete #autoForm="matAutocomplete"
+                    (optionSelected)="seleccionarParqueaderoFormulario($event)">
+                    <mat-option *ngFor="let parking of filteredParkingForm$ | async" [value]="parking.Nombres">
                       {{ parking.Nombres }}
                     </mat-option>
-                  </mat-select>
+                  </mat-autocomplete>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Comentario</mat-label>
@@ -55,12 +58,13 @@
 
           <mat-form-field appearance="fill">
             <mat-label>Estacionamiento</mat-label>
-            <mat-select [(ngModel)]="filtros.parkingId" (selectionChange)="aplicarFiltros()">
-              <mat-option [value]="null">Todos</mat-option>
-              <mat-option *ngFor="let parking of parkingList" [value]="parking.Id">
+            <input type="text" placeholder="Buscar estacionamiento" matInput [formControl]="searchParkingControl"
+              [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="seleccionarParqueadero($event)">
+              <mat-option *ngFor="let parking of filteredParkingList$ | async" [value]="parking.Nombres">
                 {{ parking.Nombres }}
               </mat-option>
-            </mat-select>
+            </mat-autocomplete>
           </mat-form-field>
 
           <mat-form-field appearance="fill">

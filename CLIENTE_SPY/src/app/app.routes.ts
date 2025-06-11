@@ -91,7 +91,7 @@ export const routes: Routes = [
         canActivate: [authGuard]
       },
       {
-        path: 'pending-payment-history',
+        path: 'payment-history',
         loadComponent: () => import('./pages/pending-payment-history/pending-payment-history.component').then(m => m.PendingPaymentHistoryComponent),
         canActivate: [authGuard]
       },
