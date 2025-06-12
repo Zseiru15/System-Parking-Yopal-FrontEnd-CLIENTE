@@ -89,4 +89,14 @@ export class MidService {
     return this.http.get<any>(`${this.baseMid}/pagos`);
   }
 
+  registrarCompra(id: string): Observable<{ mensaje: string; codigo: number }> {
+    return this.http.post<{ mensaje: string; codigo: number }>(
+      `${this.baseMid}/pagos/registrar/${id}`, {}
+    );
+  }
+
+  registrarPago(pago: any): Observable<any> {
+    return this.http.post(`${this.baseMid}/pagos`, pago);
+  }
+
 }
