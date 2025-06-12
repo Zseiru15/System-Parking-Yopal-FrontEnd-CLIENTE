@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,9 +14,19 @@ declare var paypal: any;
   templateUrl: './buy-membership.component.html',
   styleUrl: './buy-membership.component.css'
 })
-export class BuyMembershipComponent implements AfterViewInit {
+export class BuyMembershipComponent implements AfterViewInit, OnInit {
 
-  constructor(private http: HttpClient, private midService: MidService) {}
+  constructor(private http: HttpClient, private midService: MidService) { }
+
+  usuario: any;
+  parqueadero: any = null; // Si no se usa, puedes dejarlo en null
+
+  ngOnInit() {
+    const usuarioJSON = localStorage.getItem('usuario');
+    if (usuarioJSON) {
+      this.usuario = JSON.parse(usuarioJSON);
+    }
+  }
 
   ngAfterViewInit(): void {
     paypal.Buttons({
@@ -35,19 +45,15 @@ export class BuyMembershipComponent implements AfterViewInit {
         return actions.order.capture().then((details: any) => {
           alert('Pago completado por: ' + details.payer.name.given_name);
 
-          const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-
           const pago = {
-            IdUsuariosFk: usuario.Id,
-            IdEstacionamientosFk: usuario.IdEstacionamientoTrabajoFk || null,
+            IdUsuariosFk: this.usuario.id,
+            IdEstacionamientosFk: this.parqueadero?.id || null,
             PayPalOrderID: details.id,
-            Amount: parseFloat(details.purchase_units[0].amount.value),
+            Amount: details.purchase_units[0].amount.value,
             Currency: details.purchase_units[0].amount.currency_code,
-            Status: true,
             PayerEmail: details.payer.email_address,
-            ReceiverEmail: details.purchase_units[0].payee.email_address,
+            ReceiverEmail: 'techorus@example.com',
             Tipo: 'membresía'
-            // FechaFin lo calculará el MID automáticamente
           };
 
           this.midService.registrarPago(pago).subscribe({
