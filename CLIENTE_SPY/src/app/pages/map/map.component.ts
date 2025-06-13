@@ -1,117 +1,162 @@
-import { Component, AfterViewInit } from '@angular/core';
-import * as L from 'leaflet';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { Component, AfterViewInit } from '@angular/core';
+import { NgIf, NgFor } from '@angular/common';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule,   // Para [(ngModel)]
+    NgIf,          // Para *ngIf
+    NgFor,         // Para *ngFor
+    MatButtonModule,
+  ],
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements AfterViewInit {
-  map!: L.Map;
-  marker?: L.Marker;
-  direccion: string = '';
+  private map!: L.Map;
+  private marcadorBusqueda?: L.Marker;
+  private miUbicacionMarker?: L.Marker;
+  private rutaActual?: L.Polyline;
+
+  miUbicacion?: L.LatLng;
+  busqueda: string = '';
   sugerencias: any[] = [];
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.detectarUbicacion();
   }
 
   private initMap(): void {
-    this.map = L.map('mapa', {
-      center: [5.3496, -72.4065], // Yopal
-      zoom: 13
-    });
+    this.map = L.map('map').setView([5.3510, -72.3950], 14); // Yopal por defecto
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
+      attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);
 
-    this.map.on('click', (e: any) => {
-      const { lat, lng } = e.latlng;
-      this.colocarMarcador(lat, lng);
-    });
-  }
-
-  private colocarMarcador(lat: number, lng: number): void {
-    if (this.marker) {
-      this.marker.setLatLng([lat, lng]);
-    } else {
-      this.marker = L.marker([lat, lng]).addTo(this.map);
-    }
-
-    this.map.setView([lat, lng], 15);
-  }
-
-  detectarUbicacion(): void {
+    // Obtener ubicación actual
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        this.colocarMarcador(lat, lng);
-      }, () => {
-        console.warn('No se pudo obtener la ubicación');
-      });
-    } else {
-      alert('La geolocalización no está soportada en este navegador');
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          this.miUbicacion = L.latLng(pos.coords.latitude, pos.coords.longitude);
+          this.miUbicacionMarker = L.marker(this.miUbicacion)
+            .addTo(this.map)
+            .bindPopup('Tu ubicación')
+            .openPopup();
+          this.map.setView(this.miUbicacion, 14);
+        },
+        err => {
+          console.error('Error obteniendo ubicación:', err);
+          alert('No se pudo obtener tu ubicación actual.');
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        }
+      );
     }
+
   }
 
-  buscarSugerencias(): void {
-    if (this.direccion.length < 3) {
+  usarComoUbicacionActual(): void {
+    if (!this.marcadorBusqueda) return;
+
+    const coords = this.marcadorBusqueda.getLatLng();
+    this.miUbicacion = coords;
+
+    if (this.miUbicacionMarker) this.map.removeLayer(this.miUbicacionMarker);
+
+    this.miUbicacionMarker = L.marker(coords)
+      .addTo(this.map)
+      .bindPopup('Ubicación actual definida por el usuario')
+      .openPopup();
+  }
+
+  sugerirLugares(): void {
+    if (this.busqueda.length < 3) {
       this.sugerencias = [];
       return;
     }
 
-    const encodedQuery = encodeURIComponent(this.direccion);
-    const viewbox = '-72.5,5.2,-72.3,5.5'; // área de Yopal, puedes ajustar
-
-    const nominatimURL = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedQuery}&viewbox=${viewbox}&bounded=1&addressdetails=1&limit=5`;
-    const photonURL = `https://photon.komoot.io/api/?q=${encodedQuery}&limit=5`;
-
-    Promise.all([
-      fetch(nominatimURL).then(res => res.json()).catch(() => []),
-      fetch(photonURL).then(res => res.json()).catch(() => [])
-    ]).then(([nominatimResults, photonResults]) => {
-      const photonFormatted = (photonResults?.features || []).map((feature: any) => ({
-        display_name: `${feature.properties.name}, ${feature.properties.city || feature.properties.state || ''}`,
-        lat: feature.geometry.coordinates[1],
-        lon: feature.geometry.coordinates[0],
-        source: 'Photon'
-      }));
-
-      const nominatimFormatted = (nominatimResults || []).map((item: any) => ({
-        ...item,
-        source: 'Nominatim'
-      }));
-
-      this.sugerencias = [...nominatimFormatted, ...photonFormatted];
-    }).catch(err => console.error('Error combinando búsquedas:', err));
-  }
-
-  seleccionarSugerencia(item: any): void {
-    const lat = parseFloat(item.lat);
-    const lon = parseFloat(item.lon);
-    this.colocarMarcador(lat, lon);
-    this.direccion = item.display_name;
-    this.sugerencias = [];
-  }
-
-  buscarDireccion(): void {
-    if (!this.direccion.trim()) return;
-    const viewbox = '-72.5,5.2,-72.3,5.5';
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.direccion)}&viewbox=${viewbox}&bounded=1&addressdetails=1&limit=1`;
+    const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(this.busqueda)}&limit=5&lang=es`;
 
     fetch(url)
       .then(res => res.json())
       .then(data => {
-        if (data.length) this.seleccionarSugerencia(data[0]);
-        else alert('No se encontró la dirección en Yopal.');
+        this.sugerencias = data.features;
       })
-      .catch(console.error);
+      .catch(err => {
+        console.error('Error al obtener sugerencias:', err);
+      });
+  }
+
+  seleccionarSugerencia(sugerencia: any): void {
+    this.sugerencias = [];
+    this.busqueda = sugerencia.properties.name;
+    const lat = sugerencia.geometry.coordinates[1];
+    const lon = sugerencia.geometry.coordinates[0];
+    const coords = L.latLng(lat, lon);
+
+    if (this.marcadorBusqueda) this.map.removeLayer(this.marcadorBusqueda);
+    this.marcadorBusqueda = L.marker(coords).addTo(this.map).bindPopup(this.busqueda).openPopup();
+    this.map.setView(coords, 15);
+
+    if (this.miUbicacion) {
+      this.trazarRuta(this.miUbicacion, coords);
+    }
+  }
+
+  buscarLugar(): void {
+    if (!this.busqueda) return;
+
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.busqueda)}`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        if (data.length === 0) {
+          alert('Lugar no encontrado');
+          return;
+        }
+
+        const lugar = data[0];
+        const coords = L.latLng(lugar.lat, lugar.lon);
+
+        if (this.marcadorBusqueda) this.map.removeLayer(this.marcadorBusqueda);
+        this.marcadorBusqueda = L.marker(coords).addTo(this.map).bindPopup(lugar.display_name).openPopup();
+        this.map.setView(coords, 15);
+
+        if (this.miUbicacion) {
+          this.trazarRuta(this.miUbicacion, coords);
+        }
+      })
+      .catch(err => {
+        console.error('Error en la búsqueda:', err);
+      });
+  }
+
+  trazarRuta(origen: L.LatLng, destino: L.LatLng): void {
+    const url = `https://router.project-osrm.org/route/v1/driving/${origen.lng},${origen.lat};${destino.lng},${destino.lat}?overview=full&geometries=geojson`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const coords = data.routes[0].geometry.coordinates;
+        const ruta = coords.map(([lng, lat]: [number, number]) => L.latLng(lat, lng));
+
+        // Eliminar ruta anterior si existe
+        if (this.rutaActual) {
+          this.map.removeLayer(this.rutaActual);
+        }
+
+        this.rutaActual = L.polyline(ruta, { color: 'blue', weight: 5 }).addTo(this.map);
+      })
+      .catch(err => console.error('Error al trazar la ruta:', err));
   }
 }
