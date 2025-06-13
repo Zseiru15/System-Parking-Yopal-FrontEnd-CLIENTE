@@ -1,0 +1,73 @@
+#mapa {
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+}
+
+.busqueda-container {
+  position: relative;
+  max-width: 400px;
+  margin-bottom: 10px;
+}
+
+.busqueda-container input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.busqueda-container form {
+  display: flex;
+  gap: 10px;
+}
+
+.busqueda-container button {
+  padding: 10px 16px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.busqueda-container button:hover {
+  background-color: #2c3e91;
+}
+
+.sugerencias {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.sugerencias li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.sugerencias li:hover {
+  background: #f0f0f0;
+}
+
+.map-tools {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.map-tools input {
+  flex: 1;
+  padding: 5px;
+}

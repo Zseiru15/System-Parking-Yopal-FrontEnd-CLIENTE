@@ -95,8 +95,12 @@ export class MidService {
     );
   }
 
-  registrarPago(pago: any): Observable<any> {
+  registrarPago(pago: any) {
     return this.http.post(`${this.baseMid}/pagos`, pago);
+  }
+
+  actualizarMembresia(data: any) {
+    return this.http.put(`${this.baseMid}/usuarios/actualizar-membresia`, data); // Ajusta el endpoint real
   }
 
 }

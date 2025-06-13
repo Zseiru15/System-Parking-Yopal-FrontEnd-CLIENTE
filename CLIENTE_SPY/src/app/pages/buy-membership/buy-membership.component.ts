@@ -16,10 +16,10 @@ declare var paypal: any;
 })
 export class BuyMembershipComponent implements AfterViewInit, OnInit {
 
-  constructor(private http: HttpClient, private midService: MidService) { }
-
   usuario: any;
-  parqueadero: any = null; // Si no se usa, puedes dejarlo en null
+  parqueadero: any = null; // Si se usa, puede llenarse con lógica adicional
+
+  constructor(private http: HttpClient, private midService: MidService) { }
 
   ngOnInit() {
     const usuarioJSON = localStorage.getItem('usuario');
@@ -45,29 +45,53 @@ export class BuyMembershipComponent implements AfterViewInit, OnInit {
         return actions.order.capture().then((details: any) => {
           alert('Pago completado por: ' + details.payer.name.given_name);
 
+          const inicio = new Date();
+          const fin = new Date();
+          fin.setMonth(fin.getMonth() + 1);
+
           const pago = {
             IdUsuariosFk: this.usuario.id,
             IdEstacionamientosFk: this.parqueadero?.id || null,
             PayPalOrderID: details.id,
-            Amount: details.purchase_units[0].amount.value,
+            Amount: parseFloat(details.purchase_units[0].amount.value),
             Currency: details.purchase_units[0].amount.currency_code,
             PayerEmail: details.payer.email_address,
             ReceiverEmail: 'techorus@example.com',
-            Tipo: 'membresía'
+            Tipo: 'membresía',
+            Status: details.status || 'COMPLETED',
+            FechaInicio: inicio.toISOString(),
+            FechaFin: fin.toISOString()
           };
 
-          this.midService.registrarPago(pago).subscribe({
-            next: (response) => {
-              console.log('Pago registrado correctamente:', response);
-              alert('¡Pago registrado en el sistema con membresía activa por 1 mes!');
+          const actualizacion = {
+            Id: this.usuario.id,
+            Membresia: true,
+            InicioMembresia: inicio.toISOString(),
+            FinMembresia: fin.toISOString()
+          };
+
+          this.midService.actualizarMembresia(actualizacion).subscribe({
+            next: () => {
+              console.log('Usuario actualizado con membresía activa');
+
+              this.midService.registrarPago(pago).subscribe({
+                next: (res) => {
+                  console.log("✅ Respuesta del MID:", res);
+                  alert("Pago registrado con éxito.");
+                },
+                error: (err) => {
+                  console.error("❌ Error al registrar el pago:", err);
+                  alert("Error al guardar el pago.");
+                }
+              });
             },
             error: (err) => {
-              console.error('Error al registrar el pago:', err);
-              alert('Hubo un problema al registrar el pago.');
+              console.error('❌ Error al actualizar usuario:', err);
+              alert('El pago fue exitoso pero no se pudo activar la membresía.');
             }
           });
         });
       }
-    }).render('#paypal-button-container');
+    }).render('#paypal-button-container'); // ✅ esta línea ahora está bien cerrada
   }
 }

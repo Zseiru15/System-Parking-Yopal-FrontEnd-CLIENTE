@@ -1,0 +1,14 @@
+<div class="busqueda-container">
+  <input type="text" placeholder="Busca un lugar o dirección" [(ngModel)]="direccion" (input)="buscarSugerencias()"
+    (keyup.enter)="buscarDireccion()" />
+
+  <button (click)="buscarDireccion()">🔍 Buscar</button>
+
+  <ul *ngIf="sugerencias.length" class="sugerencias">
+    <li *ngFor="let item of sugerencias" (click)="seleccionarSugerencia(item)">
+      {{ item.display_name }} <small style="color:gray;">({{ item.source }})</small>
+    </li>
+  </ul>
+</div>
+
+<div id="mapa"></div>
