@@ -96,11 +96,7 @@ export class MidService {
   }
 
   registrarPago(pago: any) {
-    return this.http.post(`${this.baseMid}/pagos`, pago);
-  }
-
-  actualizarMembresia(data: any) {
-    return this.http.put(`${this.baseMid}/usuarios/actualizar-membresia`, data); // Ajusta el endpoint real
+    return this.http.post<any>('http://localhost:8082/v1/pagos', pago); // O el endpoint real del MID
   }
 
 }

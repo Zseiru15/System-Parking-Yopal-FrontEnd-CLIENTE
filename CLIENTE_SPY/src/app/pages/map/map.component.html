@@ -1,16 +1,5 @@
-<div class="search-container">
-  <input type="text" [(ngModel)]="busqueda" (input)="sugerirLugares()" placeholder="Buscar lugar..." />
-  <ul *ngIf="sugerencias.length > 0" class="sugerencias">
-    <li *ngFor="let sugerencia of sugerencias" (click)="seleccionarSugerencia(sugerencia)">
-      {{ sugerencia.properties.name }} <small *ngIf="sugerencia.properties.city">({{ sugerencia.properties.city
-        }})</small>
-    </li>
-  </ul>
-  <button (click)="buscarLugar()">Buscar</button>
-  <button mat-raised-button color="accent" (click)="usarComoUbicacionActual()">
-    Usar este lugar como mi ubicación
-  </button>
-
+<div class="map-wrapper">
+  <input id="search-box" type="text" placeholder="Buscar lugar o dirección..." />
+  <div id="route-info" class="info-box"></div>
+  <div #mapContainer id="map"></div>
 </div>
-
-<div id="map" style="height: 400px; width: 100%;"></div>
