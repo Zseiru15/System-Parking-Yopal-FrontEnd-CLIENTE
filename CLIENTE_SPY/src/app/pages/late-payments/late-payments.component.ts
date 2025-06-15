@@ -59,7 +59,7 @@ export class LatePaymentsComponent {
 
   consultarDatos(): void {
     let url: string;
-    url = API_URLS.CRUD.Api_crud + '/Pagos';
+    url = API_URLS.MID.Api_mid + '/Pagos';
     this.http.get<any>(url).subscribe(
       (response) => {
         console.log('Estos son los datos completos', response);

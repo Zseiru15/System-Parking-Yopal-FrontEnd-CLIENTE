@@ -92,12 +92,7 @@ export const routes: Routes = [
       },
       {
         path: 'payment-history',
-        loadComponent: () => import('./pages/pending-payment-history/pending-payment-history.component').then(m => m.PendingPaymentHistoryComponent),
-        canActivate: [authGuard]
-      },
-      {
-        path: 'late-payments',
-        loadComponent: () => import('./pages/late-payments/late-payments.component').then(m => m.LatePaymentsComponent),
+        loadComponent: () => import('./pages/payment-history/payment-history.component').then(m => m.PaymentHistoryComponent),
         canActivate: [authGuard]
       },
       {

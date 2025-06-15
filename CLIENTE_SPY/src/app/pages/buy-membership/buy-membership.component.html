@@ -4,38 +4,56 @@
       <h1>Membresías</h1>
     </mat-card-title>
     <mat-card class="buy-membership-content">
+
+      <!-- Membresía básica -->
       <mat-card class="membresia">
         <mat-card-title class="sub-title">
           <h2>SPY BÁSICO</h2>
           <h3>GRATIS</h3>
         </mat-card-title>
         <mat-card-content class="informacion">
-          <p>Registro de vehiculos (Bicicleta, Moto, Carro).</p>
-          <p>Parqueaderos publicos.</p>
+          <p>Registro de vehículos (Bicicleta, Moto, Carro).</p>
+          <p>Parqueaderos públicos.</p>
           <p>Parqueaderos privados.</p>
           <p>Parqueaderos de centros comerciales.</p>
-          <p>Asistencia en rutas</p>
+          <p>Asistencia en rutas.</p>
         </mat-card-content>
       </mat-card>
+
+      <!-- Membresía premium -->
       <mat-card class="membresia">
         <mat-card-title class="sub-title">
           <h2>SPY PREMIUM</h2>
           <h3>$2.700/MES</h3>
         </mat-card-title>
         <mat-card-content class="informacion">
-          <p>Registro de vehiculos (Bicicleta, Moto, Carro).</p>
-          <p>Parqueaderos publicos.</p>
+          <p>Registro de vehículos (Bicicleta, Moto, Carro).</p>
+          <p>Parqueaderos públicos.</p>
           <p>Parqueaderos privados.</p>
           <p>Parqueaderos de centros comerciales.</p>
-          <p>Asistencia en rutas</p>
-          <p>Ofertas exclusivas</p>
-          <p>Reservas de estacionamientos</p>
-          <p>10% de descuento al mes</p>
+          <p>Asistencia en rutas.</p>
+          <p>Ofertas exclusivas.</p>
+          <p>Reservas de estacionamientos.</p>
+          <p>10% de descuento al mes.</p>
+
+          <!-- Estado de membresía -->
+          <div *ngIf="membresiaActiva; else noActiva" class="estado-membresia activo">
+            <p>✅ Membresía activa hasta: {{ fechaFin }}</p>
+          </div>
+          <ng-template #noActiva>
+            <div class="estado-membresia inactiva">
+              <p>❌ No tienes una membresía activa.</p>
+            </div>
+          </ng-template>
 
           <!-- Contenedor para el botón de PayPal -->
-          <div id="paypal-button-container"></div>
+          <!-- Mostrar botón PayPal solo si no tiene membresía -->
+          <div *ngIf="!membresiaActiva">
+            <div id="paypal-button-container"></div>
+          </div>
         </mat-card-content>
       </mat-card>
+
     </mat-card>
   </mat-card>
 </div>

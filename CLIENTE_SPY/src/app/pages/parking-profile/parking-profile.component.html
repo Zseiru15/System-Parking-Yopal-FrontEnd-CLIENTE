@@ -30,6 +30,9 @@
             <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarContratar = !mostrarContratar">
               {{ mostrarContratar ? 'Cerrar' : 'Contratar' }}
             </button>
+            <button mat-raised-button color="primary" class="submit-btn" (click)="mostrarVista('paymentHistory')">
+              Ver historial de pagos
+            </button>
           </div>
         </div>
 
@@ -145,16 +148,23 @@
       </div>
     </div>
   </mat-card>
-  <!-- ✅ Overlay para registrar promoción -->
+  <!-- Overlay para registrar promoción -->
   <div *ngIf="vistaSeleccionada === 'registrarPromocion'" class="overlay">
     <div class="overlay-content">
       <button mat-icon-button class="close-btn" (click)="cerrarVista()">
         <mat-icon>close</mat-icon>
       </button>
-
-      <app-best-offer [parqueaderoId]="parqueadero.Id" (cerrar)="cerrarVista()">
-      </app-best-offer>
+      <app-best-offer [parqueaderoId]="parqueadero.Id" (cerrar)="cerrarVista()"></app-best-offer>
     </div>
   </div>
 
+  <!-- Overlay para historial de pagos -->
+  <div *ngIf="vistaSeleccionada === 'paymentHistory'" class="overlay">
+    <div class="overlay-content">
+      <button mat-icon-button class="close-btn" (click)="cerrarVista()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <app-payment-history [parqueaderoId]="parqueadero?.Id" (cerrar)="cerrarVista()"></app-payment-history>
+    </div>
+  </div>
 </div>

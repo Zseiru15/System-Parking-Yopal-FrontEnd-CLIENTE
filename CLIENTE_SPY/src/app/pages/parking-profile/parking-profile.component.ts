@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MidService } from '../../../services/mid.service';
 import { AuthService } from '../../../services/auth.service';
 import { BestOfferComponent } from '../best-offer/best-offer.component';
+import { PaymentHistoryComponent } from '../payment-history/payment-history.component';
 
 @Component({
   selector: 'app-parking-profile',
@@ -23,7 +24,8 @@ import { BestOfferComponent } from '../best-offer/best-offer.component';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    BestOfferComponent
+    BestOfferComponent,
+    PaymentHistoryComponent
   ],
   templateUrl: './parking-profile.component.html',
   styleUrl: './parking-profile.component.css'
@@ -39,7 +41,7 @@ export class ParkingProfileComponent {
   promociones: any[] = [];
   registrarPromocion: any = null;
   rolUsuarioSesion: number = 0;
-  vistaSeleccionada: 'registrarPromocion' | '' = '';
+  vistaSeleccionada: 'registrarPromocion' | 'paymentHistory' | '' = '';
 
   constructor(private authService: AuthService, private midService: MidService) { }
 
@@ -89,6 +91,7 @@ export class ParkingProfileComponent {
 
   mostrarContratar: boolean = false;
   usuarioDisponible: boolean = false;
+  listaPagos: boolean = false;
 
   buscarUsuario() {
     if (!this.numeroIdentificacion) {
@@ -209,7 +212,7 @@ export class ParkingProfileComponent {
   }
 
   mostrarVista(
-    vista: 'registrarPromocion' | '',
+    vista: 'registrarPromocion' | 'paymentHistory' | '',
     datos?: any
   ) {
     this.vistaSeleccionada = vista;
