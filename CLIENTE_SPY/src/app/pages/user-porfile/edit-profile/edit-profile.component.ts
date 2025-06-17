@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { ApiService } from '../../../../services/api.service';
+import { AlertsComponent } from '../../alerts/alerts.component';
 
 @Component({
   standalone: true,
@@ -20,13 +21,16 @@ import { ApiService } from '../../../../services/api.service';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AlertsComponent
   ],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.css'
 })
 export class EditProfileComponent implements OnInit {
-  @Output() refreshUsuario = new EventEmitter<void>(); // ✅ Este evento lo escucha el padre
+  @Output() refreshUsuario = new EventEmitter<void>();
+  @ViewChild('alertsComp') alertsComp!: AlertsComponent;
+
   editFrom: FormGroup;
   hidePassword = true;
   previewUrl: string | ArrayBuffer | null = null;
@@ -34,7 +38,12 @@ export class EditProfileComponent implements OnInit {
   userImage: string = '';
   userId: number = 0;
 
-  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private apiService: ApiService) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private apiService: ApiService
+  ) {
     this.editFrom = this.fb.group({
       firstName: [''],
       lastName: [''],
@@ -47,7 +56,7 @@ export class EditProfileComponent implements OnInit {
 
   editprofile(): void {
     if (!this.userId) {
-      alert('No se pudo obtener el ID del usuario');
+      this.alertsComp.showAlert('No se pudo obtener el ID del usuario', 'error');
       return;
     }
 
@@ -75,13 +84,13 @@ export class EditProfileComponent implements OnInit {
         const data = res.Data;
         if (data) {
           localStorage.setItem('usuario', JSON.stringify(data));
-          alert('Perfil actualizado con éxito');
-          this.refreshUsuario.emit();  // 🚀 Emitir para el padre
+          this.alertsComp.showAlert('✅ Perfil actualizado con éxito', 'success', 2000);
+          this.refreshUsuario.emit();
         }
       },
       error: (err) => {
         console.error('Error en la actualización:', err);
-        alert('Hubo un error al actualizar los datos');
+        this.alertsComp.showAlert('❌ Hubo un error al actualizar los datos', 'error', 3000);
       }
     });
   }
@@ -93,8 +102,9 @@ export class EditProfileComponent implements OnInit {
       console.log('ID del usuario:', this.userId);
     } else {
       console.error('No se pudo obtener el ID del usuario');
-      alert('No se pudo obtener el ID del usuario. Intenta iniciar sesión nuevamente.');
-      this.router.navigate(['/login']); // Opcional: redirigir
+      this.alertsComp.showAlert('❌ Error: inicia sesión nuevamente', 'warning', 3000, () => {
+        this.router.navigate(['/login']);
+      });
     }
   }
 
@@ -105,12 +115,12 @@ export class EditProfileComponent implements OnInit {
       const maxSize = 2 * 1024 * 1024;
 
       if (!validTypes.includes(file.type)) {
-        alert('Formato de imagen no permitido');
+        this.alertsComp.showAlert('⚠️ Formato de imagen no permitido', 'warning');
         return;
       }
 
       if (file.size > maxSize) {
-        alert('La imagen excede el tamaño permitido (2MB)');
+        this.alertsComp.showAlert('⚠️ La imagen excede el tamaño permitido (2MB)', 'warning');
         return;
       }
 

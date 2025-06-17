@@ -20,15 +20,20 @@
 
 /*header*/
 
+.layout-root {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+
 .toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   background-color: #2E3036;
-  /* Fondo del encabezado */
   padding: 1rem 0;
   height: auto;
   width: 100%;
-  top: 0;
-  z-index: 1000;
-  /* Mantiene el encabezado por encima del resto del contenido */
 }
 
 .menu-button {
@@ -77,13 +82,17 @@
   margin-right: 100px;
   margin-left: 25px;
   background: #ffff;
+  transition: transform 0.6s ease-in-out;
+}
+
+.rotate {
+  transform: rotateY(180deg);
 }
 
 /*body*/
 
 .sidenav-container {
-  min-height: 673px;
-  max-height: auto;
+  height: auto;
   width: auto;
 }
 
@@ -117,27 +126,16 @@ mat-expansion-panel-header {
   color: #e0e0e0;
 }
 
-/* Opcional: mejora visibilidad del encabezado del expansion-panel */
-mat-expansion-panel-header {
-  color: #ffffff !important;
+::ng-deep button.mat-list-item .mat-line {
+  color: white !important;
+  font-weight: 500;
+  font-family: 'Work Sans', sans-serif;
 }
 
-/* Cuerpo del panel */
-.mat-expansion-panel-body {
-  color: #ffffff !important;
-  background-color: transparent !important;
-}
-
-mat-list-item {
-  color: #cbd5e1;
-  font-size: 14px;
-  padding-left: 16px;
-}
-
-mat-list-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-left: 3px solid #3b82f6; /* azul Tailwind blue-500 */
-  cursor: pointer;
+::ng-deep mat-expansion-panel-header mat-icon,
+::ng-deep mat-expansion-panel-header svg {
+  color: white !important;
+  fill: white !important;
 }
 
 .mat-accordion {
@@ -206,4 +204,139 @@ mat-list-item:hover {
 
 .social-icons i:hover {
   color: #007bff;
+}
+
+.usuario {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .usuario {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .usuario {
+    font-size: 12px;
+  }
+}
+
+
+/* Aquí para celulares pequeños */
+@media screen and (max-width: 480px) {
+  .toolbar {
+    padding: 0.3rem 0;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .usuario {
+    font-size: 12px;
+  }
+
+  .logout-button {
+    font-size: 15px;
+  }
+
+  mat-expansion-panel-header {
+    font-size: 13px;
+  }
+
+  mat-list-item {
+    font-size: 12px;
+  }
+
+  .contact-info p,
+  .social-media p {
+    font-size: 12px;
+  }
+
+  .social-icons i {
+    font-size: 16px;
+  }
+}
+
+  /* Aquí para tablets en vertical / celulares grandes */
+@media screen and (max-width: 768px) {
+  .toolbar,
+  .informatbar {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+
+  .toolbar .usuario,
+  .toolbar .logo,
+  .toolbar .menu-button {
+    margin: 5px auto;
+  }
+
+  .informatbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .contact-info,
+  .social-media {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  .social-icons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .social-icons i {
+    font-size: 20px;
+  }
+
+  .sidenav {
+    width: 80vw;
+  }
+
+  .logout-button {
+    font-size: 16px;
+    padding: 8px 12px;
+    width: 95%;
+  }
+}
+
+/* Aquí estilos para portátiles pequeños / tablets */
+@media screen and (max-width: 1024px) {
+  .menu-button {
+    margin-left: 12px;
+    margin-right: 5px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .usuario {
+    font-size: 14px;
+    margin-right: 8px;
+  }
+
+  .contact-info,
+  .social-media {
+    font-size: 14px;
+    margin: 8px;
+  }
+
+  .logout-button {
+    font-size: 18px;
+    width: 90%;
+  }
 }

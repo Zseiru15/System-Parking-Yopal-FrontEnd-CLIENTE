@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,6 +8,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../../services/auth.service';
 import { MidService } from '../../../../services/mid.service';
+import { AlertsComponent } from '../../alerts/alerts.component';
 
 @Component({
   selector: 'app-edit-vehicle',
@@ -20,6 +21,7 @@ import { MidService } from '../../../../services/mid.service';
     MatButtonModule,
     MatIconModule,
     ReactiveFormsModule,
+    AlertsComponent
   ],
   templateUrl: './edit-vehicle.component.html',
   styleUrl: './edit-vehicle.component.css',
@@ -27,13 +29,18 @@ import { MidService } from '../../../../services/mid.service';
 export class EditVehicleComponent implements OnInit {
   @Output() refreshVehiculos = new EventEmitter<void>();
   @Input() vehiculo: any = null;
+  @ViewChild('alertsComp') alertsComp!: AlertsComponent;
 
   editForm: FormGroup;
   previewUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
   base64ImageData: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private midService: MidService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private midService: MidService
+  ) {
     this.editForm = this.fb.group({
       vehicleType: [''],
       vehicleBrand: [''],
@@ -73,12 +80,12 @@ export class EditVehicleComponent implements OnInit {
       const maxSizeInMB = 2;
 
       if (!validTypes.includes(file.type)) {
-        alert('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
+        this.alertsComp.showAlert('⚠️ Por favor selecciona una imagen válida (JPG, PNG, WEBP).', 'warning');
         return;
       }
 
       if (file.size > maxSizeInMB * 1024 * 1024) {
-        alert(`La imagen no debe superar los ${maxSizeInMB}MB.`);
+        this.alertsComp.showAlert(`⚠️ La imagen no debe superar los ${maxSizeInMB}MB.`, 'warning');
         return;
       }
 
@@ -94,7 +101,7 @@ export class EditVehicleComponent implements OnInit {
 
   update(): void {
     if (!this.vehiculo?.Id) {
-      alert('Error: No se proporcionó un ID válido');
+      this.alertsComp.showAlert('❌ Error: No se proporcionó un ID válido', 'error');
       return;
     }
 
@@ -120,12 +127,12 @@ export class EditVehicleComponent implements OnInit {
     this.midService.updateVehiculo(this.vehiculo.Id, dataToSend).subscribe({
       next: (res) => {
         console.log('✅ Vehículo actualizado', res);
-        alert('Vehículo actualizado correctamente');
+        this.alertsComp.showAlert('🚗 Vehículo actualizado correctamente', 'success', 2000);
         this.refreshVehiculos.emit();
       },
       error: (err) => {
         console.error('❌ Error al actualizar vehículo:', err);
-        alert('Error al actualizar el vehículo');
+        this.alertsComp.showAlert('❌ Error al actualizar el vehículo', 'error');
       },
     });
   }

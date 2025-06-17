@@ -71,6 +71,11 @@ export const routes: Routes = [
         canActivate: [authGuard]
       },
       {
+        path: 'parking-profile',
+        loadComponent: () => import('./pages/parking-profile/parking-profile.component').then(m => m.ParkingProfileComponent),
+        canActivate: [authGuard]
+      },
+      {
         path: 'best-offer',
         loadComponent: () => import('./pages/best-offer/best-offer.component').then(m => m.BestOfferComponent),
         canActivate: [authGuard]
@@ -78,11 +83,6 @@ export const routes: Routes = [
       {
         path: 'best-offer-history',
         loadComponent: () => import('./pages/best-offer/best-offer-history/best-offer-history.component').then(m => m.BestOfferHistoryComponent),
-        canActivate: [authGuard]
-      },
-      {
-        path: 'payment-gateway',
-        loadComponent: () => import('./pages/payment-gateway/payment-gateway.component').then(m => m.PaymentGatewayComponent),
         canActivate: [authGuard]
       },
       {

@@ -128,3 +128,94 @@
   object-fit: cover;
   border: 2px solid #ccc;
 }
+
+/* ------------------------------
+   RESPONSIVE PARA <= 480px
+   (celulares pequeños)
+--------------------------------*/
+@media screen and (max-width: 480px) {
+  .main-content {
+    margin-top: 15%;
+    padding: 0.8rem;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .custom-file-upload {
+    font-size: 11px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+    padding: 0.6rem;
+  }
+}
+
+/* ------------------------------
+   RESPONSIVE PARA <= 768px
+   (tablets verticales y celulares grandes)
+--------------------------------*/
+@media screen and (max-width: 890px) {
+  .main-content {
+    width: 90%;
+    padding: 1rem;
+    margin-top: 12%;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .full-width {
+    width: 100%;
+    height: auto;
+    font-size: 15px;
+  }
+
+  .form-group.text-image {
+    align-items: center;
+    text-align: center;
+  }
+
+  .custom-file-upload {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .file-name {
+    font-size: 14px;
+  }
+
+  .preview-img {
+    max-width: 80px;
+    max-height: 80px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 16px;
+  }
+}
+
+/* ------------------------------
+   RESPONSIVE PARA <= 1024px
+   (portátiles pequeños, tablets horizontales)
+--------------------------------*/
+@media screen and (max-width: 1024px) {
+    .main-content {
+    margin-top: 10%;
+    padding: 1.5rem;
+  }
+
+  .form-row {
+    gap: 1rem;
+  }
+
+  .submit-btn {
+    font-size: 15px;
+  }
+}

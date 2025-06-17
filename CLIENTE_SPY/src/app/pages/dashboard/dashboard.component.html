@@ -1,85 +1,116 @@
-<mat-toolbar color="primary" class="toolbar">
-  <button mat-icon-button (click)="toggleSidenav()" class="menu-button">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span class="spacer"></span>
-  <span class="usuario" *ngIf="!currentRoute.includes('/dashboard/user-porfile')" (click)="Profile()">{{
-    usuario?.Nombres }} {{ usuario?.Apellidos }}</span>
-  <img src="/logo.png" alt="SPY" class="logo">
-</mat-toolbar>
+<div class="layout-root">
 
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav mode="over" position="start" [(opened)]="showSidenav" class="sidenav"
-    (closedStart)="closeAllPanels()">
-    <mat-nav-list>
-      <mat-accordion [multi]="false">
-        <!-- Inicio -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> Inicio </mat-panel-title>
-          </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/dashboard/start" (click)="toggleSidenav()">Inicio</a>
-        </mat-expansion-panel>
-        <!-- Usuario -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> Usuario </mat-panel-title>
-          </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/dashboard/user-porfile" (click)="toggleSidenav()">Perfil</a>
-          <a mat-list-item routerLink="/dashboard/comments" (click)="toggleSidenav()">Comentarios</a>
-        </mat-expansion-panel>
+  <app-alerts #alertsComp></app-alerts>
 
-        <!-- Pagos -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> Pagos </mat-panel-title>
-          </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/dashboard/payment-gateway" (click)="toggleSidenav()">Métodos de Pago</a>
-          <a mat-list-item routerLink="/dashboard/payment-history" (click)="toggleSidenav()">Historial de Pagos</a>
-          <a mat-list-item routerLink="/dashboard/late-payments" (click)="toggleSidenav()">Pagos Atrasados</a>
-        </mat-expansion-panel>
+  <mat-toolbar color="primary" class="toolbar">
+    <button mat-icon-button (click)="toggleSidenav()" class="menu-button">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <span class="usuario" *ngIf="!currentRoute.includes('/dashboard/user-porfile')" (click)="Profile()">{{
+      usuario?.Nombres }} {{ usuario?.Apellidos }}</span>
+    <img [src]="logoUrl" alt="SPY" class="logo" [class.rotate]="animando">
+  </mat-toolbar>
 
-        <!-- Información Legal -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> Información Legal </mat-panel-title>
-          </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/dashboard/privacy-policies" (click)="toggleSidenav()">Políticas de
-            Privacidad</a>
-          <a mat-list-item routerLink="/dashboard/terms-and-conditions" (click)="toggleSidenav()">Términos y
-            Condiciones</a>
-        </mat-expansion-panel>
+  <div class="main-content">
 
-        <!-- Cierre de sesión -->
-        <button mat-list-item (click)="logout()" class="logout-button">Cerrar Sesión</button>
-      </mat-accordion>
-    </mat-nav-list>
-  </mat-sidenav>
+  </div>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="over" position="start" [(opened)]="showSidenav" class="sidenav"
+      (closedStart)="closeAllPanels()">
+      <mat-nav-list>
+        <mat-accordion [multi]="false">
+          <!-- Inicio -->
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> Inicio </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a mat-list-item routerLink="/dashboard/start" (click)="toggleSidenav()">
+              <div class="mat-list-item-content">
+                <span class="mat-line">Inicio</span>
+              </div>
+            </a>
+          </mat-expansion-panel>
+          <!-- Usuario -->
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> Usuario </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a mat-list-item routerLink="/dashboard/user-porfile" (click)="toggleSidenav()">
+              <div class="mat-list-item-content">
+                <span class="mat-line">Perfil</span>
+              </div>
+            </a>
+            <a mat-list-item routerLink="/dashboard/comments" (click)="toggleSidenav()">
+              <div class="mat-list-item-content">
+                <span class="mat-line">Comentarios</span>
+              </div>
+            </a>
+          </mat-expansion-panel>
 
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+          <!-- Pagos -->
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> Pagos </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a mat-list-item routerLink="/dashboard/payment-history" (click)="toggleSidenav()">
+              <div class="mat-list-item-content">
+                <span class="mat-line">Historial de Pagos</span>
+              </div>
+            </a>
+          </mat-expansion-panel>
 
+          <!-- Información Legal -->
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> Información Legal </mat-panel-title>
+            </mat-expansion-panel-header>
 
-<mat-toolbar color="primary" class="informatbar">
-  <span class="contact-info">
-    <p>Calle 26A #14-63 Piso 1, Yopal Casanare Colombia</p>
-    <p>Horario de atención: Lunes a domingo - 6:00 am a 10:00 pm</p>
-    <p>Dependencias Administrativas: (+57) 3114368376</p>
-  </span>
-  <span class="spacer"></span>
-  <span class="social-media">
-    <h2 class="social-media">Síguenos</h2>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/share/16GgMQzg1D/" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
-      <a href="https://x.com/OrdonezCamilo15" target="_blank"><i class="fab fa-x-twitter fa-2x"></i></a>
-      <a href="https://www.instagram.com/camilo_ordonez_u?igsh=azRsN3h0NHExcTR1" target="_blank"><i
-          class="fab fa-instagram fa-2x"></i></a>
-      <a href="https://www.linkedin.com/in/sneyder-camilo-ordoñez-uscategui-0008111b8" target="_blank"><i
-          class="fab fa-linkedin fa-2x"></i></a>
-      <a href="https://github.com/Zseiru15" target="_blank"><i class="fab fa-github fa-2x"></i></a>
-    </div>
-    <p>&#64;SystemParkingYopal</p>
-  </span>
-</mat-toolbar>
+            <a mat-list-item routerLink="/dashboard/privacy-policies" (click)="toggleSidenav()">
+              <div class="mat-list-item-content">
+                <span class="mat-line">Políticas de
+                  Privacidad</span>
+              </div>
+            </a>
+
+            <a mat-list-item routerLink="/dashboard/terms-and-conditions" (click)="toggleSidenav()">
+              <div class="mat-list-item-content">
+                <span class="mat-line">Términos y
+                  Condiciones</span>
+              </div>
+            </a>
+          </mat-expansion-panel>
+
+          <!-- Cierre de sesión -->
+          <button mat-list-item (click)="logout()" class="logout-button">Cerrar Sesión</button>
+        </mat-accordion>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <mat-toolbar color="primary" class="informatbar">
+    <span class="contact-info">
+      <p>Calle 26A #14-63 Piso 1, Yopal Casanare Colombia</p>
+      <p>Horario de atención: Lunes a domingo - 6:00 am a 10:00 pm</p>
+      <p>Dependencias Administrativas: (+57) 3114368376</p>
+    </span>
+    <span class="spacer"></span>
+    <span class="social-media">
+      <h2 class="social-media">Síguenos</h2>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/16GgMQzg1D/" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
+        <a href="https://x.com/OrdonezCamilo15" target="_blank"><i class="fab fa-x-twitter fa-2x"></i></a>
+        <a href="https://www.instagram.com/camilo_ordonez_u?igsh=azRsN3h0NHExcTR1" target="_blank"><i
+            class="fab fa-instagram fa-2x"></i></a>
+        <a href="https://www.linkedin.com/in/sneyder-camilo-ordoñez-uscategui-0008111b8" target="_blank"><i
+            class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/Zseiru15" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+      </div>
+      <p>&#64;SystemParkingYopal</p>
+    </span>
+  </mat-toolbar>
+</div>

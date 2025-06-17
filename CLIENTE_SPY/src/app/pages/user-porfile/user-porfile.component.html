@@ -1,4 +1,7 @@
 <div class="user-profile-container">
+
+  <app-alerts #alertsComp></app-alerts>
+
   <mat-card class="main-content">
     <!-- Información de Usuario -->
     <div class="form-row">
@@ -23,6 +26,36 @@
             <button *ngIf="usuario?.IdRolesFk?.Id !== 2" mat-raised-button color="primary" class="submit-btn"
               (click)="mostrarVista('parqueaderos')">Registro de
               parqueaderos</button>
+
+            <div class="pdf-report-container">
+              <!-- Campo fecha desde -->
+              <mat-form-field appearance="outline" class="full-width date-field">
+                <mat-label>Desde</mat-label>
+                <input matInput [matDatepicker]="pickerInicio" [(ngModel)]="fechaInicio" [max]="fechaFin" />
+                <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicio></mat-datepicker>
+              </mat-form-field>
+
+              <!-- Campo fecha hasta -->
+              <mat-form-field appearance="outline" class="full-width date-field">
+                <mat-label>Hasta</mat-label>
+                <input matInput [matDatepicker]="pickerFin" [(ngModel)]="fechaFin" [min]="fechaInicio" />
+                <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFin></mat-datepicker>
+              </mat-form-field>
+
+              <!-- Botón generar PDF -->
+              <button mat-raised-button color="accent" class="submit-btn full-width" [disabled]="generandoPDF"
+                (click)="generarInformePDF()">
+                <mat-icon *ngIf="!generandoPDF">picture_as_pdf</mat-icon>
+                <mat-progress-spinner *ngIf="generandoPDF" diameter="20" mode="indeterminate" color="accent"
+                  style="margin-right: 8px;"></mat-progress-spinner>
+                {{ generandoPDF ? 'Generando...' : 'Generar Informe' }}
+              </button>
+              <!-- <button mat-raised-button color="accent" (click)="generarPDFEjemplo()">
+                Generar Ejemplo de PDF
+              </button> -->
+            </div>
           </div>
         </div>
       </div>

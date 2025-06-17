@@ -1,4 +1,4 @@
-import { Component, ViewChildren, QueryList } from '@angular/core';
+import { Component, ViewChildren, ViewChild, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../../../services/auth.service';
 import { NavigationEnd } from '@angular/router';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,13 +24,16 @@ import { NavigationEnd } from '@angular/router';
     MatExpansionModule,
     MatSidenavModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    AlertsComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
+  @ViewChild('alertsComp') alertsComp!: AlertsComponent;
+
 
   currentRoute: string = '';
 
@@ -41,15 +45,44 @@ export class DashboardComponent {
     });
   }
 
-
+  logoUrl: string = '/logo.png';
+  logoAlterno: string = '/logovip.png';
+  animando = false;
+  intervaloCambioLogo: any;
   showSidenav = false;
-
   usuario: any;
 
   ngOnInit() {
     const userData = localStorage.getItem('usuario');
     if (userData) {
       this.usuario = JSON.parse(userData);
+      const tieneMembresiaActiva = this.usuario?.Membresia === true;
+
+      if (tieneMembresiaActiva) {
+        this.logoUrl = '/logovip.png';
+
+        // Inicia el cambio automático con animación
+        this.iniciarCambioDeLogo();
+      } else {
+        this.logoUrl = '/logo.png';
+      }
+    }
+  }
+
+  iniciarCambioDeLogo() {
+    this.intervaloCambioLogo = setInterval(() => {
+      this.animando = true;
+
+      setTimeout(() => {
+        this.logoUrl = this.logoUrl === '/logo.png' ? '/logovip.png' : '/logo.png';
+        this.animando = false;
+      }, 300); // tiempo igual o menor al transition de CSS
+    }, 5000); // cada 3 segundos
+  }
+
+  ngOnDestroy() {
+    if (this.intervaloCambioLogo) {
+      clearInterval(this.intervaloCambioLogo);
     }
   }
 
@@ -68,24 +101,25 @@ export class DashboardComponent {
   }
 
   logout() {
-    const usuario = localStorage.getItem('usuario');
-    const parsedUser = usuario ? JSON.parse(usuario) : null;
-    let rol = 'usuario';
-    if (parsedUser && parsedUser.IdRolesFk && parsedUser.IdRolesFk.Nombre) {
-      rol = parsedUser.IdRolesFk.Nombre.toLowerCase();
+    const userData = localStorage.getItem('usuario');
+    let rol = 'usuario'; // valor por defecto
+
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        rol = user?.IdRolesFk?.Roles?.toLowerCase() || 'usuario';
+      } catch (err) {
+        console.error('Error al parsear usuario:', err);
+      }
     }
 
-
-    alert(`Sesión cerrada (${rol})`);
-    console.log('Logout clicked para rol:', rol);
-
-    // Cerrar sesión
-    localStorage.removeItem('usuario');
-
-    // Redirigir según el rol si lo deseas
-    this.router.navigate(['/welcome']);
-    this.closeAllPanels();
-    this.showSidenav = false;
+    // Mostrar alerta y redirigir
+    this.alertsComp.showAlert(`Sesión cerrada (${rol})`, 'info', 2000, () => {
+      localStorage.removeItem('usuario');
+      this.router.navigate(['/welcome']);
+      this.closeAllPanels();
+      this.showSidenav = false;
+    });
   }
 
 }

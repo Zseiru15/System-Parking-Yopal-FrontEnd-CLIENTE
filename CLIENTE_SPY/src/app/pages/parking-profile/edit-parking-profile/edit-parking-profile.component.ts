@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,15 +6,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { FormBuilder, FormGroup, ReactiveFormsModule,} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../services/api.service';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../../../../services/auth.service'; // Ajusta según estructura
+import { AuthService } from '../../../../services/auth.service';
 import { MidService } from '../../../../services/mid.service';
+import { AlertsComponent } from '../../alerts/alerts.component';
 
 @Component({
   selector: 'app-edit-parking-profile',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
@@ -25,6 +27,7 @@ import { MidService } from '../../../../services/mid.service';
     MatOptionModule,
     MatSelectModule,
     MatIconModule,
+    AlertsComponent
   ],
   templateUrl: './edit-parking-profile.component.html',
   styleUrl: './edit-parking-profile.component.css'
@@ -32,13 +35,20 @@ import { MidService } from '../../../../services/mid.service';
 export class EditParkingProfileComponent implements OnInit {
   @Output() refreshParqueaderos = new EventEmitter<void>();
   @Input() parqueadero: any = null;
+  @ViewChild('alertsComp') alertsComp!: AlertsComponent;
 
   registerForm: FormGroup;
   previewUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
   base64ImageData: string = '';
 
-  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private apiService: ApiService, private midService: MidService) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private apiService: ApiService,
+    private midService: MidService
+  ) {
     this.registerForm = this.fb.group({
       parkingName: [''],
       number: [''],
@@ -100,12 +110,12 @@ export class EditParkingProfileComponent implements OnInit {
       const maxSizeInMB = 2;
 
       if (!validTypes.includes(file.type)) {
-        alert('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
+        this.alertsComp.showAlert('Por favor selecciona una imagen válida (JPG, PNG, WEBP).', 'warning');
         return;
       }
 
       if (file.size > maxSizeInMB * 1024 * 1024) {
-        alert(`La imagen no debe superar los ${maxSizeInMB}MB.`);
+        this.alertsComp.showAlert(`La imagen no debe superar los ${maxSizeInMB}MB.`, 'warning');
         return;
       }
 
@@ -121,7 +131,7 @@ export class EditParkingProfileComponent implements OnInit {
 
   update(): void {
     if (!this.parqueadero?.Id) {
-      alert('Error: No se proporcionó un ID válido');
+      this.alertsComp.showAlert('Error: No se proporcionó un ID válido', 'error');
       return;
     }
 
@@ -158,14 +168,13 @@ export class EditParkingProfileComponent implements OnInit {
     this.midService.updateParqueadero(this.parqueadero.Id, dataToSend).subscribe({
       next: (res) => {
         console.log('✅ Parqueadero actualizado', res);
-        alert('Parqueadero actualizado correctamente');
+        this.alertsComp.showAlert('Parqueadero actualizado correctamente', 'success');
         this.refreshParqueaderos.emit();
       },
       error: (err) => {
         console.error('❌ Error al actualizar parqueadero:', err);
-        alert('Error al actualizar el parqueadero');
+        this.alertsComp.showAlert('Error al actualizar el parqueadero', 'error');
       }
     });
   }
-
 }

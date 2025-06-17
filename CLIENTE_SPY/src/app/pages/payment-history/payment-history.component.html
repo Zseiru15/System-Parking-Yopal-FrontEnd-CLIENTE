@@ -1,13 +1,10 @@
-<div class="payment-history-container">
+<div class="payment-history-container" [class.blur]="!membresiaActiva">
   <mat-card class="payment-history-card">
     <mat-card-title class="title">Historial de pagos</mat-card-title>
     <mat-card-content>
       <p>Aquí puedes consultar el estado de los pagos</p>
 
       <div class="form-row">
-        <button mat-raised-button color="primary" class="submit-btn" (click)="consultarDatos()">
-          Consultar
-        </button>
         <button mat-raised-button color="warn" class="submit-btn" (click)="limpiarFiltros()">Limpiar filtros</button>
       </div>
 
@@ -22,11 +19,25 @@
           <mat-label>Estacionamiento</mat-label>
           <input matInput [(ngModel)]="filtroParqueadero" (input)="aplicarFiltros()" placeholder="Buscar dirección">
         </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Fecha de pago</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="filtroFecha" (dateChange)="aplicarFiltros()">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Estado</mat-label>
+          <mat-select [(ngModel)]="filtroEstado" (selectionChange)="aplicarFiltros()">
+            <mat-option value="">Todos</mat-option>
+            <mat-option *ngFor="let estado of estadosDisponibles" [value]="estado">{{ estado }}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
       <!-- Tabla -->
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
         <ng-container matColumnDef="Usuario">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuario</th>
           <td mat-cell *matCellDef="let element">{{ element.Usuario }}</td>
@@ -69,4 +80,13 @@
       <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
     </mat-card-content>
   </mat-card>
+</div>
+
+<!-- Overlay bloqueante si no hay membresía activa -->
+<div *ngIf="!membresiaActiva" class="overlay">
+  <div class="overlay-content">
+    <h2>⚠️ Membresía Inactiva</h2>
+    <p>Para acceder al historial de pagos necesitas una membresía activa.</p>
+    <button mat-raised-button color="accent" (click)="redirigirActivacion()">Activar ahora</button>
+  </div>
 </div>

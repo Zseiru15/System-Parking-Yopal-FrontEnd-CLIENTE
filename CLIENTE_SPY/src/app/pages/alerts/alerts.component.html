@@ -1,1 +1,12 @@
-<p>alerts works!</p>
+<div *ngIf="visible" class="overlay">
+  <div class="modal-alert"
+    [ngClass]="{ 'success': type === 'success', 'error': type === 'error', 'warning': type === 'warning', 'info': type === 'info' }">
+    <div class="icon">
+      <span [innerHTML]="getIcon()"></span>
+    </div>
+    <div class="alert-message">
+      {{ message }}
+    </div>
+    <button class="close-btn" (click)="close()">×</button>
+  </div>
+</div>

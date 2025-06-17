@@ -288,13 +288,14 @@
 .overlay-content {
   background-color: #fff;
   padding: 0.3rem;
-  width: 90%;
-  height: 90%;
+  width: 60%;
+  height: 80%;
   overflow-y: auto;
   border-radius: 12px;
   position: relative;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
   animation: fadeInUp 0.3s ease;
+  margin-top: 50px;
 }
 
 .close-btn {
@@ -317,13 +318,105 @@
   }
 }
 
-@media (max-width: 600px) {
-  .btn-group {
-    justify-content: center;
+/* ------------------------------
+   RESPONSIVE PERSONALIZADO
+   PARA VISTA DE PARQUEADERO
+--------------------------------*/
+
+/* Móviles pequeños */
+@media screen and (max-width: 480px) {
+  .parking-card {
+    padding: 1rem;
+    margin: 0.5rem;
+    font-size: 14px;
+    border-radius: 12px;
   }
 
-  .submit-btn {
-    width: auto;
+  .parking-info p {
+    font-size: 14px;
+    margin: 4px 0;
+    text-align: center;
+  }
+
+  .parking-icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .parking-icons span {
+    font-size: 14px;
+  }
+
+  .parking-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    align-items: center;
+  }
+
+  .parking-buttons button {
+    width: 90%;
+    font-size: 14px;
+    padding: 0.6rem;
+  }
+
+  .trabajadores-box {
+    font-size: 16px;
+    padding: 0.6rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+}
+
+/* Tablets y móviles grandes */
+@media screen and (max-width: 768px) {
+  .parking-card {
+    padding: 1.5rem;
+  }
+
+  .parking-info p {
+    font-size: 15px;
+  }
+
+  .parking-icons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .parking-buttons button {
+    width: 85%;
+    font-size: 15px;
+    padding: 0.7rem;
+  }
+
+  .trabajadores-box {
+    font-size: 17px;
+  }
+}
+
+/* Portátiles pequeños */
+@media screen and (max-width: 1024px) {
+  .parking-card {
+    max-width: 90%;
+    margin: auto;
+    padding: 1.5rem;
+  }
+
+  .parking-buttons {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .parking-buttons button {
+    width: 70%;
+  }
+
+  .trabajadores-box {
     text-align: center;
   }
 }

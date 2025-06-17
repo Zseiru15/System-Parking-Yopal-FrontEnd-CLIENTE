@@ -99,6 +99,28 @@ mat-form-field {
   border: 1px solid transparent;
 }
 
+.activo {
+  color: #2e7d32;
+  /* Verde oscuro */
+  font-weight: bold;
+  background-color: #e8f5e9;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 0.9rem;
+}
+
+.inactivo {
+  color: #c62828;
+  /* Rojo oscuro */
+  font-weight: bold;
+  background-color: #ffebee;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 0.9rem;
+}
+
 /* Estilo del boton iniciar sesion*/
 .submit-btn {
   width: auto;
@@ -130,13 +152,14 @@ mat-form-field {
 .overlay-content {
   background-color: #fff;
   padding: 0.3rem;
-  width: 90%;
-  height: 90%;
+  width: 60%;
+  height: 80%;
   overflow-y: auto;
   border-radius: 12px;
   position: relative;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
   animation: fadeInUp 0.3s ease;
+  margin-top: 50px;
 }
 
 .close-btn {

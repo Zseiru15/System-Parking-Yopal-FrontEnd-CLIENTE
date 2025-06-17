@@ -1,4 +1,7 @@
 <div class="login-session">
+
+  <app-alerts #alertsComp></app-alerts>
+
   <mat-card class="login-container">
     <mat-card class="login-form">
       <h1 class="title">Iniciar Sesion</h1>
@@ -21,14 +24,6 @@
         <!-- Botón de Ingreso -->
         <button mat-raised-button color="primary" class="submit-btn" (click)="login()">Iniciar Sesión</button>
       </mat-card>
-
-      <div class="form-options">
-        <label class="remember-me">
-          <input type="checkbox">
-          <span>Recuérdame</span>
-        </label>
-        <a href="/help" class="help-link">¿Necesitas ayuda?</a>
-      </div>
 
       <!-- Enlaces para recuperar contraseña y crear cuenta -->
       <div class="actions">

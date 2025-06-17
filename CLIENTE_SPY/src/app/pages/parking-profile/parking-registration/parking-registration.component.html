@@ -1,4 +1,7 @@
 <div class="parking-registration-container">
+
+  <app-alerts #alertsComp></app-alerts>
+
   <mat-card class="register-card">
     <mat-card class="register-form">
       <h1 class="title">Registro de parquederos</h1>
@@ -18,22 +21,23 @@
             </div>
             <div class="form-row">
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Latitud</mat-label>
-                <input matInput formControlName="latitude" placeholder="5°19'29.2''N 72°23'22.1''W">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="SPY@gmail.com">
               </mat-form-field>
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Longitud</mat-label>
-                <input matInput formControlName="length" placeholder="5°19'29.2''N 72°23'22.1''W">
+                <mat-label>Dirección</mat-label>
+                <input matInput id="searchBox" placeholder="Buscar dirección..." />
               </mat-form-field>
             </div>
             <div class="form-row">
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="email" placeholder="Cra. 19 #36-92 Yopal, Casanare">
+                <mat-label>Latitud</mat-label>
+                <input matInput [value]="registerForm.get('latitude')?.value" disabled />
               </mat-form-field>
+
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Direccion</mat-label>
-                <input matInput formControlName="address" placeholder="Cra. 19 #36-92 Yopal, Casanare">
+                <mat-label>Longitud</mat-label>
+                <input matInput [value]="registerForm.get('length')?.value" disabled />
               </mat-form-field>
             </div>
             <div class="form-group text-image">

@@ -1,0 +1,99 @@
+.modal-alert {
+  background: rgb(46, 48, 54);
+  color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeInAlert 0.4s ease-in-out;
+  position: relative;
+}
+
+/* Icono */
+.modal-alert .icon {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.alert-message {
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.2s ease-in-out;
+}
+
+.close-btn:hover {
+  color: #fff;
+}
+
+/* Colores con box-shadow dinámico */
+.modal-alert.success {
+  border-left: 6px solid #28a745;
+  box-shadow: 0 10px 40px rgba(40, 167, 69, 0.5); /* Verde */
+}
+
+.modal-alert.error {
+  border-left: 6px solid #dc3545;
+  box-shadow: 0 10px 40px rgba(220, 53, 69, 0.5); /* Rojo */
+}
+
+.modal-alert.warning {
+  border-left: 6px solid #ffc107;
+  box-shadow: 0 10px 40px rgba(255, 193, 7, 0.5); /* Amarillo */
+}
+
+.modal-alert.info {
+  border-left: 6px solid #17a2b8;
+  box-shadow: 0 10px 40px rgba(23, 162, 184, 0.5); /* Azul cielo */
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInOverlay 0.3s ease-in-out;
+}
+
+/* Animaciones */
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInAlert {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

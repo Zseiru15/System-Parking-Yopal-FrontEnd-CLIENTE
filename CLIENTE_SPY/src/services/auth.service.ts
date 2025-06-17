@@ -15,22 +15,58 @@ export class AuthService {
     return this.midService.registerUser({ firstName, lastName, documentNumber, phone, email, password });
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+  saveToken(token: string): void {
+    if (token) {
+      localStorage.setItem('token', token);
+    }
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
-  getUsuarioActual() {
-    const data = localStorage.getItem('usuario');
-    return data ? JSON.parse(data) : null;
+  setUserSession(user: any): void {
+    if (user && typeof user === 'object') {
+      localStorage.setItem('usuario', JSON.stringify(user));
+    } else {
+      console.warn('❗ Datos de usuario inválidos al intentar guardar la sesión:', user);
+    }
+  }
+
+  getUsuarioActual(): any {
+    try {
+      const data = localStorage.getItem('usuario');
+      if (!data) {
+        console.warn('⚠️ No hay datos de usuario en localStorage');
+        return null;
+      }
+      const parsed = JSON.parse(data);
+      if (!parsed?.Id) {
+        console.warn('⚠️ El usuario no tiene ID válido:', parsed);
+        return null;
+      }
+      return parsed;
+    } catch (err) {
+      console.error('❌ Error al obtener el usuario desde localStorage:', err);
+      return null;
+    }
   }
 
   getCurrentUserId(): number {
-    const data = JSON.parse(localStorage.getItem('usuario') || '{}');
-    return data?.Id || 0;
+    const user = this.getUsuarioActual();
+    return user?.Id || 0;
   }
 
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  clearSession(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+  }
+
+  logout(): void {
+    this.clearSession();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,8 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service'; // Ajusta según estructura
+import { AuthService } from '../../../services/auth.service';
 import { MidService } from '../../../services/mid.service';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ import { MidService } from '../../../services/mid.service';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AlertsComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -28,7 +30,14 @@ export class LoginComponent {
   hidePassword = true;
   loginForm: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private midService: MidService) {
+  @ViewChild('alertsComp') alertsComp!: AlertsComponent;
+
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private midService: MidService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -50,7 +59,7 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.invalid) {
-      alert("Por favor completa todos los campos.");
+      this.alertsComp.showAlert('Por favor completa todos los campos.', 'warning');
       return;
     }
 
@@ -61,38 +70,37 @@ export class LoginComponent {
         if (res.Success) {
           localStorage.setItem('usuario', JSON.stringify(res.Data));
 
-          // ✅ Guardar credenciales si el usuario activó "Recuérdame"
           if (rememberMe) {
             localStorage.setItem('rememberEmail', email);
-            localStorage.setItem('rememberPassword', password);
           } else {
             localStorage.removeItem('rememberEmail');
-            localStorage.removeItem('rememberPassword');
           }
 
-          this.router.navigate(['/dashboard/start']);
+          // ✅ Mostrar alerta y luego redirigir
+          this.alertsComp.showAlert('Inicio de sesión exitoso', 'success', 2000, () => {
+            this.router.navigate(['/dashboard/start']);
+          });
+
         } else {
-          alert(res.Message || 'Login fallido');
+          this.alertsComp.showAlert(res.Message || 'Login fallido', 'error');
         }
       },
       error: (err: any) => {
         console.error('❌ Error de login:', err);
-        alert('Error al iniciar sesión');
+        this.alertsComp.showAlert('Error al iniciar sesión', 'error');
       }
     });
   }
 
   goToRegister() {
-    console.log('Boton de registro clickeado');
-    this.router.navigate(['/register']);
+    this.alertsComp.showAlert('Crear Cuenta Clickeado', 'info', 2000, () => {
+      this.router.navigate(['/register']);
+    });
   }
 
   recoverPassword() {
-    alert('Recuperacion Contraseña')
+    this.alertsComp.showAlert('Funcionalidad de recuperación en desarrollo', 'info', 2000, () => {
+      this.router.navigate(['/login']);
+    });
   }
-
-  createAccount() {
-    this.router.navigate(['/register']);
-  }
-
 }

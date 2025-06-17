@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -16,8 +16,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
 import { Observable, startWith, map } from 'rxjs';
-
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-comments',
@@ -35,23 +35,35 @@ import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/ma
     FormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    AlertsComponent
   ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })
 export class CommentsComponent implements OnInit {
+  @ViewChild('alertsComp') alertsComp!: AlertsComponent;
+
   comentariosOriginal: any[] = [];
   comentariosFiltrados: any[] = [];
   parkingList: any[] = [];
   commentForm: FormGroup;
   usuario: any = null;
 
-  // 🔍 Autocompletado
   searchParkingControl = new FormControl('');
   filteredParkingList$: Observable<any[]> = new Observable<any[]>();
   searchParkingFormControl = new FormControl('');
   filteredParkingForm$: Observable<any[]> = new Observable<any[]>();
+
+  filtros: {
+    estrellas: number | null;
+    parkingId: number | null;
+    fecha: Date | null;
+  } = {
+    estrellas: null,
+    parkingId: null,
+    fecha: null
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -66,16 +78,6 @@ export class CommentsComponent implements OnInit {
       classification: ['', Validators.required],
     });
   }
-
-  filtros: {
-    estrellas: number | null;
-    parkingId: number | null;
-    fecha: Date | null;
-  } = {
-      estrellas: null,
-      parkingId: null,
-      fecha: null
-    };
 
   ngOnInit(): void {
     this.usuario = this.authService.getUsuarioActual();
@@ -109,12 +111,11 @@ export class CommentsComponent implements OnInit {
             startWith(''),
             map(value => this.filtrarParqueaderos(value || ''))
           );
-
         }
       },
       error: (err: any) => {
         console.error('❌ Error al obtener parqueaderos', err);
-        alert('No se pudieron cargar los parqueaderos');
+        this.alertsComp.showAlert('No se pudieron cargar los parqueaderos', 'error');
       }
     });
   }
@@ -160,7 +161,6 @@ export class CommentsComponent implements OnInit {
       const coincideParqueadero = this.filtros.parkingId != null
         ? comentario.Estacionamiento?.toLowerCase() === this.obtenerNombreParqueaderoPorId(this.filtros.parkingId)?.toLowerCase()
         : true;
-
 
       const coincideFecha = this.filtros.fecha
         ? new Date(comentario.Fecha).toDateString() === new Date(this.filtros.fecha).toDateString()
@@ -208,7 +208,7 @@ export class CommentsComponent implements OnInit {
 
   comment() {
     if (!this.commentForm.valid) {
-      alert('Por favor complete todos los campos');
+      this.alertsComp.showAlert('Por favor complete todos los campos', 'warning');
       return;
     }
 
@@ -216,7 +216,7 @@ export class CommentsComponent implements OnInit {
     const calificacion = Number(formData.classification);
 
     if (isNaN(calificacion) || calificacion < 1 || calificacion > 5) {
-      alert('La calificación debe ser un número entre 1 y 5');
+      this.alertsComp.showAlert('La calificación debe ser un número entre 1 y 5', 'warning');
       return;
     }
 
@@ -232,14 +232,14 @@ export class CommentsComponent implements OnInit {
 
     this.apiService.post(`comentarios`, extendedData).subscribe({
       next: (rep) => {
-        alert('Comentario enviado con éxito');
+        this.alertsComp.showAlert('Comentario enviado con éxito', 'success');
         this.commentForm.reset();
         this.obtenerComentarios();
         console.log('✅ Comentario enviado exitosamente', rep);
       },
       error: (error) => {
         console.error('❌ Error al enviar comentario:', error);
-        alert('Error al enviar el comentario');
+        this.alertsComp.showAlert('Error al enviar el comentario', 'error');
       }
     });
   }

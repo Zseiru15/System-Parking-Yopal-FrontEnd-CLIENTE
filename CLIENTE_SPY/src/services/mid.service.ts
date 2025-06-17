@@ -21,6 +21,11 @@ export class MidService {
     return this.http.post(`${API_URLS.MID.Api_mid}/usuarios/login`, data);
   }
 
+  getActividadesUsuario(userId: number, desde: string, hasta: string) {
+    const url = `/actividades-usuario/${userId}?desde=${desde}&hasta=${hasta}`;
+    return this.http.get<any>(this.baseMid + url);
+  }
+
   getUsuarioPorIdentificacion(identificacion: string) {
     return this.http.get<any>(`${this.baseMid}/usuarios/identificacion/${identificacion}`);
   }

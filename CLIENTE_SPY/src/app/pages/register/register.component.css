@@ -115,11 +115,36 @@ h1 {
   font-size: 15px;
 }
 
-/* === Dispositivos pequeños (teléfonos) === */
+/* === Responsive: Pantallas muy pequeñas (hasta 480px) === */
+@media (max-width: 480px) {
+  .register-card {
+    padding: 1rem;
+  }
+
+  h1.title {
+    font-size: 24px;
+  }
+
+  .submit-btn {
+    font-size: 15px;
+    padding: 0.6rem;
+  }
+
+  .form-group, .form-row .full-width {
+    font-size: 14px;
+  }
+
+  .session, .terms-condit {
+    font-size: 12px;
+  }
+}
+
+/* === Responsive: Móviles (hasta 768px) === */
 @media (max-width: 768px) {
   .register-card {
-    width: 90%;
-    padding: 1.5rem;
+    width: 95%;
+    padding: 1.2rem;
+    border-radius: 20px;
   }
 
   .form-row {
@@ -127,62 +152,33 @@ h1 {
     gap: 1rem;
   }
 
-  .full-width {
-    width: 100%;
-    height: 50px;
-    font-size: 14px;
-  }
-
-  h1 {
-    font-size: 32px;
-  }
-
-  .user-type button {
-    font-size: 16px;
-  }
-
-  .form-group label {
-    font-size: 16px;
+  .form-row .full-width {
+    min-width: 100%;
   }
 
   .submit-btn {
-    font-size: 18px;
+    font-size: 16px;
+    padding: 0.8rem;
   }
 
-  .remember-me, .help-link, .recover-password, .create-account {
-    font-size: 12px;
+  .actions {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
-/* === Dispositivos medianos (tablets) === */
+/* === Responsive: Tablets (hasta 1024px) === */
 @media (max-width: 1024px) {
   .register-card {
-    width: 80%;
+    width: 85%;
     padding: 1.5rem;
   }
 
-  .form-row {
-    gap: 1rem;
-  }
-
-  .full-width {
-    height: 55px;
-    font-size: 15px;
-  }
-
-  h1 {
-    font-size: 36px;
-  }
-
-  .user-type button {
-    font-size: 18px;
-  }
-
-  .form-group label {
-    font-size: 18px;
+  h1.title {
+    font-size: 32px;
   }
 
   .submit-btn {
-    font-size: 19px;
+    font-size: 18px;
   }
 }

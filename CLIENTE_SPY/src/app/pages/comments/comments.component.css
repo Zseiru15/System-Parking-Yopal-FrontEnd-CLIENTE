@@ -237,23 +237,178 @@
   -webkit-text-fill-color: transparent;
 }
 
-@media (max-width: 1200px) {
-  .comment-content {
-    flex: 1 1 calc(33.33% - 2rem);
-    /* 3 por fila */
+@media screen and (max-width: 480px) {
+  .main-content {
+    padding: 1rem;
+    margin: 1rem auto;
   }
-}
 
-@media (max-width: 768px) {
-  .comment-content {
-    flex: 1 1 calc(50% - 2rem);
-    /* 2 por fila */
+  .title h1 {
+    font-size: 1.6rem;
+    text-align: center;
   }
-}
 
-@media (max-width: 350px) {
+  .form-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .formulario-cajon,
+  .comentarios-cajon {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .filtros {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+    font-size: 16px;
+    padding: 0.6rem;
+  }
+
+  .profile-image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .form-group,
+  .comentario-nombre {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .comentario-comentario {
+    font-size: 16px;
+    text-align: justify;
+  }
+
+  .comentario-calificacion,
+  .comentario-estacionamiento,
+  .comentario-fecha {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .comentarios-grid {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
   .comment-content {
     flex: 1 1 100%;
-    /* 1 por fila en móvil */
+    padding: 1rem;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .title h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .form-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .formulario-cajon,
+  .comentarios-cajon {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .filtros {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .submit-btn {
+    width: 90%;
+    font-size: 17px;
+  }
+
+  .profile-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .comentario-nombre {
+    font-size: 20px;
+  }
+
+  .comentario-comentario {
+    font-size: 17px;
+  }
+
+  .comentarios-grid {
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .comment-content {
+    flex: 1 1 calc(100% - 1rem);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .main-content {
+    max-width: 95%;
+    padding: 2rem;
+    margin: 2rem auto;
+  }
+
+  .form-row {
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .formulario-cajon,
+  .comentarios-cajon {
+    flex: 1 1 45%;
+  }
+
+  .comentarios-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .comment-content {
+    flex: 1 1 calc(50% - 1rem);
+    padding: 1.2rem;
+  }
+
+  .comentario-nombre {
+    font-size: 22px;
+  }
+
+  .comentario-comentario {
+    font-size: 18px;
+  }
+
+  .comentario-fecha,
+  .comentario-estacionamiento,
+  .comentario-calificacion {
+    font-size: 16px;
+  }
+
+  .submit-btn {
+    width: auto;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
