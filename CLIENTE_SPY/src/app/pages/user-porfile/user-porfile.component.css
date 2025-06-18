@@ -147,7 +147,8 @@
 
 .vehicle-information {
   min-height: 80px;
-  height: 275px;
+  height: auto;
+  width: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

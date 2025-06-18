@@ -70,9 +70,9 @@
                 <mat-card class="vehicle-information" *ngFor="let v of vehiculos">
                   <div class="vehicle-text">
                     <h1>{{v.Tipo}}</h1>
-                    Marca: {{ v.Marca }}<br>
-                    Modelo: {{ v.Modelo || '' }}<br>
-                    Placa: {{ v.Placa || 'N/A' }}
+                    <strong>Marca:</strong> {{ v.Marca }}<br>
+                    <strong>Modelo:</strong> {{ v.Modelo || '' }}<br>
+                    <strong>Placa:</strong> {{ v.Placa || 'N/A' }}
                   </div>
                   <div>
                     <img [src]="v.Imagen ? getBase64ImageSrc(v.Imagen) : '/assets/default-vehicle.jpg'"
@@ -107,7 +107,7 @@
                     <h4>{{ p.Nombres }}</h4>
                     {{ p.Direccion }} <br>
                     {{p.Email}} <br>
-                    Capacidad: {{ p.Carros + p.Motos + p. Bicicletas }} <br>
+                    <strong>Capacidad:</strong> {{ p.Carros + p.Motos + p. Bicicletas }} <br>
                     {{p.Descripcion}}
                   </div>
                   <div>

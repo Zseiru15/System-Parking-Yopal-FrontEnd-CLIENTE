@@ -62,9 +62,9 @@ export class UserPorfileComponent implements OnInit {
   profileparqueadero: any = null;
   parqueaderoEmpleado: any = null;
 
+  filtroTipo: string = 'Todos'; // Ejemplo: 'Todos', 'Comentario', 'Pago', etc.
   fechaInicio: Date | null = null;
   horaInicio: string = '';
-
   fechaFin: Date | null = null;
   horaFin: string = '';
 
@@ -249,55 +249,146 @@ export class UserPorfileComponent implements OnInit {
     this.vistaSeleccionada = '';
   }
 
-  generarInformePDF() {
-    if (!this.fechaInicio || !this.fechaFin) {
-      this.alertsComp.showAlert("Selecciona ambas fechas para el informe.", 'warning', 3000);
-      return;
-    }
-
-    if (this.fechaFin < this.fechaInicio) {
-      this.alertsComp.showAlert("La fecha final no puede ser anterior a la inicial.", 'warning', 3000);
-      return;
-    }
-
+  generarInformePDF(): void {
     this.generandoPDF = true;
 
     const inicioStr = moment(this.fechaInicio).format('YYYY-MM-DD');
     const finStr = moment(this.fechaFin).format('YYYY-MM-DD');
+    const fechaGeneracion = moment().format('YYYY-MM-DD');
     const userId = this.usuario.Id;
 
     this.midService.getActividadesUsuario(userId, inicioStr, finStr).subscribe({
       next: (res) => {
         this.generandoPDF = false;
 
-        if (res.Success && Array.isArray(res.Data)) {
-          const doc = new jsPDF();
-          doc.text(`Informe de Actividades`, 14, 20);
-          doc.text(`Usuario: ${this.usuario.Nombres}`, 14, 30);
-          doc.text(`Periodo: ${inicioStr} a ${finStr}`, 14, 38);
+        const doc = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4',
+        });
 
-          const actividades = res.Data.map((a: any) => [
+        const logoBase64 = '/logo.png'; // Solo encabezado
+        doc.addImage(logoBase64, 'PNG', 15, 10, 25, 25);
+
+        // Encabezado principal
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(18);
+        doc.text('System Parking Yopal - SPY', 105, 18, { align: 'center' });
+
+        doc.setFontSize(13);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Informe de Actividades del Usuario', 105, 26, { align: 'center' });
+
+        doc.setFontSize(10);
+        doc.text(`Usuario: ${this.usuario.Nombres} ${this.usuario.Apellidos}`, 105, 33, { align: 'center' });
+        doc.text(`Periodo: ${inicioStr} a ${finStr}`, 105, 38, { align: 'center' });
+        doc.text(`Tipo de actividad: ${this.filtroTipo}`, 105, 43, { align: 'center' });
+
+        doc.setDrawColor(180);
+        doc.line(15, 47, 195, 47);
+
+        // Actividades
+        const actividades: [string, string, string, string][] = Array.isArray(res.data)
+          ? res.data.map((a: any) => [
             a.Fecha || 'Sin fecha',
             a.Accion || 'Sin acción',
-            a.Descripcion || 'Sin descripción'
-          ]);
+            a.Descripcion || 'Sin descripción',
+          ])
+          : [];
 
+        const actividadesFiltradas = actividades.filter(([_, accion]) =>
+          this.filtroTipo === 'Todos' || accion === this.filtroTipo
+        );
+
+        if (actividadesFiltradas.length > 0) {
           autoTable(doc, {
+            startY: 52,
             head: [['Fecha', 'Acción', 'Descripción']],
-            body: actividades,
-            startY: 45
+            body: actividadesFiltradas,
+            headStyles: {
+              fillColor: [46, 48, 54],  // #2E3036
+              textColor: 255,
+              fontSize: 11,
+              halign: 'center',
+            },
+            bodyStyles: {
+              fontSize: 10,
+              textColor: 50,
+            },
+            alternateRowStyles: {
+              fillColor: [245, 245, 245],
+            },
+            margin: { left: 15, right: 15 },
+            theme: 'striped',
+            pageBreak: 'auto',
           });
-
-          doc.save(`informe_actividad_${this.usuario.Nombres}.pdf`);
-          this.alertsComp.showAlert("✅ Informe generado exitosamente.", 'success', 3000);
         } else {
-          this.alertsComp.showAlert("No se encontraron actividades en ese rango.", 'info', 3000);
+          doc.setFontSize(11);
+          doc.setTextColor(100);
+          doc.text('No se encontraron actividades en este rango de fechas.', 20, 55);
         }
+
+        // Pie de página
+        const totalPages = doc.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+          doc.setPage(i);
+          const pageHeight = doc.internal.pageSize.height;
+
+          doc.setDrawColor(220);
+          doc.line(15, pageHeight - 15, 195, pageHeight - 15);
+
+          doc.setFontSize(9);
+          doc.setTextColor(120);
+          doc.text(`Generado el ${fechaGeneracion}`, 15, pageHeight - 10);
+          doc.text('System Parking Yopal - SPY © 2025', 195, pageHeight - 10, { align: 'right' });
+        }
+
+        doc.save(`Informe_de_actividades_${this.usuario.Nombres }&&${this.usuario.Apellidos}_SPY.pdf`);
+        this.alertsComp.showAlert("✅ Informe generado exitosamente.", 'success', 3000);
       },
       error: (err) => {
         this.generandoPDF = false;
         console.error('❌ Error al generar informe:', err);
         this.alertsComp.showAlert("Error generando informe.", 'error', 3000);
+      }
+    });
+  }
+
+  exportarCSV(): void {
+    const inicioStr = moment(this.fechaInicio).format('YYYY-MM-DD');
+    const finStr = moment(this.fechaFin).format('YYYY-MM-DD');
+    const userId = this.usuario.Id;
+
+    this.midService.getActividadesUsuario(userId, inicioStr, finStr).subscribe({
+      next: (res) => {
+        const actividades: [string, string, string][] = Array.isArray(res.data)
+          ? res.data.map((a: any) => [
+            a.Fecha || 'Sin fecha',
+            a.Accion || 'Sin acción',
+            a.Descripcion || 'Sin descripción'
+          ])
+          : [];
+
+        const actividadesFiltradas = actividades.filter((actividad: [string, string, string]) => {
+          const [_, accion] = actividad;
+          return this.filtroTipo === 'Todos' || accion === this.filtroTipo;
+        });
+
+        let csvContent = 'data:text/csv;charset=utf-8,Fecha,Acción,Descripción\n';
+        actividadesFiltradas.forEach((a: [string, string, string]) => {
+          csvContent += `"${a[0]}","${a[1]}","${a[2]}"\n`;
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', `informe_actividad_${this.usuario.Nombres}.csv`);
+        document.body.appendChild(link);
+        link.click();
+      },
+      error: (err) => {
+        console.error('❌ Error exportando CSV:', err);
+        this.alertsComp.showAlert("Error exportando CSV.", 'error', 3000);
       }
     });
   }
